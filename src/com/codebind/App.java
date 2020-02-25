@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.*;
 import java.io.Console;
 
-public class App extends JPanel{
+public class App{
     private JButton cirkelButton;
     private JPanel mainPanel;
     private JButton rechthoekButton;
@@ -18,9 +18,8 @@ public class App extends JPanel{
     private JPanel canvas;
     private JTree tree1;
 
-
     public App() {
-        //canvas.add(new Draw());
+
     }
 
     public static void main(String[] args)
@@ -28,12 +27,8 @@ public class App extends JPanel{
         JFrame frame = new JFrame("Painter-V2");
         frame.setContentPane(new App().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new Draw());
         frame.pack();
         frame.setVisible(true);
         frame.setSize(1280,720);
-
     }
-
-
 }
