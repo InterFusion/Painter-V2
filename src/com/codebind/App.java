@@ -22,8 +22,10 @@ public class App{
         app.setLocation(100, 0);
         app.setBackground(Color.black);
 
+
         frame.getContentPane().add(app, BorderLayout.CENTER);
         frame.getContentPane().add(new App().mainPanel, BorderLayout.CENTER);
+
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
