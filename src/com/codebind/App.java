@@ -1,7 +1,5 @@
 package com.codebind;
 
-import com.sun.deploy.panel.JreDialog;
-
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -28,11 +26,11 @@ public class App{
         JFrame frame = new JFrame("Painter-V2");
         app.setSize(1000,700);
         app.setLocation(100, 0);
-        app.setBackground(Color.black);
+        app.setBackground(Color.white);
 
         frame.getContentPane().add(app, BorderLayout.CENTER);
        // frame.setContentPane(new App().mainPanel);
-        frame.getContentPane().add(new App().mainPanel, BorderLayout.CENTER);
+
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        // frame.add(new Draw());
