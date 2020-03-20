@@ -17,17 +17,15 @@ public class Draw extends JPanel
 
     public Draw()
     {
-        this.setSize(720, 480);
-
+        repaint();
         this.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent e)
             {
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
-                repaint();
+               // repaint();
             }
-
 
             public void mouseReleased(MouseEvent e)
             {
@@ -43,7 +41,7 @@ public class Draw extends JPanel
             public void mouseDragged(MouseEvent e)
             {
                 endDrag = new Point(e.getX(), e.getY());
-                repaint();
+                //repaint();
             }
         });
     }
@@ -51,9 +49,9 @@ public class Draw extends JPanel
     protected void paintComponent(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setStroke(new BasicStroke(2));
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.50f));
+        //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //g2.setStroke(new BasicStroke(2));
+        //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.50f));
 
         for (Shape s : shapes)
         {

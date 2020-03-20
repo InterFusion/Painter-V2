@@ -16,24 +16,22 @@ public class App{
     private JPanel canvas;
     private JTree tree1;
 
-    public App() {
-
-    }
-
     public static void main(String[] args)
     {
-        Draw app = new Draw();
         JFrame frame = new JFrame("Painter-V2");
+
+        Draw app = new Draw();
+        app.setVisible(true);
         app.setSize(1000,700);
         app.setLocation(100, 0);
-        app.setBackground(Color.white);
+        app.setBackground(Color.black);
+
 
         frame.getContentPane().add(app, BorderLayout.CENTER);
-       // frame.setContentPane(new App().mainPanel);
+        frame.getContentPane().add(new App().mainPanel, BorderLayout.CENTER);
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // frame.add(new Draw());
         frame.pack();
         frame.setVisible(true);
         frame.setSize(1280,720);
