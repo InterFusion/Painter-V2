@@ -11,14 +11,15 @@ public class Draw extends JPanel {
 
     public Draw()
     {
-        addMouseListener(new MouseAdapter() {
+        this.setSize(720,480);
+        this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 oldX = e.getX();
                 oldY = e.getY();
             }
         });
 
-        addMouseListener(new MouseAdapter() {
+        this.addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 newX = e.getX();
                 newY = e.getY();
@@ -29,12 +30,19 @@ public class Draw extends JPanel {
 
     private void drawShape()
     {
-        repaint(oldX,oldY,newX - oldX, newY - oldY);
+        if((newX - oldX) < 0)
+            repaint(newX,newY,Math.abs(newX - oldX), Math.abs(newY - oldY));
+        else
+            repaint(oldX,oldY,Math.abs(newX - oldX), Math.abs(newY - oldY));
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.RED);
-        g.fillRect(oldX,oldY,newX - oldX, newY - oldY);
+        if((newX - oldX) < 0)
+            g.fillRect(newX,newY,Math.abs(newX - oldX), Math.abs(newY - oldY));
+        else
+            g.fillRect(oldX,oldY,Math.abs(newX - oldX), Math.abs(newY - oldY));
+
     }
 }
