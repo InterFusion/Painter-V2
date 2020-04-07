@@ -54,7 +54,7 @@ public class App{
         app = new Draw();
         app.setSize(1000,700);
         app.setLocation(100, 0);
-        
+
         frame.add(app, BorderLayout.CENTER);
         frame.add(new App().mainPanel);
 
