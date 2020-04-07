@@ -11,12 +11,15 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
+
+
 public class Draw extends JPanel
 {
 
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     Point startDrag, endDrag;
     private int Shapeint = 0;
+    private App mainapp;
 
     public Draw()
     {
@@ -48,8 +51,11 @@ public class Draw extends JPanel
                 }
                 else if(Shapeint == 3)
                 {
+                    Shapes test = new Rectangle("Rectangle", startDrag.x, startDrag.y, e.getX(), e.getY());
                     Shape r = makeRectangle(startDrag.x, startDrag.y, e.getX(), e.getY());
                     shapes.add(r);
+
+                    System.out.println(test);
                 }
                // repaint(startDrag.x,startDrag.y, e.getX() - startDrag.x, e.getY() - startDrag.y);
 
@@ -103,6 +109,11 @@ public class Draw extends JPanel
     public void setShape(int x)
     {
         Shapeint = x;
+    }
+
+    public void setMainapp(App app)
+    {
+        mainapp = app;
     }
 }
 
