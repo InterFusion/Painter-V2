@@ -7,7 +7,7 @@ public class Shapes
 
     public Shapes()
     {
-
+        App.mainapp.addTreeNode(this);
     }
 
     public void Resize()
