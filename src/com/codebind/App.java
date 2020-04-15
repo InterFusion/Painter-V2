@@ -57,9 +57,22 @@ public class App{
             @Override
             public void valueChanged(TreeSelectionEvent e)
             {
-                DefaultMutableTreeNode selectedNode =
-                        (DefaultMutableTreeNode)tree1.getLastSelectedPathComponent();
-                System.out.println(selectedNode);
+                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree1.getLastSelectedPathComponent();
+
+                if (selectedNode == null)
+                    //Nothing is selected.
+                    return;
+
+                Object nodeInfo = selectedNode.getUserObject();
+
+                if (selectedNode.isLeaf()) {
+                    Shapes s = (Shapes) nodeInfo;
+                    System.out.println(s.name);
+                    System.out.println(s.posX);
+                    System.out.println(s.posY);
+                    System.out.println(s.width);
+                    System.out.println(s.height);
+                }
             }
         });
     }
