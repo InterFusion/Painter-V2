@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 public class Draw extends JPanel
 {
+    ArrayList<Shapes> objShapes = new ArrayList<Shapes>();      //list of objects
+    ArrayList<Shape> shapes = new ArrayList<Shape>();           //list to draw
 
-    ArrayList<Shape> shapes = new ArrayList<Shape>();
     Point startDrag, endDrag;
     private int Shapeint = 0;
-    private App mainapp;
 
     public Draw()
     {
@@ -36,28 +36,36 @@ public class Draw extends JPanel
             {
                 if(Shapeint == 0)
                 {
+                    Shapes s = new Circle("Circle", startDrag.x, startDrag.y, e.getX(), e.getY());
                     Shape r = makeCircle(startDrag.x, startDrag.y, e.getX(), e.getY());
                     shapes.add(r);
+                    objShapes.add(s);
+                    System.out.println(s);
                 }
                 else if(Shapeint == 1)
                 {
+                    Shapes s = new Ellipse("Ellipse", startDrag.x, startDrag.y, e.getX(), e.getY());
                     Shape r = makeEllipse(startDrag.x, startDrag.y, e.getX(), e.getY());
                     shapes.add(r);
+                    objShapes.add(s);
+                    System.out.println(s);
                 }
                 else if(Shapeint == 2)
                 {
+                    Shapes s = new Square("Square", startDrag.x, startDrag.y, e.getX(), e.getY());
                     Shape r =  makeSquare(startDrag.x, startDrag.y, e.getX(), e.getY());
                     shapes.add(r);
+                    objShapes.add(s);
+                    System.out.println(s);
                 }
                 else if(Shapeint == 3)
                 {
-                    Shapes test = new Rectangle("Rectangle", startDrag.x, startDrag.y, e.getX(), e.getY());
+                    Shapes s = new Rectangle("Rectangle", startDrag.x, startDrag.y, e.getX(), e.getY());
                     Shape r = makeRectangle(startDrag.x, startDrag.y, e.getX(), e.getY());
                     shapes.add(r);
-
-                    System.out.println(test);
+                    objShapes.add(s);
+                    System.out.println(s);
                 }
-               // repaint(startDrag.x,startDrag.y, e.getX() - startDrag.x, e.getY() - startDrag.y);
 
                 paintImmediately(0,0,1000,720);
                 startDrag = null;
@@ -70,7 +78,6 @@ public class Draw extends JPanel
             public void mouseDragged(MouseEvent e)
             {
                 endDrag = new Point(e.getX(), e.getY());
-                //repaint();
             }
         });
     }
@@ -109,11 +116,6 @@ public class Draw extends JPanel
     public void setShape(int x)
     {
         Shapeint = x;
-    }
-
-    public void setMainapp(App app)
-    {
-        mainapp = app;
     }
 }
 

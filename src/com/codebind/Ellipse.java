@@ -9,5 +9,7 @@ public class Ellipse extends Shapes
         this.posY = posY;
         this.width = width;
         this.height = height;
+
+        App.mainapp.addTreeNode(this);
     }
 }
