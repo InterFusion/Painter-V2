@@ -72,6 +72,7 @@ public class App{
                     System.out.println(s.posY);
                     System.out.println(s.width);
                     System.out.println(s.height);
+                    s.Resize(100,100);
                 }
             }
         });
@@ -106,5 +107,10 @@ public class App{
 
         DefaultTreeModel model =(DefaultTreeModel) mainapp.tree1.getModel();
         model.setRoot(root);
+    }
+
+    public Draw getDraw()
+    {
+        return draw;
     }
 }
