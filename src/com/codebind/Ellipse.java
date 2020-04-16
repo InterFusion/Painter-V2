@@ -14,7 +14,7 @@ public class Ellipse extends Shapes
 
     public void Resize(int width, int height)
     {
-        Shape s = new Ellipse2D.Float(this.posX, this.posY, 100, 100);
+        Shape s = new Ellipse2D.Float(this.posX, this.posY, width, height);
         draw.setShapes(shape, s);
         shape = s;
     }

@@ -13,7 +13,7 @@ public class Rectangle extends Shapes
 
     public void Resize(int width, int height)
     {
-        Shape s = new Rectangle2D.Float(this.posX, this.posY, 100, 100);
+        Shape s = new Rectangle2D.Float(this.posX, this.posY, width, height);
         draw.setShapes(shape, s);
         shape = s;
     }

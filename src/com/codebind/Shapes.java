@@ -8,6 +8,7 @@ public class Shapes
     public int posX, posY, width, height;
     public Shape shape;
     public Draw draw;
+    public Tree tree;
 
     public Shapes(String name, int posX, int posY, int height, int width)
     {
@@ -16,8 +17,9 @@ public class Shapes
         this.posY = posY;
         this.width = width;
         this.height = height;
-/*        this.draw = App.mainapp.getDraw();
-        App.mainapp.addTreeNode(this);*/
+        this.draw = Draw.getInstance();
+        tree = Tree.getInstance();
+        tree.addTreeNode(this);
     }
 
     public void Resize(int width, int height)

@@ -22,20 +22,23 @@ public class App extends JFrame{
     private JPanel canvas;
     private JTree tree1;
     protected final Draw draw;
-    protected final App instance = null;
+    protected final Tree tree;
+
+    protected static App instance = null;
 
     public App() {
-        super("Painter v2");
+        super("Painter-V2");
+        instance = this;
         this.draw = Draw.getInstance();
         this.draw.setSize(1000,700);
         this.draw.setLocation(100, 0);
-
+        tree = Tree.getInstance();
+        add(tree);
         add(draw, BorderLayout.CENTER);
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setSize(1280,720);
-
 
 
         cirkelButton.addActionListener(new ActionListener() {
@@ -62,34 +65,9 @@ public class App extends JFrame{
                 draw.setShape(3);
             }
         });
-
-        tree1.addTreeSelectionListener(new TreeSelectionListener()
-        {
-            @Override
-            public void valueChanged(TreeSelectionEvent e)
-            {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree1.getLastSelectedPathComponent();
-
-                if (selectedNode == null)
-                    //Nothing is selected.
-                    return;
-
-                Object nodeInfo = selectedNode.getUserObject();
-
-                if (selectedNode.isLeaf()) {
-                    Shapes s = (Shapes) nodeInfo;
-                    System.out.println(s.name);
-                    System.out.println(s.posX);
-                    System.out.println(s.posY);
-                    System.out.println(s.width);
-                    System.out.println(s.height);
-                    s.Resize(100,100);
-                }
-            }
-        });
     }
 
-    public final App getInstance(){
+    public static App getInstance(){
         return instance;
     }
 
@@ -98,5 +76,9 @@ public class App extends JFrame{
         new App();
     }
 
+    public JTree getTree()
+    {
+        return tree1;
+    }
 
 }
