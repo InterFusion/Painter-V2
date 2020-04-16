@@ -8,19 +8,24 @@ import javax.swing.tree.DefaultTreeModel;
 
 public class Tree extends JTree
 {
-    protected final DefaultMutableTreeNode root;
+    protected final DefaultMutableTreeNode root;        //the root of the tree
     protected final DefaultTreeModel model;
 
     private static Tree instance = null;
     private App mainApp;
 
     public Tree(){
-        //create the root node
         root = new DefaultMutableTreeNode("Shapes");
         mainApp = App.getInstance();
         model =(DefaultTreeModel) mainApp.getTree().getModel();
         model.setRoot(root);
 
+        //add listener to the tree for the selected node
+        addTreeListener();
+    }
+
+    public void addTreeListener()
+    {
         mainApp.getTree().addTreeSelectionListener(new TreeSelectionListener()
         {
             @Override
@@ -28,8 +33,8 @@ public class Tree extends JTree
             {
                 DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)mainApp.getTree().getLastSelectedPathComponent();
 
+                //Nothing is selected.
                 if (selectedNode == null)
-                    //Nothing is selected.
                     return;
 
                 Object nodeInfo = selectedNode.getUserObject();
@@ -47,9 +52,9 @@ public class Tree extends JTree
         });
     }
 
+    //add new node to the tree
     public void addTreeNode(Shapes obj)
     {
-        //add the child nodes to the root node
         root.add(new DefaultMutableTreeNode(obj));
         model.setRoot(root);
     }

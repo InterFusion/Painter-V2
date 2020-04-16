@@ -10,6 +10,7 @@ public class Shapes
     public Draw draw;
     public Tree tree;
 
+    //create a shape
     public Shapes(String name, int posX, int posY, int height, int width)
     {
         this.name = name;

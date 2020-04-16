@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 public class Draw extends JPanel
 {
-    private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();      //list of objects
+    private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
     private ArrayList<Shape> shapes = new ArrayList<Shape>();           //list to draw
 
-    private Point startDrag, endDrag;
-    private int shapeInt = 0;
+    private Point startDrag, endDrag;                               //start and endpoint
+    private int shapeInt = 0;                                       //select which shape to draw
 
     private static Draw instance = null;
 
@@ -33,6 +33,7 @@ public class Draw extends JPanel
                 endDrag = startDrag;
             }
 
+            //veranderen in een switch of iets anders??
             public void mouseReleased(MouseEvent e)
             {
                 if(shapeInt == 0)
@@ -101,6 +102,7 @@ public class Draw extends JPanel
         shapeInt = x;
     }
 
+    //replace the old shape for the new shape || resize
     public void setShapes(Shape oldShape, Shape newShape)
     {
         shapes.remove(oldShape);
@@ -112,7 +114,6 @@ public class Draw extends JPanel
         if(instance == null){
             instance = new Draw();
         }
-
         return instance;
     }
 
