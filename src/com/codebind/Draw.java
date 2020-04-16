@@ -21,6 +21,8 @@ public class Draw extends JPanel
     private Point startDrag, endDrag;
     private int shapeInt = 0;
 
+    private static Draw instance = null;
+
     public Draw()
     {
         this.addMouseListener(new MouseAdapter()
@@ -104,6 +106,14 @@ public class Draw extends JPanel
         shapes.remove(oldShape);
         shapes.add(newShape);
         repaint();
+    }
+
+    public static Draw getInstance(){
+        if(instance == null){
+            instance = new Draw();
+        }
+
+        return instance;
     }
 
 

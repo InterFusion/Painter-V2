@@ -16,8 +16,8 @@ public class Shapes
         this.posY = posY;
         this.width = width;
         this.height = height;
-        this.draw = App.mainapp.getDraw();
-        App.mainapp.addTreeNode(this);
+/*        this.draw = App.mainapp.getDraw();
+        App.mainapp.addTreeNode(this);*/
     }
 
     public void Resize(int width, int height)

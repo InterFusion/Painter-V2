@@ -11,7 +11,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-public class App{
+public class App extends JFrame{
     private static DefaultMutableTreeNode root;
     private JButton cirkelButton;
     private JPanel mainPanel;
@@ -21,11 +21,22 @@ public class App{
     private JPanel buttonPanel;
     private JPanel canvas;
     private JTree tree1;
-    private static Draw draw;
-    public static App mainapp;
-
+    protected final Draw draw;
+    protected final App instance = null;
 
     public App() {
+        super("Painter v2");
+        this.draw = Draw.getInstance();
+        this.draw.setSize(1000,700);
+        this.draw.setLocation(100, 0);
+
+        add(draw, BorderLayout.CENTER);
+        add(mainPanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setSize(1280,720);
+
+
 
         cirkelButton.addActionListener(new ActionListener() {
             @Override
@@ -78,39 +89,14 @@ public class App{
         });
     }
 
+    public final App getInstance(){
+        return instance;
+    }
+
     public static void main(String[] args)
     {
-        JFrame frame = new JFrame("Painter-V2");
-
-        draw = new Draw();
-        draw.setSize(1000,700);
-        draw.setLocation(100, 0);
-
-        frame.add(draw, BorderLayout.CENTER);
-        mainapp = new App();
-
-        //create the root node
-        root = new DefaultMutableTreeNode("Shapes");
-        DefaultTreeModel model =(DefaultTreeModel) mainapp.tree1.getModel();
-        model.setRoot(root);
-
-        frame.add(mainapp.mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setSize(1280,720);
+        new App();
     }
 
-    public void addTreeNode(Shapes obj)
-    {
-        //add the child nodes to the root node
-        root.add(new DefaultMutableTreeNode(obj));
 
-        DefaultTreeModel model =(DefaultTreeModel) mainapp.tree1.getModel();
-        model.setRoot(root);
-    }
-
-    public Draw getDraw()
-    {
-        return draw;
-    }
 }
