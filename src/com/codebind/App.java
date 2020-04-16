@@ -90,6 +90,8 @@ public class App{
 
         //create the root node
         root = new DefaultMutableTreeNode("Shapes");
+        DefaultTreeModel model =(DefaultTreeModel) mainapp.tree1.getModel();
+        model.setRoot(root);
 
         frame.add(mainapp.mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,6 +106,5 @@ public class App{
 
         DefaultTreeModel model =(DefaultTreeModel) mainapp.tree1.getModel();
         model.setRoot(root);
-        model.reload();
     }
 }

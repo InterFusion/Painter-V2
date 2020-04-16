@@ -29,7 +29,6 @@ public class Draw extends JPanel
             {
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
-               // repaint();
             }
 
             public void mouseReleased(MouseEvent e)
@@ -67,7 +66,8 @@ public class Draw extends JPanel
                     System.out.println(s);
                 }
 
-                paintImmediately(0,0,1000,720);
+                repaint();
+                //paintImmediately(0,0,1000,700);
                 startDrag = null;
                 endDrag = null;
 
@@ -84,13 +84,8 @@ public class Draw extends JPanel
 
     protected void paintComponent(Graphics g)
     {
-        Graphics2D g2 = (Graphics2D) g;
-        for (Shape s : shapes)
-        {
-            g2.draw(s);
-            g2.setPaint(Color.RED);
-            g2.fill(s);
-        }
+        super.paintComponent(g);
+        draw(g);
     }
 
     private Rectangle2D.Float makeRectangle(int x1, int y1, int x2, int y2)
@@ -117,6 +112,17 @@ public class Draw extends JPanel
     {
         Shapeint = x;
     }
-}
 
+    //will draw whats necessary to Graphics object
+    public void draw(Graphics g)
+    {
+        Graphics2D g2 = (Graphics2D) g;
+        for (Shape s : shapes)
+        {
+            g2.draw(s);
+            g2.setPaint(Color.RED);
+            g2.fill(s);
+        }
+    }
+}
 

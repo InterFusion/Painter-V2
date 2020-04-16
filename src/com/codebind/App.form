@@ -74,6 +74,8 @@
             </constraints>
             <properties>
               <dropMode value="ON"/>
+              <editable value="true"/>
+              <enabled value="true"/>
             </properties>
           </component>
           <hspacer id="2b468">
