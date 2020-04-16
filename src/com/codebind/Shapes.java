@@ -10,8 +10,9 @@ public class Shapes
         App.mainapp.addTreeNode(this);
     }
 
-    public void Resize()
+    public void Resize(int width, int height)
     {
-
+        this.height = height;
+        this.width = width;
     }
 }

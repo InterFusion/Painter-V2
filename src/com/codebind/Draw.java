@@ -67,10 +67,9 @@ public class Draw extends JPanel
                 }
 
                 repaint();
-                //paintImmediately(0,0,1000,700);
+
                 startDrag = null;
                 endDrag = null;
-
             }
         });
         this.addMouseMotionListener(new MouseMotionAdapter()
@@ -86,6 +85,18 @@ public class Draw extends JPanel
     {
         super.paintComponent(g);
         draw(g);
+    }
+
+    //will draw whats necessary to Graphics object
+    public void draw(Graphics g)
+    {
+        Graphics2D g2 = (Graphics2D) g;
+        for (Shape s : shapes)
+        {
+            g2.draw(s);
+            g2.setPaint(Color.RED);
+            g2.fill(s);
+        }
     }
 
     private Rectangle2D.Float makeRectangle(int x1, int y1, int x2, int y2)
@@ -113,16 +124,6 @@ public class Draw extends JPanel
         Shapeint = x;
     }
 
-    //will draw whats necessary to Graphics object
-    public void draw(Graphics g)
-    {
-        Graphics2D g2 = (Graphics2D) g;
-        for (Shape s : shapes)
-        {
-            g2.draw(s);
-            g2.setPaint(Color.RED);
-            g2.fill(s);
-        }
-    }
+
 }
 
