@@ -1,14 +1,16 @@
 package com.codebind;
 
+import shapes.Circle;
+import shapes.Ellipse;
+import shapes.Rectangle;
+import shapes.Shapes;
+import shapes.Square;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
 
@@ -38,9 +40,10 @@ public class Draw extends JPanel
             //checks to see which shape to draw
             public void mouseReleased(MouseEvent e)
             {
-                Shapes s = null;
+
                 if(shapeInt >= 0)
                 {
+                    Shapes s = null;
                     if(shapeInt == 0)
                         s = new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
                     else if(shapeInt == 1)
