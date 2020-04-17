@@ -53,10 +53,6 @@ public class MenuBar extends JMenuBar implements ActionListener
         label.setText(s + " selected");
     }
 
-    public JLabel getLabel(){
-        return label;
-    }
-
     public static MenuBar getInstance(){
         if(instance == null)
             instance = new MenuBar();

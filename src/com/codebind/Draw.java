@@ -25,6 +25,8 @@ public class Draw extends JPanel
 
     public Draw()
     {
+        /*setSize(1000,700);
+        setLocation(106, 0);*/
         this.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent e)
