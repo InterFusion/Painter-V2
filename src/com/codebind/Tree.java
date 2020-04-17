@@ -5,6 +5,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.*;
 
 public class Tree extends JTree
 {
@@ -12,26 +13,27 @@ public class Tree extends JTree
     protected final DefaultTreeModel model;
 
     private static Tree instance = null;
-    private App mainApp;
+
+    private Shapes selectedShape;
 
     public Tree(){
         root = new DefaultMutableTreeNode("Shapes");
-        mainApp = App.getInstance();
-        model =(DefaultTreeModel) mainApp.getTree().getModel();
+        model =(DefaultTreeModel) this.getModel();
         model.setRoot(root);
-
+        this.setBackground(new Color(56,162,197));
+        this.setPreferredSize(new Dimension(200,-1));
         //add listener to the tree for the selected node
         addTreeListener();
     }
 
     public void addTreeListener()
     {
-        mainApp.getTree().addTreeSelectionListener(new TreeSelectionListener()
+        this.addTreeSelectionListener(new TreeSelectionListener()
         {
             @Override
             public void valueChanged(TreeSelectionEvent e)
             {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)mainApp.getTree().getLastSelectedPathComponent();
+                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)instance.getLastSelectedPathComponent();
 
                 //Nothing is selected.
                 if (selectedNode == null)
@@ -40,13 +42,7 @@ public class Tree extends JTree
                 Object nodeInfo = selectedNode.getUserObject();
 
                 if (selectedNode.isLeaf()) {
-                    Shapes s = (Shapes) nodeInfo;
-                    System.out.println(s.name);
-                    System.out.println(s.posX);
-                    System.out.println(s.posY);
-                    System.out.println(s.width);
-                    System.out.println(s.height);
-                    s.Resize(100,100);
+                    selectedShape = (Shapes) nodeInfo;
                 }
             }
         });
@@ -61,6 +57,11 @@ public class Tree extends JTree
 
     public void removeTreeNode(Shapes obj){
 
+    }
+
+    public Shapes getSelectedShape()
+    {
+        return selectedShape;
     }
 
     public static Tree getInstance(){

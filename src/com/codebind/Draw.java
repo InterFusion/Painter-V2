@@ -25,6 +25,8 @@ public class Draw extends JPanel
 
     public Draw()
     {
+        /*setSize(1000,700);
+        setLocation(106, 0);*/
         this.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent e)
@@ -36,33 +38,32 @@ public class Draw extends JPanel
             //veranderen in een switch of iets anders??
             public void mouseReleased(MouseEvent e)
             {
-                if(shapeInt == 0)
-                {
-                    Shapes s = new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                Shapes s;
+                switch (shapeInt){
+                    case 0:
+                        s = new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        objShapes.add(s);
+                        shapes.add(s.shape);
+                        System.out.println(s);
+                        break;
+                    case 1:
+                        s = new Ellipse("Ellipse", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        objShapes.add(s);
+                        shapes.add(s.shape);
+                        System.out.println(s);
+                        break;
+                    case 2:
+                        s = new Square("Square", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        objShapes.add(s);
+                        shapes.add(s.shape);
+                        System.out.println(s);
+                        break;
+                    case 3:
+                    s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
                     objShapes.add(s);
                     shapes.add(s.shape);
                     System.out.println(s);
-                }
-                else if(shapeInt == 1)
-                {
-                    Shapes s = new Ellipse("Ellipse", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
-                    objShapes.add(s);
-                    shapes.add(s.shape);
-                    System.out.println(s);
-                }
-                else if(shapeInt == 2)
-                {
-                    Shapes s = new Square("Square", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
-                    objShapes.add(s);
-                    shapes.add(s.shape);
-                    System.out.println(s);
-                }
-                else if(shapeInt == 3)
-                {
-                    Shapes s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
-                    objShapes.add(s);
-                    shapes.add(s.shape);
-                    System.out.println(s);
+                    break;
                 }
 
                 repaint();

@@ -11,7 +11,7 @@ public class Shapes
     public Tree tree;
 
     //create a shape
-    public Shapes(String name, int posX, int posY, int height, int width)
+    public Shapes(String name, int posX, int posY, int width, int height)
     {
         this.name = name;
         this.posX = posX;
@@ -23,12 +23,7 @@ public class Shapes
         tree.addTreeNode(this);
     }
 
-    public void Resize(int width, int height)
-    {
-
-    }
-
-    public void move(int posX, int posY)
+    public void refactor(int posX, int posY, int width, int height)
     {
 
     }
