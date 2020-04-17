@@ -12,8 +12,8 @@ public class App extends JFrame{
     private JButton ovaalButton;
     private JButton vierkantButton;
     private JPanel buttonPanel;
+    private JPanel canvas;
     private JPanel treePanel;
-    private JTree tree1;
     protected final Draw draw;                  //draw class
     protected final Tree tree;                  //tree class
     protected final MenuBar menu;
@@ -25,18 +25,16 @@ public class App extends JFrame{
         super("Painter-V2");
         instance = this;
         this.menu = MenuBar.getInstance();
+        tree = Tree.getInstance();
         //get instance of draw and set the size and location
         this.draw = Draw.getInstance();
-        this.draw.setSize(1000,700);
-        this.draw.setLocation(100, 0);
+        canvas.add(draw);
+        treePanel.add(tree);
 
-        tree = Tree.getInstance();
 
         //add jPanel to jFrame
-        add(draw, BorderLayout.CENTER);
 
         setJMenuBar(menu); //add jmenu to the jframe
-
         add(mainPanel);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,8 +65,4 @@ public class App extends JFrame{
     }
 
     //get tree from app.form
-    public JTree getTree()
-    {
-        return tree1;
-    }
 }

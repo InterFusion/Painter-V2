@@ -8,8 +8,8 @@ public class Circle extends Shapes
 {
     public Circle(String name, int posX, int posY, int width, int height)
     {
-        super(name, posX, posY, width, height);
-        shape = new Ellipse2D.Float(posX, posY, width, height);
+        super(name, posX, posY, height, height);
+        shape = new Ellipse2D.Float(posX, posY, height, height);
     }
 
     public void refactor(int posX, int posY, int width, int height)
