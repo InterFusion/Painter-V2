@@ -14,6 +14,8 @@ public class Tree extends JTree
 
     private static Tree instance = null;
 
+    private Shapes selectedShape;
+
     public Tree(){
         root = new DefaultMutableTreeNode("Shapes");
         model =(DefaultTreeModel) this.getModel();
@@ -40,13 +42,7 @@ public class Tree extends JTree
                 Object nodeInfo = selectedNode.getUserObject();
 
                 if (selectedNode.isLeaf()) {
-                    Shapes s = (Shapes) nodeInfo;
-                    System.out.println(s.name);
-                    System.out.println(s.posX);
-                    System.out.println(s.posY);
-                    System.out.println(s.width);
-                    System.out.println(s.height);
-                    s.Resize(100,100);
+                    selectedShape = (Shapes) nodeInfo;
                 }
             }
         });
@@ -61,6 +57,11 @@ public class Tree extends JTree
 
     public void removeTreeNode(Shapes obj){
 
+    }
+
+    public Shapes getSelectedShape()
+    {
+        return selectedShape;
     }
 
     public static Tree getInstance(){
