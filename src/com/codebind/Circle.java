@@ -6,15 +6,19 @@ import java.awt.geom.Rectangle2D;
 
 public class Circle extends Shapes
 {
-    public Circle(String name, int posX, int posY, int height, int width)
+    public Circle(String name, int posX, int posY, int width, int height)
     {
-        super(name, posX, posY, height, width);
-        shape = new Ellipse2D.Float(posX, posY, height, width);
+        super(name, posX, posY, width, height);
+        shape = new Ellipse2D.Float(posX, posY, width, height);
     }
 
-    public void Resize(int width, int height)
+    public void refactor(int posX, int posY, int width, int height)
     {
-        Shape s = new Ellipse2D.Float(this.posX, this.posY, width, height);
+        this.posX = posX;
+        this.posY = posY;
+        this.width = width;
+        this.height = height;
+        Shape s = new Ellipse2D.Float(this.posX, this.posY, this.width, this.height);
         draw.setShapes(shape, s);
         shape = s;
     }

@@ -34,6 +34,7 @@ public class App extends JFrame{
 
         //add jPanel to jFrame
         add(draw, BorderLayout.CENTER);
+
         setJMenuBar(menu); //add jmenu to the jframe
 
         add(mainPanel);
