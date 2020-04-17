@@ -7,8 +7,8 @@ public class Square extends Shapes
 {
     public Square(String name, int posX, int posY, int height, int width)
     {
-        super(name, posX, posY, height, width);
-        shape = new Rectangle2D.Float(posX, posY, height, width);
+        super(name, posX, posY, height, height);
+        shape = new Rectangle2D.Float(posX, posY, height, height);
     }
 
     public void Resize(int width, int height)
