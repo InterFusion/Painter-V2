@@ -1,5 +1,6 @@
 package com.codebind;
 
+import jdk.jfr.Event;
 import shapes.Circle;
 import shapes.Ellipse;
 import shapes.Rectangle;
@@ -7,10 +8,12 @@ import shapes.Shapes;
 import shapes.Square;
 
 import javax.swing.*;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 
@@ -19,14 +22,47 @@ public class Draw extends JPanel
 {
     private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
     private ArrayList<Shape> shapes = new ArrayList<Shape>();           //list to draw
-
     private Point startDrag, endDrag;                               //start and endpoint
     private int shapeInt = 0;                                       //select which shape to draw
+
+    protected JButton undoButton = new JButton("Undo");
+    protected JButton redoButton = new JButton("Redo");
+    protected UndoManager undoManager = new UndoManager();
 
     private static Draw instance = null;
 
     public Draw()
     {
+        undoButton.setEnabled(false);
+        redoButton.setEnabled(false);
+        JPanel buttonPanel = new JPanel(new GridLayout());
+        buttonPanel.add(undoButton);
+        buttonPanel.add(redoButton);
+        add(buttonPanel, BorderLayout.NORTH);
+
+        undoButton.addActionListener(e ->
+        {
+            try {
+                undoManager.undo();
+            } catch (CannotRedoException cre) {
+                cre.printStackTrace();
+            }
+            repaint();
+            undoButton.setEnabled(undoManager.canUndo());
+            redoButton.setEnabled(undoManager.canRedo());
+        });
+
+        redoButton.addActionListener(e ->
+        {
+            try {
+                undoManager.redo();
+            } catch (CannotRedoException cre) {
+                cre.printStackTrace();
+            }
+            repaint();
+            undoButton.setEnabled(undoManager.canUndo());
+            redoButton.setEnabled(undoManager.canRedo());
+        });
         /*setSize(1000,700);
         setLocation(106, 0);*/
         this.addMouseListener(new MouseAdapter()
@@ -35,15 +71,20 @@ public class Draw extends JPanel
             {
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
+
+
             }
+
+
 
             //checks to see which shape to draw
             public void mouseReleased(MouseEvent e)
             {
 
-                if(shapeInt >= 0)
+                if(endDrag != startDrag)
                 {
                     Shapes s = null;
+
                     if(shapeInt == 0)
                         s = new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
                     else if(shapeInt == 1)
@@ -53,11 +94,16 @@ public class Draw extends JPanel
                     else if(shapeInt == 3)
                         s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
 
-                    objShapes.add(s);
+                    //objShapes.add(s);
                     assert s != null;
+                    undoManager.undoableEditHappened(new UndoableEditEvent(
+                            this, new UndoableDraw(shapes, s)
+                    ));
                     shapes.add(s.shape);
                     System.out.println(s);
                 }
+                undoButton.setEnabled(undoManager.canUndo());
+                redoButton.setEnabled(undoManager.canRedo());
                 repaint();
 
                 startDrag = null;
@@ -67,7 +113,8 @@ public class Draw extends JPanel
         this.addMouseMotionListener(new MouseMotionAdapter()
         {
             public void mouseDragged(MouseEvent e)
-            { endDrag = new Point(e.getX(), e.getY());
+            {
+                endDrag = new Point(e.getX(), e.getY());
             }
         });
     }
@@ -85,7 +132,7 @@ public class Draw extends JPanel
         for (Shape s : shapes)
         {
             g2.draw(s);
-            g2.setPaint(Color.RED);
+            g2.setColor(Color.RED);
             g2.fill(s);
         }
     }
@@ -98,6 +145,8 @@ public class Draw extends JPanel
     //replace the old shape for the new shape || resize
     public void setShapes(Shape oldShape, Shape newShape)
     {
+        // TODO: 20/04/2020 Code aanpassen dat de coordinaten ergens anders worden bepaald
+        //  zodat die aangepast kan worden per object. Dan hoeven we niet elke keer de objecten te verwijderen.
         shapes.remove(oldShape);
         shapes.add(newShape);
         repaint();
@@ -109,7 +158,6 @@ public class Draw extends JPanel
         }
         return instance;
     }
-
 
 }
 
