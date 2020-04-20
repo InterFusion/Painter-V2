@@ -31,9 +31,6 @@ public class App extends JFrame{
         canvas.add(draw);
         treePanel.add(tree);
 
-
-        //add jPanel to jFrame
-
         setJMenuBar(menu); //add jmenu to the jframe
         add(mainPanel);
 

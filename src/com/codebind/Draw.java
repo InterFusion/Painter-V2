@@ -5,10 +5,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
 
@@ -98,6 +94,10 @@ public class Draw extends JPanel
         shapes.remove(oldShape);
         shapes.add(newShape);
         repaint();
+    }
+
+    public ArrayList<Shapes> getObjShapes() {
+        return objShapes;
     }
 
     public static Draw getInstance(){
