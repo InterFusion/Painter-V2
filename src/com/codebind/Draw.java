@@ -122,6 +122,10 @@ public class Draw extends JPanel implements UndoableEditListener
         draw(g);
     }
 
+    public ArrayList<Shapes> getObjShapes() {
+        return objShapes;
+    }
+
     //will draw whats necessary to Graphics object
     public void draw(Graphics g)
     {
