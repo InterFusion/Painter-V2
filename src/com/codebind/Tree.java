@@ -64,7 +64,6 @@ public class Tree extends JTree implements UndoableEditListener
     }
 
     public void removeTreeNode(Shapes obj){
-        model.
         model.setRoot(root);
     }
 

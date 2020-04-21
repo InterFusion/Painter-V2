@@ -1,4 +1,6 @@
 package com.codebind;
+import shapes.Shapes;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,12 +11,13 @@ import java.util.List;
 public class FileIO
 {
     protected final Draw draw;                                          //draw class
-    private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
+    private ArrayList<Shapes> objShapes;        //list of objects
 
     private static FileIO instance = null;                              //the instance of this class
 
     public  FileIO()
     {
+        objShapes = new ArrayList<>();
         draw = Draw.getInstance();
     }
 
