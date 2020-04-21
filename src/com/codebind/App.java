@@ -16,7 +16,7 @@ public class App extends JFrame{
     private JPanel treePanel;
     protected final Draw draw;                  //draw class
     protected final Tree tree;                  //tree class
-    protected final MenuBar menu;
+    protected final MenuBar menu;               //MenuBar class
 
     protected static App instance = null;
 
@@ -60,6 +60,4 @@ public class App extends JFrame{
     {
         new App();
     }
-
-    //get tree from app.form
 }

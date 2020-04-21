@@ -22,6 +22,7 @@ public class Tree extends JTree
         model.setRoot(root);
         this.setBackground(new Color(56,162,197));
         this.setPreferredSize(new Dimension(200,-1));
+
         //add listener to the tree for the selected node
         addTreeListener();
     }
@@ -56,7 +57,7 @@ public class Tree extends JTree
     }
 
     public void removeTreeNode(Shapes obj){
-        root.remove(new DefaultMutableTreeNode(obj));
+
     }
 
     public Shapes getSelectedShape()

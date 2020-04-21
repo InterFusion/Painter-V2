@@ -1,20 +1,17 @@
 package com.codebind;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class FileIO
 {
-    protected final Draw draw;
+    protected final Draw draw;                                          //draw class
     private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
 
-    private static FileIO instance = null;
+    private static FileIO instance = null;                              //the instance of this class
 
     public  FileIO()
     {
@@ -25,16 +22,17 @@ public class FileIO
     {
         objShapes = draw.getObjShapes();
 
-        //Write JSON file
+        //create new file paint.txt
         try (FileWriter file = new FileWriter("Paint.txt")) {
             for (Shapes shape : objShapes)
             {
+                //write the variables to the paint.txt
                 file.write(shape.name);
                 file.write(" " + Integer.toString(shape.posX));
                 file.write(" " + Integer.toString(shape.posY));
                 file.write(" " + Integer.toString(shape.width));
                 file.write(" " + Integer.toString(shape.height));
-                file.write(System.lineSeparator());
+                file.write(System.lineSeparator()); //at the end of every object create a new line
             }
 
             file.flush();
@@ -46,16 +44,17 @@ public class FileIO
 
     public void readFile()
     {
-        try {
+        try { //read the lines from paint.txt
             List<String> allLines = Files.readAllLines(Paths.get("Paint.txt"));
             for (String line : allLines) {
-                String[] words = line.split(" ");
+                String[] words = line.split(" "); //split the lines in to words
                 String name = words[0];
                 String posX = words[1];
                 String posY = words[2];
                 String width = words[3];
                 String height = words[4];
 
+                //make new shapes from the words
                 draw.makeShape(name, Integer.parseInt(posX), Integer.parseInt(posY), Integer.parseInt(width), Integer.parseInt(height));
             }
         } catch (IOException e) {

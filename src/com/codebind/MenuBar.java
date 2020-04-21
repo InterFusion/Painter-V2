@@ -8,13 +8,14 @@ import java.awt.event.ActionListener;
 
 public class MenuBar extends JMenuBar implements ActionListener
 {
-    private static MenuBar instance = null;
+    private static MenuBar instance = null;         //instance of this class
     private JMenuItem m1, m2, b1, b2;
     private JMenu menu, bewerken;
 
     protected final Tree tree;                  //tree class
-    protected final FileIO fileIO;
+    protected final FileIO fileIO;              //the FileIO class
 
+    //make al the buttons when the program starts
     public MenuBar(){
         menu = new JMenu("File");
         bewerken = new JMenu(("Bewerken"));
@@ -39,8 +40,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         addActionListeners();
     }
 
-    public void addActionListeners()
-    {
+    public void addActionListeners() {
         m1.addActionListener(this);
         m2.addActionListener(this);
 
@@ -51,6 +51,7 @@ public class MenuBar extends JMenuBar implements ActionListener
     public void actionPerformed(ActionEvent e){
         String s = e.getActionCommand();
 
+        //switch to see which button is pressed
         switch (s)
         {
             case "Grootte aanpassen":

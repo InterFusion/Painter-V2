@@ -12,17 +12,15 @@ import java.util.ArrayList;
 public class Draw extends JPanel
 {
     private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
-    private ArrayList<Shape> shapes = new ArrayList<Shape>();           //list to draw
+    private ArrayList<Shape> shapes = new ArrayList<Shape>();                   //list to draw
 
-    private Point startDrag, endDrag;                               //start and endpoint
-    private int shapeInt = 0;                                       //select which shape to draw
+    private Point startDrag, endDrag;                                       //start and endpoint
+    private int shapeInt = 0;                                               //select which shape to draw
 
     private static Draw instance = null;
 
     public Draw()
     {
-        /*setSize(1000,700);
-        setLocation(106, 0);*/
         this.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent e)
@@ -100,6 +98,7 @@ public class Draw extends JPanel
         return objShapes;
     }
 
+    //method for when you load a saved file.
     public void makeShape(String name, int posX, int posY, int width, int height)
     {
         Shapes s = null;
