@@ -100,6 +100,33 @@ public class Draw extends JPanel
         return objShapes;
     }
 
+    public void makeShape(String name, int posX, int posY, int width, int height)
+    {
+        Shapes s = null;
+        switch (name)
+        {
+            case "Circle":
+                s = new Circle("Circle",  posX, posY, width, height);
+                break;
+            case "Ellipse":
+                s = new Ellipse("Ellipse",  posX, posY, width, height);
+                break;
+            case "Square":
+                s = new Square("Square",  posX, posY, width, height);
+                break;
+            case "Rectangle":
+                s = new Rectangle("Rectangle",  posX, posY, width, height);
+                break;
+        }
+
+        if(s == null)
+            return;
+
+        objShapes.add(s);
+        shapes.add(s.shape);
+        repaint();
+    }
+
     public static Draw getInstance(){
         if(instance == null){
             instance = new Draw();

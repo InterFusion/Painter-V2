@@ -56,7 +56,7 @@ public class Tree extends JTree
     }
 
     public void removeTreeNode(Shapes obj){
-
+        root.remove(new DefaultMutableTreeNode(obj));
     }
 
     public Shapes getSelectedShape()

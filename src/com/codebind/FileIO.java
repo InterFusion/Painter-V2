@@ -1,9 +1,13 @@
 package com.codebind;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class FileIO
 {
@@ -42,25 +46,20 @@ public class FileIO
 
     public void readFile()
     {
-        try (FileReader reader = new FileReader("Paint.txt"))
-        {
-            String content = readMultipleCharacters(reader, reader.read());
-            System.out.println(content);
+        try {
+            List<String> allLines = Files.readAllLines(Paths.get("Paint.txt"));
+            for (String line : allLines) {
+                String[] words = line.split(" ");
+                String name = words[0];
+                String posX = words[1];
+                String posY = words[2];
+                String width = words[3];
+                String height = words[4];
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+                draw.makeShape(name, Integer.parseInt(posX), Integer.parseInt(posY), Integer.parseInt(width), Integer.parseInt(height));
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static String readMultipleCharacters(FileReader reader, int length) throws IOException {
-        char[] buffer = new char[length];
-        int charactersRead = reader.read(buffer, 0, length);
-        if (charactersRead != -1) {
-            return new String(buffer, 0, charactersRead);
-        } else {
-            return "";
         }
     }
 
