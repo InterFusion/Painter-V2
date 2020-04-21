@@ -67,8 +67,7 @@ public class Draw extends JPanel implements UndoableEditListener
             undoButton.setEnabled(undoHandler.canUndo());
             redoButton.setEnabled(undoHandler.canRedo());
         });
-        /*setSize(1000,700);
-        setLocation(106, 0);*/
+
         this.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent e)
@@ -115,8 +114,6 @@ public class Draw extends JPanel implements UndoableEditListener
                 endDrag = new Point(e.getX(), e.getY());
             }
         });
-
-
     }
 
     protected void paintComponent(Graphics g)
@@ -150,11 +147,9 @@ public class Draw extends JPanel implements UndoableEditListener
         shapes.remove(oldShape);
         shapes.add(newShape);
         repaint();
+
     }
 
-    public ArrayList<Shapes> getObjShapes() {
-        return objShapes;
-    }
 
     //method for when you load a saved file.
     public void makeShape(String name, int posX, int posY, int width, int height)
@@ -175,6 +170,8 @@ public class Draw extends JPanel implements UndoableEditListener
         shapes.add(s.shape);
         repaint();
     }
+
+    public ArrayList<Shape> getShapes() { return shapes;}
 
     public static Draw getInstance(){
         if(instance == null){

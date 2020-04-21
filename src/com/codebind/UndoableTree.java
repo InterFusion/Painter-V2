@@ -1,3 +1,4 @@
+
 package com.codebind;
 
 import shapes.Shapes;
@@ -11,24 +12,25 @@ import java.net.HttpRetryException;
 public class UndoableTree extends AbstractUndoableEdit
 {
     protected DefaultTreeModel model;
-    protected Shapes shape;
+    protected DefaultMutableTreeNode treeNode;
     protected DefaultMutableTreeNode root;
 
-    public UndoableTree(DefaultTreeModel model,DefaultMutableTreeNode root, Shapes shape)
+    public UndoableTree(DefaultTreeModel model,DefaultMutableTreeNode root, DefaultMutableTreeNode treeNode)
     {
         this.model = model;
         this.root = root;
-        this.shape = shape;
+        this.treeNode = treeNode;
     }
 
     public void undo(){
         super.undo();
-
+        Tree.getInstance().removeTreeNode(treeNode);
     }
 
     public void redo(){
         super.redo();
-        int i = root.getChildCount();
-        model.insertNodeInto((MutableTreeNode) shape, root, i);
+        root.add((treeNode));
+        model.reload(root);
     }
 }
+
