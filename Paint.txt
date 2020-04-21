@@ -1,3 +1,2 @@
-Circle 218 140 228 228
-Square 613 183 245 245
-Rectangle 80 462 138 84
+Rectangle 75 253 277 313
+Ellipse 657 122 187 251

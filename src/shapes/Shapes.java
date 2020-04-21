@@ -7,6 +7,7 @@ import com.codebind.UndoHandler;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Shapes
 {
@@ -18,6 +19,8 @@ public class Shapes
     public DefaultMutableTreeNode treeNode;
     protected UndoManager undoHandler = UndoHandler.getInstance();
     public Shape oldShape;
+    private ArrayList<Shapes> subordinates;
+
 
     //create a shape
     public Shapes(String name, int posX, int posY, int width, int height)
@@ -36,6 +39,18 @@ public class Shapes
     public void refactor(int posX, int posY, int width, int height)
     {
 
+    }
+
+    public void add(Shapes e) {
+        subordinates.add(e);
+    }
+
+    public void remove(Shapes e) {
+        subordinates.remove(e);
+    }
+
+    public ArrayList<Shapes> getSubordinates(){
+        return subordinates;
     }
 
     public int getHeight(){
