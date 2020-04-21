@@ -27,7 +27,8 @@ public class UndoableRefactor extends AbstractUndoableEdit
 
     public void redo(){
         super.redo();
-        shapes.add(shape.shape);
         shapes.remove(shape.oldShape);
+        shapes.add(shape.shape);
+
     }
 }
