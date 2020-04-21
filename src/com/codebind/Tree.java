@@ -29,6 +29,7 @@ public class Tree extends JTree implements UndoableEditListener
         model.setRoot(root);
         this.setBackground(new Color(56,162,197));
         this.setPreferredSize(new Dimension(200,-1));
+
         //add listener to the tree for the selected node
         addTreeListener();
     }
