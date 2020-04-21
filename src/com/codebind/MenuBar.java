@@ -58,8 +58,8 @@ public class MenuBar extends JMenuBar implements ActionListener
             case "Grootte aanpassen":
                 if(tree.getSelectedShape() != null)
                 {
-                    JTextField field1 = new JTextField(Integer.toString(tree.getSelectedShape().width));
-                    JTextField field2 = new JTextField(Integer.toString(tree.getSelectedShape().height));
+                    JTextField field1 = new JTextField(Integer.toString(tree.getSelectedShape().getWidth()));
+                    JTextField field2 = new JTextField(Integer.toString(tree.getSelectedShape().getHeight()));
                     JPanel panel = new JPanel(new GridLayout(0, 1));
                     panel.add(new JLabel("Breedte:"));
                     panel.add(field1);
@@ -69,15 +69,15 @@ public class MenuBar extends JMenuBar implements ActionListener
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
                     if (result == JOptionPane.OK_OPTION) {
-                        tree.getSelectedShape().refactor(tree.getSelectedShape().posX, tree.getSelectedShape().posY, Integer.parseInt(field1.getText()),Integer.parseInt(field2.getText()));
+                        tree.getSelectedShape().refactor(tree.getSelectedShape().getPosX(), tree.getSelectedShape().getPosY(), Integer.parseInt(field1.getText()),Integer.parseInt(field2.getText()));
                     }
                 }
                 break;
             case "Verplaatsen":
                 if(tree.getSelectedShape() != null)
                 {
-                    JTextField posx = new JTextField(Integer.toString(tree.getSelectedShape().posX));
-                    JTextField posy = new JTextField(Integer.toString(tree.getSelectedShape().posY));
+                    JTextField posx = new JTextField(Integer.toString(tree.getSelectedShape().getPosX()));
+                    JTextField posy = new JTextField(Integer.toString(tree.getSelectedShape().getPosY()));
                     JPanel panel1 = new JPanel(new GridLayout(0, 1));
                     panel1.add(new JLabel("Pos x:"));
                     panel1.add(posx);
@@ -87,7 +87,7 @@ public class MenuBar extends JMenuBar implements ActionListener
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
                     if (result1 == JOptionPane.OK_OPTION) {
-                        tree.getSelectedShape().refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().width, tree.getSelectedShape().height);
+                        tree.getSelectedShape().refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().getWidth(), tree.getSelectedShape().getHeight());
                     }
                 }
                 break;

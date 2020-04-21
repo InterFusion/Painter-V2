@@ -1,4 +1,3 @@
-/*
 package com.codebind;
 
 import shapes.Shapes;
@@ -7,6 +6,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.undo.AbstractUndoableEdit;
+import java.net.HttpRetryException;
 
 public class UndoableTree extends AbstractUndoableEdit
 {
@@ -23,8 +23,7 @@ public class UndoableTree extends AbstractUndoableEdit
 
     public void undo(){
         super.undo();
-        if(root.getChildCount() != 0)
-            model.removeNodeFromParent(new DefaultMutableTreeNode(shape));
+
     }
 
     public void redo(){
@@ -33,4 +32,3 @@ public class UndoableTree extends AbstractUndoableEdit
         model.insertNodeInto((MutableTreeNode) shape, root, i);
     }
 }
-*/

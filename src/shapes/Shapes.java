@@ -7,11 +7,11 @@ import java.awt.*;
 
 public class Shapes
 {
-    public String name;
-    public int posX, posY, width, height;
+    protected String name;
+    protected int posX, posY, width, height;
     public Shape shape;
-    public Draw draw;
-    public Tree tree;
+    protected Draw draw;
+    protected Tree tree;
 
     //create a shape
     public Shapes(String name, int posX, int posY, int width, int height)
@@ -29,5 +29,25 @@ public class Shapes
     public void refactor(int posX, int posY, int width, int height)
     {
 
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getPosX(){
+        return posX;
+    }
+
+    public int getPosY(){
+        return posY;
+    }
+
+    public String getName(){
+        return name;
     }
 }

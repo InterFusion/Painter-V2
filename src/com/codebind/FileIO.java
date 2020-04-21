@@ -30,11 +30,11 @@ public class FileIO
             for (Shapes shape : objShapes)
             {
                 //write the variables to the paint.txt
-                file.write(shape.name);
-                file.write(" " + Integer.toString(shape.posX));
-                file.write(" " + Integer.toString(shape.posY));
-                file.write(" " + Integer.toString(shape.width));
-                file.write(" " + Integer.toString(shape.height));
+                file.write(shape.getName());
+                file.write(" " + Integer.toString(shape.getPosX()));
+                file.write(" " + Integer.toString(shape.getPosY()));
+                file.write(" " + Integer.toString(shape.getWidth()));
+                file.write(" " + Integer.toString(shape.getHeight()));
                 file.write(System.lineSeparator()); //at the end of every object create a new line
             }
 
