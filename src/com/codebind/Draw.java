@@ -9,6 +9,7 @@ import shapes.Square;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.UndoManager;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 
 
-public class Draw extends JPanel
+public class Draw extends JPanel implements UndoableEditListener
 {
     private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
     private ArrayList<Shape> shapes = new ArrayList<Shape>();           //list to draw
@@ -27,7 +28,7 @@ public class Draw extends JPanel
 
     protected JButton undoButton = new JButton("Undo");
     protected JButton redoButton = new JButton("Redo");
-    protected UndoManager undoManager = new UndoManager();
+    protected UndoManager undoHandler = UndoHandler.getInstance();
 
     private static Draw instance = null;
 
@@ -43,25 +44,25 @@ public class Draw extends JPanel
         undoButton.addActionListener(e ->
         {
             try {
-                undoManager.undo();
+                undoHandler.undo();
             } catch (CannotRedoException cre) {
                 cre.printStackTrace();
             }
             repaint();
-            undoButton.setEnabled(undoManager.canUndo());
-            redoButton.setEnabled(undoManager.canRedo());
+            undoButton.setEnabled(undoHandler.canUndo());
+            redoButton.setEnabled(undoHandler.canRedo());
         });
 
         redoButton.addActionListener(e ->
         {
             try {
-                undoManager.redo();
+                undoHandler.redo();
             } catch (CannotRedoException cre) {
                 cre.printStackTrace();
             }
             repaint();
-            undoButton.setEnabled(undoManager.canUndo());
-            redoButton.setEnabled(undoManager.canRedo());
+            undoButton.setEnabled(undoHandler.canUndo());
+            redoButton.setEnabled(undoHandler.canRedo());
         });
         /*setSize(1000,700);
         setLocation(106, 0);*/
@@ -71,16 +72,10 @@ public class Draw extends JPanel
             {
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
-
-
             }
-
-
-
             //checks to see which shape to draw
             public void mouseReleased(MouseEvent e)
             {
-
                 if(endDrag != startDrag)
                 {
                     Shapes s = null;
@@ -94,16 +89,16 @@ public class Draw extends JPanel
                     else if(shapeInt == 3)
                         s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
 
-                    //objShapes.add(s);
+                    objShapes.add(s);
                     assert s != null;
-                    undoManager.undoableEditHappened(new UndoableEditEvent(
+                    undoHandler.undoableEditHappened(new UndoableEditEvent(
                             this, new UndoableDraw(shapes, s)
                     ));
                     shapes.add(s.shape);
                     System.out.println(s);
                 }
-                undoButton.setEnabled(undoManager.canUndo());
-                redoButton.setEnabled(undoManager.canRedo());
+                undoButton.setEnabled(undoHandler.canUndo());
+                redoButton.setEnabled(undoHandler.canRedo());
                 repaint();
 
                 startDrag = null;
@@ -117,6 +112,8 @@ public class Draw extends JPanel
                 endDrag = new Point(e.getX(), e.getY());
             }
         });
+
+
     }
 
     protected void paintComponent(Graphics g)
@@ -159,5 +156,10 @@ public class Draw extends JPanel
         return instance;
     }
 
+    @Override
+    public void undoableEditHappened(UndoableEditEvent e)
+    {
+        undoHandler.addEdit(e.getEdit());
+    }
 }
 

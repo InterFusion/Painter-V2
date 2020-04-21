@@ -21,6 +21,7 @@ public class Rectangle extends Shapes
         this.height = height;
         Shape s = new Rectangle2D.Float(this.posX, this.posY, this.width, this.height);
         draw.setShapes(shape, s);
+        tree.removeTreeNode(this);
         shape = s;
     }
 }

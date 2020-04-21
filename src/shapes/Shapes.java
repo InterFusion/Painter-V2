@@ -1,6 +1,5 @@
 package shapes;
 
-import com.codebind.Action;
 import com.codebind.Draw;
 import com.codebind.Tree;
 

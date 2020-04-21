@@ -5,22 +5,27 @@ import shapes.Shapes;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 
-public class Tree extends JTree
+public class Tree extends JTree implements UndoableEditListener
 {
     protected final DefaultMutableTreeNode root;        //the root of the tree
     protected final DefaultTreeModel model;
+    protected final UndoHandler undoHandler;
 
     private static Tree instance = null;
 
     private Shapes selectedShape;
 
     public Tree(){
-        root = new DefaultMutableTreeNode("Shapes");
+        undoHandler = UndoHandler.getInstance();
         model =(DefaultTreeModel) this.getModel();
+        root = (DefaultMutableTreeNode) model.getRoot();
         model.setRoot(root);
         this.setBackground(new Color(56,162,197));
         this.setPreferredSize(new Dimension(200,-1));
@@ -58,7 +63,8 @@ public class Tree extends JTree
     }
 
     public void removeTreeNode(Shapes obj){
-
+        model.
+        model.setRoot(root);
     }
 
     public Shapes getSelectedShape()
@@ -73,4 +79,9 @@ public class Tree extends JTree
         return instance;
     }
 
+    @Override
+    public void undoableEditHappened(UndoableEditEvent e)
+    {
+        undoHandler.addEdit(e.getEdit());
+    }
 }
