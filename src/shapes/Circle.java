@@ -1,7 +1,6 @@
 package shapes;
 
-import com.codebind.UndoableDraw;
-import com.codebind.UndoableRefactor;
+import UndoRedo.UndoableRefactor;
 
 import javax.swing.event.UndoableEditEvent;
 import java.awt.*;

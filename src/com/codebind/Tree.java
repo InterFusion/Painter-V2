@@ -1,5 +1,7 @@
 package com.codebind;
 
+import UndoRedo.UndoHandler;
+import UndoRedo.UndoableTree;
 import shapes.Shapes;
 
 import javax.swing.*;
@@ -9,7 +11,6 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 
 public class Tree extends JTree implements UndoableEditListener

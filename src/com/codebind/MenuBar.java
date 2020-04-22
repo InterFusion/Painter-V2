@@ -3,6 +3,9 @@ package com.codebind;
 import shapes.Shapes;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -111,28 +114,55 @@ public class MenuBar extends JMenuBar implements ActionListener
                 break;
             case"Groep aanmaken":
                 firstSelectedShape = tree.getSelectedShape();
-                createGroup();
-
+                openDialog(firstSelectedShape);
                 break;
         }
     }
 
-    private void createGroup()
+    public void openDialog(Shapes shapes)
     {
+        JFrame f = new JFrame();
+        JDialog d = new JDialog(f, "dialog Box");
+        JButton okButton = new JButton("OK");
+        JButton cancelButton = new JButton("Cancel");
+        // create a label
+        JPanel test = new JPanel();
+        d.add(test);
+        JTree dialogTree = new JTree();
+        dialogTree.setModel(tree.getModel());
+        test.add(okButton);
+        test.add(cancelButton);
+        test.add(dialogTree);
 
-        secondSelectedShape = tree.getSelectedShape();
-        if(checkSelected == false)
-        {
-            createGroup();
-        }
-        else
-        {
-            System.out.println("esfd");
+        // setsize of dialog
+        d.setSize(400, 400);
+        // set visibility of dialog
+        d.setVisible(true);
 
-            if(firstSelectedShape != secondSelectedShape)
-                firstSelectedShape.addSubordinates(secondSelectedShape);
-        }
+        dialogTree.addTreeSelectionListener(new TreeSelectionListener()
+        {
+            @Override
+            public void valueChanged(TreeSelectionEvent e)
+            {
+                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) dialogTree.getLastSelectedPathComponent();
+
+                //Nothing is selected.
+                if (selectedNode == null)
+                    return;
+
+                Object nodeInfo = selectedNode.getUserObject();
+
+                if (selectedNode.isLeaf())
+                {
+                    Shapes selectedShape = (Shapes) nodeInfo;
+                    System.out.println(selectedShape);
+
+                }
+            }
+        });
     }
+
+
 
 
     public static MenuBar getInstance(){
