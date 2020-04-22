@@ -12,6 +12,7 @@ import javax.swing.tree.TreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class MenuBar extends JMenuBar implements ActionListener
@@ -21,7 +22,7 @@ public class MenuBar extends JMenuBar implements ActionListener
     private JMenu menu, bewerken, groepen;
     private JDialog d;
     private Shapes secondSelectedShape;
-    private boolean checkSelected = false;
+    private ArrayList<Shapes> listOfShapes = new ArrayList<>();
 
     protected final Tree tree;                  //tree class
     protected final FileIO fileIO;              //the FileIO class
@@ -151,7 +152,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         // set visibility of dialog
         d.setVisible(true);
 
-        okButton.addActionListener(e -> makeGroup(firstSelectedShape));
+        okButton.addActionListener(e -> makeGroup(firstSelectedShape, listOfShapes));
 
         dialogTree.addTreeSelectionListener(new TreeSelectionListener()
         {
@@ -169,7 +170,9 @@ public class MenuBar extends JMenuBar implements ActionListener
                 if (selectedNode.isLeaf())
                 {
                     secondSelectedShape = (Shapes) nodeInfo;
-                    System.out.println(secondSelectedShape);
+                    /*if(!listOfShapes.contains(secondSelectedShape))*/
+                    listOfShapes.add(secondSelectedShape);
+                    tree.removeTreeNode(selectedNode);
                 }
             }
         });
@@ -177,12 +180,15 @@ public class MenuBar extends JMenuBar implements ActionListener
 
     }
 
-    public void makeGroup(Shapes firstSelectedShape)
+    public void makeGroup(Shapes firstSelectedShape, ArrayList<Shapes> listOfShapes)
     {
-        if(firstSelectedShape != null || secondSelectedShape != null)
+        if(firstSelectedShape != null && listOfShapes != null)
         {
-            firstSelectedShape.addSubordinates(secondSelectedShape);
-            tree.addTreeNodeToNode(firstSelectedShape.getTreeNode(), secondSelectedShape.getTreeNode());
+            for (Shapes s: listOfShapes)
+            {
+                firstSelectedShape.addSubordinates(s);
+                tree.addTreeNodeToNode(firstSelectedShape.getTreeNode(), s.getTreeNode());
+            }
             d.dispose();
         }
     }
