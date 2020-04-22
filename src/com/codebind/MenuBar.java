@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +19,8 @@ public class MenuBar extends JMenuBar implements ActionListener
     private static MenuBar instance = null;         //instance of this class
     private JMenuItem m1, m2, b1, b2, g1;
     private JMenu menu, bewerken, groepen;
-
-    private Shapes firstSelectedShape, secondSelectedShape;
+    private JDialog d;
+    private Shapes secondSelectedShape;
     private boolean checkSelected = false;
 
     protected final Tree tree;                  //tree class
@@ -113,23 +116,32 @@ public class MenuBar extends JMenuBar implements ActionListener
                 fileIO.readFile();
                 break;
             case"Groep aanmaken":
-                firstSelectedShape = tree.getSelectedShape();
-                openDialog(firstSelectedShape);
+                if(tree.getSelectedShape() != null)
+                {
+                    openDialog(tree.getSelectedNode(), tree.getSelectedShape());
+                }
                 break;
         }
     }
 
-    public void openDialog(Shapes shapes)
+    public void openDialog(DefaultMutableTreeNode firstSelectedNode, Shapes firstSelectedShape)
     {
         JFrame f = new JFrame();
-        JDialog d = new JDialog(f, "dialog Box");
+        d = new JDialog(f, "dialog Box");
         JButton okButton = new JButton("OK");
         JButton cancelButton = new JButton("Cancel");
+
         // create a label
         JPanel test = new JPanel();
-        d.add(test);
         JTree dialogTree = new JTree();
-        dialogTree.setModel(tree.getModel());
+
+        //clone maintree and remove selected node
+        DefaultTreeModel model =(DefaultTreeModel) tree.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        root.remove(firstSelectedNode);
+        dialogTree.setModel(model);
+
+        d.add(test);
         test.add(okButton);
         test.add(cancelButton);
         test.add(dialogTree);
@@ -138,6 +150,8 @@ public class MenuBar extends JMenuBar implements ActionListener
         d.setSize(400, 400);
         // set visibility of dialog
         d.setVisible(true);
+
+        okButton.addActionListener(e -> makeGroup(firstSelectedShape));
 
         dialogTree.addTreeSelectionListener(new TreeSelectionListener()
         {
@@ -154,16 +168,24 @@ public class MenuBar extends JMenuBar implements ActionListener
 
                 if (selectedNode.isLeaf())
                 {
-                    Shapes selectedShape = (Shapes) nodeInfo;
-                    System.out.println(selectedShape);
-
+                    secondSelectedShape = (Shapes) nodeInfo;
+                    System.out.println(secondSelectedShape);
                 }
             }
         });
+
+
     }
 
-
-
+    public void makeGroup(Shapes firstSelectedShape)
+    {
+        if(firstSelectedShape != null || secondSelectedShape != null)
+        {
+            firstSelectedShape.addSubordinates(secondSelectedShape);
+            tree.addTreeNodeToNode(firstSelectedShape.getTreeNode(), secondSelectedShape.getTreeNode());
+            d.dispose();
+        }
+    }
 
     public static MenuBar getInstance(){
         if(instance == null)

@@ -11,6 +11,7 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 
 public class Tree extends JTree implements UndoableEditListener
@@ -20,7 +21,7 @@ public class Tree extends JTree implements UndoableEditListener
     protected final UndoHandler undoHandler;
 
     private static Tree instance = null;
-
+    private DefaultMutableTreeNode selectedNode;
     private Shapes selectedShape;
 
     public Tree(){
@@ -45,7 +46,7 @@ public class Tree extends JTree implements UndoableEditListener
             @Override
             public void valueChanged(TreeSelectionEvent e)
             {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)instance.getLastSelectedPathComponent();
+                selectedNode = (DefaultMutableTreeNode)instance.getLastSelectedPathComponent();
 
                 //Nothing is selected.
                 if (selectedNode == null)
@@ -70,11 +71,18 @@ public class Tree extends JTree implements UndoableEditListener
     //add new node to the tree
     public void addTreeNode(DefaultMutableTreeNode obj)
     {
-       root.add((obj));
-       model.reload(root);
+        root.add((obj));
+        model.reload(root);
         undoHandler.undoableEditHappened(new UndoableEditEvent(
                 this, new UndoableTree(model, root, obj)
         ));
+    }
+
+    //add new node to the tree
+    public void addTreeNodeToNode(DefaultMutableTreeNode parent, DefaultMutableTreeNode child)
+    {
+        parent.add(child);
+        model.reload(child);
     }
 
     public void removeTreeNode(DefaultMutableTreeNode obj){
@@ -86,6 +94,12 @@ public class Tree extends JTree implements UndoableEditListener
     {
         return selectedShape;
     }
+
+    public DefaultMutableTreeNode getSelectedNode()
+    {
+        return selectedNode;
+    }
+
 
     public static Tree getInstance(){
         if(instance == null){

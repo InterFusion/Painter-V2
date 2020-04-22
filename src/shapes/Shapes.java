@@ -35,8 +35,9 @@ public class Shapes
         this.posY = posY;
         this.width = width;
         this.height = height;
-        this.draw = Draw.getInstance();
+        draw = Draw.getInstance();
         tree = Tree.getInstance();
+        subordinates = new ArrayList<Shapes>();
         treeNode = new DefaultMutableTreeNode(this);
         tree.addTreeNode(treeNode);
     }
@@ -96,5 +97,9 @@ public class Shapes
 
     public Shape getOldShape() {
         return oldShape;
+    }
+
+    public DefaultMutableTreeNode getTreeNode() {
+        return treeNode;
     }
 }
