@@ -10,22 +10,22 @@ import java.util.Vector;
 
 public class UndoableDraw extends AbstractUndoableEdit
 {
-    protected ArrayList<Shape> shapes;
-    protected Shapes shape;
+    protected ArrayList<Shapes> listOfShapes;
+    protected Shapes shapes;
 
 
-    public UndoableDraw(ArrayList<Shape> shapes, Shapes shape){
-        this.shapes = shapes;
-        this.shape =  shape;
+    public UndoableDraw(ArrayList<Shapes> listOfShapes, Shapes shapes){
+        this.listOfShapes = listOfShapes;
+        this.shapes =  shapes;
     }
 
     public void undo(){
         super.undo();
-        shapes.remove(shape.shape);
+        listOfShapes.remove(shapes);
     }
 
     public void redo(){
         super.redo();
-        shapes.add(shape.shape);
+        listOfShapes.add(shapes);
     }
 }

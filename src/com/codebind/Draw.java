@@ -94,10 +94,9 @@ public class Draw extends JPanel implements UndoableEditListener
                     objShapes.add(s);
                     assert s != null;
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
-                            this, new UndoableDraw(shapes, s)
+                            this, new UndoableDraw(objShapes, s)
                     ));
-                    shapes.add(s.shape);
-                    System.out.println(s);
+                    shapes.add(s.getShape());
                 }
                 undoButton.setEnabled(undoHandler.canUndo());
                 redoButton.setEnabled(undoHandler.canRedo());
@@ -127,14 +126,13 @@ public class Draw extends JPanel implements UndoableEditListener
     }
 
     //will draw whats necessary to Graphics object
-    public void draw(Graphics g)
+    private void draw(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
-        for (Shape s : shapes)
+        for (Shapes s : objShapes)
         {
-            g2.draw(s);
-            g2.setColor(Color.RED);
-            g2.fill(s);
+            g2.setColor(s.getColor());
+            g2.fill(s.getShape());
         }
     }
 
@@ -171,7 +169,7 @@ public class Draw extends JPanel implements UndoableEditListener
             return;
 
         objShapes.add(s);
-        shapes.add(s.shape);
+        shapes.add(s.getShape());
         repaint();
     }
 

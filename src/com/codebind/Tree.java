@@ -28,7 +28,8 @@ public class Tree extends JTree implements UndoableEditListener
         model.setRoot(new DefaultMutableTreeNode("Shapes"));
 
         root = (DefaultMutableTreeNode) model.getRoot();
-
+        this.setDragEnabled(true);
+        this.setDropMode(DropMode.ON_OR_INSERT);
         this.setBackground(new Color(56,162,197));
         this.setPreferredSize(new Dimension(200,-1));
 
@@ -53,6 +54,13 @@ public class Tree extends JTree implements UndoableEditListener
 
                 if (selectedNode.isLeaf()) {
                     selectedShape = (Shapes) nodeInfo;
+                    selectedShape.setColor(Color.GRAY);
+                }
+
+                for (Shapes s : Draw.getInstance().getObjShapes())
+                {
+                    if(s != selectedShape)
+                        s.setColor(Color.red);
                 }
             }
         });

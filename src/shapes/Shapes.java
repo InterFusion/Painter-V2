@@ -7,18 +7,24 @@ import com.codebind.UndoHandler;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 public class Shapes
 {
     protected String name;
     protected int posX, posY, width, height;
-    public Shape shape;
-    public Draw draw;
-    public Tree tree;
-    public DefaultMutableTreeNode treeNode;
+
+    protected Shape shape, oldShape;
+
+    protected final Draw draw;
+    protected final Tree tree;
+    protected DefaultMutableTreeNode treeNode;
+
     protected UndoManager undoHandler = UndoHandler.getInstance();
-    public Shape oldShape;
+
+    protected Color color = Color.RED;
+
     private ArrayList<Shapes> subordinates;
 
 
@@ -41,17 +47,29 @@ public class Shapes
 
     }
 
-    public void add(Shapes e) {
+    public void addSubordinates(Shapes e) {
         subordinates.add(e);
+        System.out.println("ADDED");
     }
 
-    public void remove(Shapes e) {
+    public void removeSubordinates(Shapes e) {
         subordinates.remove(e);
     }
 
     public ArrayList<Shapes> getSubordinates(){
         return subordinates;
     }
+
+    public void setColor(Color color) {
+        this.color = color;
+        draw.repaint();
+    }
+
+    public Color getColor()
+    {
+        return color;
+    }
+
 
     public int getHeight(){
         return height;
@@ -71,5 +89,13 @@ public class Shapes
 
     public String getName(){
         return name;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Shape getOldShape() {
+        return oldShape;
     }
 }

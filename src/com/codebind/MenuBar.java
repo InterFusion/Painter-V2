@@ -1,17 +1,21 @@
 package com.codebind;
 
-import javax.accessibility.Accessible;
+import shapes.Shapes;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
+import java.util.concurrent.TimeUnit;
 
 public class MenuBar extends JMenuBar implements ActionListener
 {
     private static MenuBar instance = null;         //instance of this class
-    private JMenuItem m1, m2, b1, b2;
-    private JMenu menu, bewerken;
+    private JMenuItem m1, m2, b1, b2, g1;
+    private JMenu menu, bewerken, groepen;
+
+    private Shapes firstSelectedShape, secondSelectedShape;
+    private boolean checkSelected = false;
 
     protected final Tree tree;                  //tree class
     protected final FileIO fileIO;              //the FileIO class
@@ -19,7 +23,8 @@ public class MenuBar extends JMenuBar implements ActionListener
     //make al the buttons when the program starts
     public MenuBar(){
         menu = new JMenu("File");
-        bewerken = new JMenu(("Bewerken"));
+        bewerken = new JMenu("Bewerken");
+        groepen = new JMenu("Groepen");
 
         m1 = new JMenuItem("Opslaan");
         m2 = new JMenuItem("Openen");
@@ -27,14 +32,19 @@ public class MenuBar extends JMenuBar implements ActionListener
         b1 = new JMenuItem("Verplaatsen");
         b2 = new JMenuItem("Grootte aanpassen");
 
+        g1 = new JMenuItem("Groep aanmaken");
+
         menu.add(m1);
         menu.add(m2);
 
         bewerken.add(b1);
         bewerken.add(b2);
 
+        groepen.add(g1);
+
         add(menu);
         add(bewerken);
+        add(groepen);
 
         tree = Tree.getInstance();
         fileIO = FileIO.getInstance();
@@ -47,6 +57,8 @@ public class MenuBar extends JMenuBar implements ActionListener
 
         b1.addActionListener(this);
         b2.addActionListener(this);
+
+        g1.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e){
@@ -97,8 +109,31 @@ public class MenuBar extends JMenuBar implements ActionListener
             case"Openen":
                 fileIO.readFile();
                 break;
+            case"Groep aanmaken":
+                firstSelectedShape = tree.getSelectedShape();
+                createGroup();
+
+                break;
         }
     }
+
+    private void createGroup()
+    {
+
+        secondSelectedShape = tree.getSelectedShape();
+        if(checkSelected == false)
+        {
+            createGroup();
+        }
+        else
+        {
+            System.out.println("esfd");
+
+            if(firstSelectedShape != secondSelectedShape)
+                firstSelectedShape.addSubordinates(secondSelectedShape);
+        }
+    }
+
 
     public static MenuBar getInstance(){
         if(instance == null)
