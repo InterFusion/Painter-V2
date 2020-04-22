@@ -37,6 +37,11 @@ public class Draw extends JPanel implements UndoableEditListener
         buttonPanel.add(redoButton);
         add(buttonPanel, BorderLayout.NORTH);
 
+        addActionListeners();
+    }
+
+    public void addActionListeners()
+    {
         undoButton.addActionListener(e ->
         {
             try {

@@ -23,6 +23,8 @@ public class Circle extends Shapes
         Shape s = new Ellipse2D.Float(this.posX, this.posY, this.width, this.height);
         draw.repaint();
         shape = s;
+
+        //add action to undoHandler
         undoHandler.undoableEditHappened(new UndoableEditEvent(
                 this, new UndoableRefactor(draw.getObjShapes(), this)
         ));

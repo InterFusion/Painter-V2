@@ -1,5 +1,7 @@
 package shapes;
 
+import com.codebind.UndoableRefactor;
+import javax.swing.event.UndoableEditEvent;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -9,6 +11,7 @@ public class Square extends Shapes
     {
         super(name, posX, posY, height, height);
         shape = new Rectangle2D.Float(posX, posY, height, height);
+        oldShape = shape;
     }
 
     public void refactor(int posX, int posY, int width, int height)
@@ -20,5 +23,10 @@ public class Square extends Shapes
         Shape s = new Rectangle2D.Float(this.posX, this.posY, this.width, this.height);
         draw.repaint();
         shape = s;
+
+        //add action to undoHandler
+        undoHandler.undoableEditHappened(new UndoableEditEvent(
+                this, new UndoableRefactor(draw.getObjShapes(), this)
+        ));
     }
 }
