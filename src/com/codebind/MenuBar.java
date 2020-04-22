@@ -9,6 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
+import javax.xml.crypto.NodeSetData;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,10 +24,12 @@ public class MenuBar extends JMenuBar implements ActionListener
     private JDialog d;
     private Shapes secondSelectedShape;
     private ArrayList<Shapes> listOfShapes = new ArrayList<>();
+    private ArrayList<DefaultMutableTreeNode> listOfNodes = new ArrayList<>();
 
     protected final Tree tree;                  //tree class
     protected final FileIO fileIO;              //the FileIO class
-
+    DefaultTreeModel model;
+    DefaultMutableTreeNode root;
     //make al the buttons when the program starts
     public MenuBar(){
         menu = new JMenu("File");
@@ -55,6 +58,8 @@ public class MenuBar extends JMenuBar implements ActionListener
 
         tree = Tree.getInstance();
         fileIO = FileIO.getInstance();
+        model = (DefaultTreeModel) tree.getModel();
+        root = (DefaultMutableTreeNode) model.getRoot();
         addActionListeners();
     }
 
@@ -137,8 +142,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         JTree dialogTree = new JTree();
 
         //clone maintree and remove selected node
-        DefaultTreeModel model =(DefaultTreeModel) tree.getModel();
-        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+
         root.remove(firstSelectedNode);
         dialogTree.setModel(model);
 
@@ -153,6 +157,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         d.setVisible(true);
 
         okButton.addActionListener(e -> makeGroup(firstSelectedShape, listOfShapes));
+        cancelButton.addActionListener(e -> cancel(firstSelectedShape, listOfNodes));
 
         dialogTree.addTreeSelectionListener(new TreeSelectionListener()
         {
@@ -172,6 +177,7 @@ public class MenuBar extends JMenuBar implements ActionListener
                     secondSelectedShape = (Shapes) nodeInfo;
                     /*if(!listOfShapes.contains(secondSelectedShape))*/
                     listOfShapes.add(secondSelectedShape);
+                    listOfNodes.add(selectedNode);
                     tree.removeTreeNode(selectedNode);
                 }
             }
@@ -182,12 +188,22 @@ public class MenuBar extends JMenuBar implements ActionListener
 
     public void makeGroup(Shapes firstSelectedShape, ArrayList<Shapes> listOfShapes)
     {
-        if(firstSelectedShape != null && listOfShapes != null)
+        if(listOfShapes != null)
         {
             for (Shapes s: listOfShapes)
             {
                 firstSelectedShape.addSubordinates(s);
                 tree.addTreeNodeToNode(firstSelectedShape.getTreeNode(), s.getTreeNode());
+            }
+            d.dispose();
+        }
+    }
+
+    public void cancel(Shapes firstSelectedShape, ArrayList<DefaultMutableTreeNode> listOfNodes){
+        if(listOfNodes != null){
+            tree.addTreeNode(firstSelectedShape.getTreeNode());
+            for (DefaultMutableTreeNode node : listOfNodes){
+                tree.addTreeNode(node);
             }
             d.dispose();
         }
