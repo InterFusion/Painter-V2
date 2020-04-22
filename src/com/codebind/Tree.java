@@ -1,7 +1,6 @@
 package com.codebind;
 
 import shapes.Shapes;
-
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -9,14 +8,13 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 
 public class Tree extends JTree implements UndoableEditListener
 {
-    protected final DefaultMutableTreeNode root;        //the root of the tree
-    protected final DefaultTreeModel model;
-    protected final UndoHandler undoHandler;
+    private final DefaultMutableTreeNode root;        //the root of the tree
+    private final DefaultTreeModel model;
+    private final UndoHandler undoHandler;
 
     private static Tree instance = null;
 

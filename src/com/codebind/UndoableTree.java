@@ -1,19 +1,14 @@
-
 package com.codebind;
-
-import shapes.Shapes;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.undo.AbstractUndoableEdit;
-import java.net.HttpRetryException;
 
 public class UndoableTree extends AbstractUndoableEdit
 {
-    protected DefaultTreeModel model;
-    protected DefaultMutableTreeNode treeNode;
-    protected DefaultMutableTreeNode root;
+    private DefaultTreeModel model;
+    private DefaultMutableTreeNode treeNode;
+    private DefaultMutableTreeNode root;
 
     public UndoableTree(DefaultTreeModel model,DefaultMutableTreeNode root, DefaultMutableTreeNode treeNode)
     {
