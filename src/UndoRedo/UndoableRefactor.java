@@ -1,31 +1,34 @@
-package com.codebind;
+package UndoRedo;
 
 import shapes.Shapes;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.undo.AbstractUndoableEdit;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
-public class UndoableDraw extends AbstractUndoableEdit
+public class UndoableRefactor extends AbstractUndoableEdit
 {
     protected ArrayList<Shape> shapes;
     protected Shapes shape;
 
 
-    public UndoableDraw(ArrayList<Shape> shapes, Shapes shape){
+    public UndoableRefactor(ArrayList<Shape> shapes, Shapes shape){
         this.shapes = shapes;
         this.shape =  shape;
     }
 
     public void undo(){
         super.undo();
-        shapes.remove(shape.shape);
+        shapes.remove(shape.getShape());
+        shapes.add(shape.getOldShape());
     }
 
     public void redo(){
         super.redo();
-        shapes.add(shape.shape);
+        shapes.remove(shape.getOldShape());
+        shapes.add(shape.getShape());
+
     }
 }

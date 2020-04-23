@@ -1,6 +1,7 @@
 package com.codebind;
 
-import jdk.jfr.Event;
+import UndoRedo.UndoHandler;
+import UndoRedo.UndoableDraw;
 import shapes.Circle;
 import shapes.Ellipse;
 import shapes.Rectangle;
@@ -10,11 +11,12 @@ import shapes.Square;
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 
 
@@ -91,10 +93,9 @@ public class Draw extends JPanel implements UndoableEditListener
                     objShapes.add(s);
                     assert s != null;
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
-                            this, new UndoableDraw(shapes, s)
+                            this, new UndoableDraw(objShapes, s)
                     ));
-                    shapes.add(s.shape);
-                    System.out.println(s);
+                    shapes.add(s.getShape());
                 }
                 undoButton.setEnabled(undoHandler.canUndo());
                 redoButton.setEnabled(undoHandler.canRedo());
@@ -119,15 +120,18 @@ public class Draw extends JPanel implements UndoableEditListener
         draw(g);
     }
 
+    public ArrayList<Shapes> getObjShapes() {
+        return objShapes;
+    }
+
     //will draw whats necessary to Graphics object
-    public void draw(Graphics g)
+    private void draw(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
-        for (Shape s : shapes)
+        for (Shapes s : objShapes)
         {
-            g2.draw(s);
-            g2.setColor(Color.RED);
-            g2.fill(s);
+            g2.setColor(s.getColor());
+            g2.fill(s.getShape());
         }
     }
 
@@ -145,6 +149,27 @@ public class Draw extends JPanel implements UndoableEditListener
         shapes.add(newShape);
         repaint();
 
+    }
+
+
+    //method for when you load a saved file.
+    public void makeShape(String name, int posX, int posY, int width, int height)
+    {
+        Shapes s = switch (name)
+                {
+                    case "Circle" -> new Circle("Circle", posX, posY, width, height);
+                    case "Ellipse" -> new Ellipse("Ellipse", posX, posY, width, height);
+                    case "Square" -> new Square("Square", posX, posY, width, height);
+                    case "Rectangle" -> new Rectangle("Rectangle", posX, posY, width, height);
+                    default -> null;
+                };
+
+        if(s == null)
+            return;
+
+        objShapes.add(s);
+        shapes.add(s.getShape());
+        repaint();
     }
 
     public ArrayList<Shape> getShapes() { return shapes;}
