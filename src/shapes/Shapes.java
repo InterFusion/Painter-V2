@@ -23,7 +23,7 @@ public class Shapes
 
     protected Color color = Color.RED;
 
-    private ArrayList<Shapes> subordinates;
+    private final ArrayList<Shapes> subordinates;
 
 
     //create a shape

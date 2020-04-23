@@ -68,8 +68,7 @@ public class Tree extends JTree implements UndoableEditListener
         {
             for(Shapes sub : s.getSubordinates())
             {
-                s.getTreeNode().insert(sub.getTreeNode(),s.getTreeNode().getChildCount());
-              // s.getTreeNode().add(sub.getTreeNode());
+                s.getTreeNode().add(sub.getTreeNode());
             }
             root.add(s.getTreeNode());
         }

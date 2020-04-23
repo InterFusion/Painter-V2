@@ -127,12 +127,9 @@ public class MenuBar extends JMenuBar implements ActionListener
             case"Groep verwijderen":
                 if(tree.getSelectedShape() != null)
                 {
-                    for(Shapes child : tree.getSelectedShape().getSubordinates())
-                    {
-                        tree.getSelectedShape().removeSubordinates(child);
-                    }
-                    tree.updateTree();
+                    tree.getSelectedShape().getSubordinates().clear();
                 }
+                tree.updateTree();
                 break;
         }
     }
