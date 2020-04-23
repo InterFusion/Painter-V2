@@ -1,7 +1,6 @@
 package shapes;
 
 import UndoRedo.UndoableRefactor;
-
 import javax.swing.event.UndoableEditEvent;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -22,10 +21,12 @@ public class Circle extends Shapes
         this.width = width;
         this.height = height;
         Shape s = new Ellipse2D.Float(this.posX, this.posY, this.width, this.height);
-        draw.setShapes(shape, s);
+        draw.repaint();
         shape = s;
+
+        //add action to undoHandler
         undoHandler.undoableEditHappened(new UndoableEditEvent(
-                this, new UndoableRefactor(draw.getShapes(), this)
+                this, new UndoableRefactor(draw.getObjShapes(), this)
         ));
     }
 }

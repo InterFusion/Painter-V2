@@ -1,9 +1,7 @@
 package com.codebind;
 
 import UndoRedo.UndoHandler;
-import UndoRedo.UndoableTree;
 import shapes.Shapes;
-
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -11,14 +9,13 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 
 public class Tree extends JTree implements UndoableEditListener
 {
-    protected final DefaultMutableTreeNode root;        //the root of the tree
-    protected final DefaultTreeModel model;
-    protected final UndoHandler undoHandler;
+    private final DefaultMutableTreeNode root;        //the root of the tree
+    private final DefaultTreeModel model;
+    private final UndoHandler undoHandler;
 
     private static Tree instance = null;
     private DefaultMutableTreeNode selectedNode;
@@ -30,8 +27,7 @@ public class Tree extends JTree implements UndoableEditListener
         model.setRoot(new DefaultMutableTreeNode("Shapes"));
 
         root = (DefaultMutableTreeNode) model.getRoot();
-        this.setDragEnabled(true);
-        this.setDropMode(DropMode.ON_OR_INSERT);
+
         this.setBackground(new Color(56,162,197));
         this.setPreferredSize(new Dimension(200,-1));
 
@@ -54,10 +50,8 @@ public class Tree extends JTree implements UndoableEditListener
 
                 Object nodeInfo = selectedNode.getUserObject();
 
-                if (selectedNode.isLeaf()) {
-                    selectedShape = (Shapes) nodeInfo;
-                    selectedShape.setColor(Color.GRAY);
-                }
+                selectedShape = (Shapes) nodeInfo;
+                selectedShape.setColor(Color.GRAY);
 
                 for (Shapes s : Draw.getInstance().getObjShapes())
                 {
@@ -68,26 +62,23 @@ public class Tree extends JTree implements UndoableEditListener
         });
     }
 
-    //add new node to the tree
-    public void addTreeNode(DefaultMutableTreeNode obj)
-    {
-        root.add((obj));
-        model.reload(root);
-        undoHandler.undoableEditHappened(new UndoableEditEvent(
-                this, new UndoableTree(model, root, obj)
-        ));
-    }
-
-    //add new node to the tree
-    public void addTreeNodeToNode(DefaultMutableTreeNode parent, DefaultMutableTreeNode child)
-    {
-        parent.add(child);
-        root.add(parent);
-        model.reload(root);
-    }
-
-    public void removeTreeNode(DefaultMutableTreeNode obj){
-        root.remove((obj));
+    public void updateTree(){
+        root.removeAllChildren();
+        for(Shapes s : Draw.getInstance().getObjShapes())
+        {
+            for(Shapes sub : s.getSubordinates())
+            {
+                try
+                {
+                    s.getTreeNode().add(sub.getTreeNode());
+                }
+                catch(Exception e)
+                {
+                    System.out.println(e);
+                }
+            }
+            root.add(s.getTreeNode());
+        }
         model.reload(root);
     }
 

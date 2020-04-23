@@ -1,13 +1,10 @@
 package com.codebind;
 
-import UndoRedo.UndoHandler;
-import UndoRedo.UndoableDraw;
 import shapes.Circle;
 import shapes.Ellipse;
 import shapes.Rectangle;
 import shapes.Shapes;
 import shapes.Square;
-
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
@@ -18,13 +15,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
-
-
+import UndoRedo.*;
 
 public class Draw extends JPanel implements UndoableEditListener
 {
     private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
-    private ArrayList<Shape> shapes = new ArrayList<Shape>();           //list to draw
     private Point startDrag, endDrag;                               //start and endpoint
     private int shapeInt = 0;                                       //select which shape to draw
 
@@ -43,6 +38,11 @@ public class Draw extends JPanel implements UndoableEditListener
         buttonPanel.add(redoButton);
         add(buttonPanel, BorderLayout.NORTH);
 
+        addActionListeners();
+    }
+
+    public void addActionListeners()
+    {
         undoButton.addActionListener(e ->
         {
             try {
@@ -90,12 +90,11 @@ public class Draw extends JPanel implements UndoableEditListener
                     else if(shapeInt == 3)
                         s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
 
-                    objShapes.add(s);
+                    //objShapes.add(s);
                     assert s != null;
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
                             this, new UndoableDraw(objShapes, s)
                     ));
-                    shapes.add(s.getShape());
                 }
                 undoButton.setEnabled(undoHandler.canUndo());
                 redoButton.setEnabled(undoHandler.canRedo());
@@ -140,18 +139,6 @@ public class Draw extends JPanel implements UndoableEditListener
         shapeInt = x;
     }
 
-    //replace the old shape for the new shape || resize
-    public void setShapes(Shape oldShape, Shape newShape)
-    {
-        // TODO: 20/04/2020 Code aanpassen dat de coordinaten ergens anders worden bepaald
-        //  zodat die aangepast kan worden per object. Dan hoeven we niet elke keer de objecten te verwijderen.
-        shapes.remove(oldShape);
-        shapes.add(newShape);
-        repaint();
-
-    }
-
-
     //method for when you load a saved file.
     public void makeShape(String name, int posX, int posY, int width, int height)
     {
@@ -168,12 +155,12 @@ public class Draw extends JPanel implements UndoableEditListener
             return;
 
         objShapes.add(s);
-        shapes.add(s.getShape());
         repaint();
     }
 
-    public ArrayList<Shape> getShapes() { return shapes;}
-
+    public void setObjShapes(Shapes s){
+        objShapes.add(s);
+    }
     public static Draw getInstance(){
         if(instance == null){
             instance = new Draw();

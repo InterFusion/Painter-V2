@@ -3,7 +3,6 @@ package shapes;
 import com.codebind.Draw;
 import com.codebind.Tree;
 import UndoRedo.UndoHandler;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
@@ -28,8 +27,7 @@ public class Shapes
 
 
     //create a shape
-    public Shapes(String name, int posX, int posY, int width, int height)
-    {
+    public Shapes(String name, int posX, int posY, int width, int height) {
         this.name = name;
         this.posX = posX;
         this.posY = posY;
@@ -39,17 +37,16 @@ public class Shapes
         tree = Tree.getInstance();
         subordinates = new ArrayList<Shapes>();
         treeNode = new DefaultMutableTreeNode(this);
-        tree.addTreeNode(treeNode);
+        draw.setObjShapes(this);
+        tree.updateTree();
     }
 
-    public void refactor(int posX, int posY, int width, int height)
-    {
+    public void refactor(int posX, int posY, int width, int height) {
 
     }
 
     public void addSubordinates(Shapes e) {
         subordinates.add(e);
-        System.out.println("ADDED");
     }
 
     public void removeSubordinates(Shapes e) {
@@ -95,10 +92,18 @@ public class Shapes
         return shape;
     }
 
+    public void setShape(Shape shape) {
+        this.shape = shape;
+    }
+
     public Shape getOldShape() {
         return oldShape;
     }
 
+    public void setOldShape(Shape oldShape) {
+        this.oldShape = oldShape;
+    }
+    
     public DefaultMutableTreeNode getTreeNode() {
         return treeNode;
     }

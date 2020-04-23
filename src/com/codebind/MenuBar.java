@@ -5,10 +5,7 @@ import shapes.Shapes;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeModel;
+import javax.swing.tree.*;
 import javax.xml.crypto.NodeSetData;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,14 +19,13 @@ public class MenuBar extends JMenuBar implements ActionListener
     private JMenuItem m1, m2, b1, b2, g1;
     private JMenu menu, bewerken, groepen;
     private JDialog d;
-    private Shapes secondSelectedShape;
     private ArrayList<Shapes> listOfShapes = new ArrayList<>();
-    private ArrayList<DefaultMutableTreeNode> listOfNodes = new ArrayList<>();
 
     protected final Tree tree;                  //tree class
     protected final FileIO fileIO;              //the FileIO class
-    DefaultTreeModel model;
-    DefaultMutableTreeNode root;
+    private DefaultTreeModel dialogTreemodel;
+    private DefaultMutableTreeNode dialogTreeroot;
+
     //make al the buttons when the program starts
     public MenuBar(){
         menu = new JMenu("File");
@@ -58,8 +54,6 @@ public class MenuBar extends JMenuBar implements ActionListener
 
         tree = Tree.getInstance();
         fileIO = FileIO.getInstance();
-        model = (DefaultTreeModel) tree.getModel();
-        root = (DefaultMutableTreeNode) model.getRoot();
         addActionListeners();
     }
 
@@ -141,10 +135,11 @@ public class MenuBar extends JMenuBar implements ActionListener
         JPanel test = new JPanel();
         JTree dialogTree = new JTree();
 
-        //clone maintree and remove selected node
-
-        root.remove(firstSelectedNode);
-        dialogTree.setModel(model);
+        dialogTreemodel =(DefaultTreeModel) dialogTree.getModel();
+        dialogTreemodel.setRoot((TreeNode) tree.getModel().getRoot());
+        dialogTreeroot = (DefaultMutableTreeNode) dialogTreemodel.getRoot();
+       // dialogTreeroot.remove(firstSelectedNode);
+        dialogTreemodel.reload(dialogTreeroot);
 
         d.add(test);
         test.add(okButton);
@@ -157,7 +152,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         d.setVisible(true);
 
         okButton.addActionListener(e -> makeGroup(firstSelectedShape, listOfShapes));
-        cancelButton.addActionListener(e -> cancel(firstSelectedShape, listOfNodes));
+        cancelButton.addActionListener(e -> cancel());
 
         dialogTree.addTreeSelectionListener(new TreeSelectionListener()
         {
@@ -171,19 +166,12 @@ public class MenuBar extends JMenuBar implements ActionListener
                     return;
 
                 Object nodeInfo = selectedNode.getUserObject();
+                listOfShapes.add((Shapes) nodeInfo);
+                //dialogTreeroot.remove(selectedNode);
 
-                if (selectedNode.isLeaf())
-                {
-                    secondSelectedShape = (Shapes) nodeInfo;
-                    /*if(!listOfShapes.contains(secondSelectedShape))*/
-                    listOfShapes.add(secondSelectedShape);
-                    listOfNodes.add(selectedNode);
-                    tree.removeTreeNode(selectedNode);
-                }
+               // dialogTreemodel.reload(dialogTreeroot);
             }
         });
-
-
     }
 
     public void makeGroup(Shapes firstSelectedShape, ArrayList<Shapes> listOfShapes)
@@ -193,18 +181,15 @@ public class MenuBar extends JMenuBar implements ActionListener
             for (Shapes s: listOfShapes)
             {
                 firstSelectedShape.addSubordinates(s);
-                tree.addTreeNodeToNode(firstSelectedShape.getTreeNode(), s.getTreeNode());
             }
+            tree.updateTree();
             d.dispose();
         }
     }
 
-    public void cancel(Shapes firstSelectedShape, ArrayList<DefaultMutableTreeNode> listOfNodes){
-        if(listOfNodes != null){
-            tree.addTreeNode(firstSelectedShape.getTreeNode());
-            for (DefaultMutableTreeNode node : listOfNodes){
-                tree.addTreeNode(node);
-            }
+    public void cancel(){
+        if(listOfShapes != null){
+            listOfShapes.clear();
             d.dispose();
         }
     }

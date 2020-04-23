@@ -1,5 +1,6 @@
 package UndoRedo;
 
+import com.codebind.Draw;
 import shapes.Shapes;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -10,25 +11,30 @@ import java.util.ArrayList;
 
 public class UndoableRefactor extends AbstractUndoableEdit
 {
-    protected ArrayList<Shape> shapes;
-    protected Shapes shape;
+    private ArrayList<Shapes> listOfShapes;
+    private Shapes shapes;
 
 
-    public UndoableRefactor(ArrayList<Shape> shapes, Shapes shape){
-        this.shapes = shapes;
-        this.shape =  shape;
+    public UndoableRefactor(ArrayList<Shapes> listOfShapes, Shapes shapes){
+        this.listOfShapes = listOfShapes;
+        this.shapes =  shapes;
     }
 
     public void undo(){
         super.undo();
-        shapes.remove(shape.getShape());
-        shapes.add(shape.getOldShape());
+        Shape oldShape = shapes.getOldShape();
+        Shape shapes1 = shapes.getShape();
+        shapes.setShape(oldShape);
+        shapes.setOldShape(shapes1);
+        Draw.getInstance().repaint();
     }
 
     public void redo(){
         super.redo();
-        shapes.remove(shape.getOldShape());
-        shapes.add(shape.getShape());
-
+        Shape shapes1 = shapes.getOldShape();
+        Shape oldShape = shapes.getShape();
+        shapes.setShape(shapes1);
+        shapes.setOldShape(oldShape);
+        Draw.getInstance().repaint();
     }
 }
