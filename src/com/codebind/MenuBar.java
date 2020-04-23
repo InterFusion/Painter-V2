@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class MenuBar extends JMenuBar implements ActionListener
 {
     private static MenuBar instance = null;         //instance of this class
-    private JMenuItem m1, m2, b1, b2, g1;
+    private JMenuItem m1, m2, b1, b2, g1, g2;
     private JMenu menu, bewerken, groepen;
     private JDialog d;
     private ArrayList<Shapes> listOfShapes = new ArrayList<>();
@@ -39,6 +39,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         b2 = new JMenuItem("Grootte aanpassen");
 
         g1 = new JMenuItem("Groep aanmaken");
+        g2 = new JMenuItem("Groep verwijderen");
 
         menu.add(m1);
         menu.add(m2);
@@ -47,6 +48,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         bewerken.add(b2);
 
         groepen.add(g1);
+        groepen.add(g2);
 
         add(menu);
         add(bewerken);
@@ -65,6 +67,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         b2.addActionListener(this);
 
         g1.addActionListener(this);
+        g2.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e){
@@ -119,6 +122,16 @@ public class MenuBar extends JMenuBar implements ActionListener
                 if(tree.getSelectedShape() != null)
                 {
                     openDialog(tree.getSelectedNode(), tree.getSelectedShape());
+                }
+                break;
+            case"Groep verwijderen":
+                if(tree.getSelectedShape() != null)
+                {
+                    for(Shapes child : tree.getSelectedShape().getSubordinates())
+                    {
+                        tree.getSelectedShape().removeSubordinates(child);
+                    }
+                    tree.updateTree();
                 }
                 break;
         }
