@@ -89,7 +89,6 @@ public class Draw extends JPanel implements UndoableEditListener
                     else if(shapeInt == 3)
                         s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
 
-                    objShapes.add(s);
                     assert s != null;
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
                             this, new UndoableDraw(objShapes, s)
@@ -122,6 +121,10 @@ public class Draw extends JPanel implements UndoableEditListener
         return objShapes;
     }
 
+    public void setObjShapes(Shapes s){
+        objShapes.add(s);
+    }
+
     //will draw whats necessary to Graphics object
     public void draw(Graphics g)
     {
@@ -152,8 +155,6 @@ public class Draw extends JPanel implements UndoableEditListener
 
         if(s == null)
             return;
-
-        objShapes.add(s);
         repaint();
     }
 

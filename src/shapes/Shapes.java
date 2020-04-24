@@ -32,7 +32,8 @@ public class Shapes
         this.draw = Draw.getInstance();
         tree = Tree.getInstance();
         treeNode = new DefaultMutableTreeNode(this);
-        tree.addTreeNode(treeNode);
+        draw.setObjShapes(this);
+        tree.updateTree();
     }
 
     public void refactor(int posX, int posY, int width, int height) {
@@ -78,5 +79,9 @@ public class Shapes
 
     public void setOldShape(Shape oldShape) {
         this.oldShape = oldShape;
+    }
+
+    public DefaultMutableTreeNode getTreeNode() {
+        return treeNode;
     }
 }

@@ -16,11 +16,13 @@ public class UndoableDraw extends AbstractUndoableEdit
 
     public void undo(){
         super.undo();
-            listOfShapes.remove(shapes);
+        listOfShapes.remove(shapes);
+        Tree.getInstance().updateTree();
     }
 
     public void redo(){
         super.redo();
-            listOfShapes.add(shapes);
+        listOfShapes.add(shapes);
+        Tree.getInstance().updateTree();
     }
 }

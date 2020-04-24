@@ -56,18 +56,12 @@ public class Tree extends JTree implements UndoableEditListener
         });
     }
 
-    //add new node to the tree
-    public void addTreeNode(DefaultMutableTreeNode obj)
-    {
-       root.add((obj));
-       model.reload(root);
-        undoHandler.undoableEditHappened(new UndoableEditEvent(
-                this, new UndoableTree(model, root, obj)
-        ));
-    }
-
-    public void removeTreeNode(DefaultMutableTreeNode obj){
-        root.remove((obj));
+    public void updateTree(){
+        root.removeAllChildren();
+        for(Shapes s : Draw.getInstance().getObjShapes())
+        {
+            root.add(s.getTreeNode());
+        }
         model.reload(root);
     }
 
