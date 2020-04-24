@@ -1,5 +1,9 @@
-Group 1
-Circle 402 163 150 150
-Circle 178 186 127 127
-Circle 733 75 226 226
-Circle 178 186 127 127
+Group 3
+	Circle 185 162 158 158
+	Circle 562 137 158 158
+	Circle 241 389 142 142
+	Circle 503 367 104 104
+	Group 3
+		Circle 185 162 158 158
+		Circle 562 137 158 158
+		Circle 241 389 142 142

@@ -16,12 +16,16 @@ public class Shapes
     protected Shape shape, oldShape;
 
     protected final Draw draw;
-    protected final Tree tree;
-    protected DefaultMutableTreeNode treeNode;
+    private final Tree tree;
+
+    private DefaultMutableTreeNode treeNode;
+    private boolean isSetInTree;
 
     protected UndoManager undoHandler = UndoHandler.getInstance();
 
     protected Color color = Color.RED;
+
+
 
     private final ArrayList<Shapes> subordinates;
 
@@ -35,7 +39,7 @@ public class Shapes
         this.height = height;
         draw = Draw.getInstance();
         tree = Tree.getInstance();
-        subordinates = new ArrayList<Shapes>();
+        subordinates = new ArrayList<>();
         treeNode = new DefaultMutableTreeNode(this);
         draw.setObjShapes(this);
         tree.updateTree();
@@ -106,5 +110,15 @@ public class Shapes
     
     public DefaultMutableTreeNode getTreeNode() {
         return treeNode;
+    }
+
+    public void setboolTree(boolean isSetInTree)
+    {
+        this.isSetInTree = isSetInTree;
+    }
+
+    public boolean getboolTree()
+    {
+        return isSetInTree;
     }
 }

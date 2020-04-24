@@ -3,12 +3,10 @@ package com.codebind;
 import UndoRedo.UndoHandler;
 import shapes.Shapes;
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.event.UndoableEditListener;
+import javax.swing.event.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.ExpandVetoException;
 import java.awt.*;
 
 public class Tree extends JTree implements UndoableEditListener
@@ -50,8 +48,11 @@ public class Tree extends JTree implements UndoableEditListener
 
                 Object nodeInfo = selectedNode.getUserObject();
 
-                selectedShape = (Shapes) nodeInfo;
-                selectedShape.setColor(Color.GRAY);
+                if(selectedNode.isLeaf())
+                {
+                    selectedShape = (Shapes) nodeInfo;
+                    selectedShape.setColor(Color.GRAY);
+                }
 
                 for (Shapes s : Draw.getInstance().getObjShapes())
                 {
@@ -63,14 +64,23 @@ public class Tree extends JTree implements UndoableEditListener
     }
 
     public void updateTree(){
-        root.removeAllChildren();
         for(Shapes s : Draw.getInstance().getObjShapes())
         {
             for(Shapes sub : s.getSubordinates())
             {
-                s.getTreeNode().add(sub.getTreeNode());
+                if(!sub.getboolTree())
+                {
+                    s.getTreeNode().add(sub.getTreeNode());
+                    sub.setboolTree(true);
+                }
             }
-            root.add(s.getTreeNode());
+
+            if(!s.getboolTree())
+            {
+                root.add(s.getTreeNode());
+                s.setboolTree(true);
+            }
+            s.setboolTree(false);
         }
         model.reload(root);
     }

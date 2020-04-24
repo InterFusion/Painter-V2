@@ -28,30 +28,37 @@ public class FileIO
         //create new file paint.txt
         try (FileWriter file = new FileWriter("Paint.txt")) {
             int groupcount = 0;
+            StringBuilder whiteSpace = new StringBuilder();
             for (Shapes shape : objShapes)
             {
                 if (shape.getSubordinates().size() != 0)
                 {
-                    groupcount++;
+                    groupcount = shape.getTreeNode().getChildCount();
                 }
             }
 
             file.write("Group " + groupcount);
             file.write(System.lineSeparator());
+            whiteSpace.append("\t");
 
             for (Shapes shape : objShapes)
             {
                 if (shape.getSubordinates().size() == 0)
                 {
-                    writeToFile(file, shape);
+                    writeToFile(file, shape, whiteSpace); //root
                 }
                 else
                 {
-                    writeToFile(file, shape);
+                    writeToFile(file, shape, whiteSpace); //parent
+                    file.write(whiteSpace + "Group " + shape.getTreeNode().getChildCount());
+                    file.write(System.lineSeparator());
+                    whiteSpace.append("\t");
+
+                    System.out.println(shape.getSubordinates().size());
 
                     for(Shapes child : shape.getSubordinates())
                     {
-                        writeToFile(file, child);
+                        writeToFile(file, child, whiteSpace); //childs
                     }
                 }
             }
@@ -62,10 +69,10 @@ public class FileIO
         }
     }
 
-    public void writeToFile(FileWriter file, Shapes shape) throws IOException
+    public void writeToFile(FileWriter file, Shapes shape, StringBuilder whitespace) throws IOException
     {
         //write the variables to the paint.txt
-        file.write(shape.getName());
+        file.write(whitespace + shape.getName());
         file.write(" " + shape.getPosX());
         file.write(" " + shape.getPosY());
         file.write(" " + shape.getWidth());
@@ -75,18 +82,31 @@ public class FileIO
 
     public void readFile()
     {
+        String name;
+        int posX = 0;
+        int posY = 0;
+        int width = 0;
+        int height = 0;
+
         try { //read the lines from paint.txt
             List<String> allLines = Files.readAllLines(Paths.get("Paint.txt"));
             for (String line : allLines) {
                 String[] words = line.split(" "); //split the lines in to words
-                String name = words[0];
-                String posX = words[1];
-                String posY = words[2];
-                String width = words[3];
-                String height = words[4];
 
-                //make new shapes from the words
-                draw.makeShape(name, Integer.parseInt(posX), Integer.parseInt(posY), Integer.parseInt(width), Integer.parseInt(height));
+                name = words[0];
+                if(!name.contains("Group"))
+                {
+                    posX = Integer.parseInt(words[1]);
+                    posY = Integer.parseInt(words[2]);
+                    width = Integer.parseInt(words[3]);
+                    height = Integer.parseInt(words[4]);
+                }
+
+                if(!name.contains("Group"))
+                {
+                    //make new shapes from the words
+                    draw.makeShape(name.trim(), posX, posY, width, height);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
