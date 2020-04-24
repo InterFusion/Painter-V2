@@ -27,22 +27,50 @@ public class FileIO
 
         //create new file paint.txt
         try (FileWriter file = new FileWriter("Paint.txt")) {
+            int groupcount = 0;
             for (Shapes shape : objShapes)
             {
-                //write the variables to the paint.txt
-                file.write(shape.getName());
-                file.write(" " + Integer.toString(shape.getPosX()));
-                file.write(" " + Integer.toString(shape.getPosY()));
-                file.write(" " + Integer.toString(shape.getWidth()));
-                file.write(" " + Integer.toString(shape.getHeight()));
-                file.write(System.lineSeparator()); //at the end of every object create a new line
+                if (shape.getSubordinates().size() != 0)
+                {
+                    groupcount++;
+                }
             }
 
+            file.write("Group " + groupcount);
+            file.write(System.lineSeparator());
+
+            for (Shapes shape : objShapes)
+            {
+                if (shape.getSubordinates().size() == 0)
+                {
+                    writeToFile(file, shape);
+                }
+                else
+                {
+                    writeToFile(file, shape);
+
+                    for(Shapes child : shape.getSubordinates())
+                    {
+                        writeToFile(file, child);
+                    }
+                }
+            }
             file.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void writeToFile(FileWriter file, Shapes shape) throws IOException
+    {
+        //write the variables to the paint.txt
+        file.write(shape.getName());
+        file.write(" " + shape.getPosX());
+        file.write(" " + shape.getPosY());
+        file.write(" " + shape.getWidth());
+        file.write(" " + shape.getHeight());
+        file.write(System.lineSeparator()); //at the end of every object create a new line
     }
 
     public void readFile()

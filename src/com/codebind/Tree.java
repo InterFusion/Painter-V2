@@ -1,5 +1,6 @@
 package com.codebind;
 
+import UndoRedo.UndoHandler;
 import shapes.Shapes;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -17,7 +18,7 @@ public class Tree extends JTree implements UndoableEditListener
     private final UndoHandler undoHandler;
 
     private static Tree instance = null;
-
+    private DefaultMutableTreeNode selectedNode;
     private Shapes selectedShape;
 
     public Tree(){
@@ -41,7 +42,7 @@ public class Tree extends JTree implements UndoableEditListener
             @Override
             public void valueChanged(TreeSelectionEvent e)
             {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)instance.getLastSelectedPathComponent();
+                selectedNode = (DefaultMutableTreeNode)instance.getLastSelectedPathComponent();
 
                 //Nothing is selected.
                 if (selectedNode == null)
@@ -49,25 +50,28 @@ public class Tree extends JTree implements UndoableEditListener
 
                 Object nodeInfo = selectedNode.getUserObject();
 
-                if (selectedNode.isLeaf()) {
-                    selectedShape = (Shapes) nodeInfo;
+                selectedShape = (Shapes) nodeInfo;
+                selectedShape.setColor(Color.GRAY);
+
+                for (Shapes s : Draw.getInstance().getObjShapes())
+                {
+                    if(s != selectedShape)
+                        s.setColor(Color.red);
                 }
             }
         });
     }
 
-    //add new node to the tree
-    public void addTreeNode(DefaultMutableTreeNode obj)
-    {
-       root.add((obj));
-       model.reload(root);
-        undoHandler.undoableEditHappened(new UndoableEditEvent(
-                this, new UndoableTree(model, root, obj)
-        ));
-    }
-
-    public void removeTreeNode(DefaultMutableTreeNode obj){
-        root.remove((obj));
+    public void updateTree(){
+        root.removeAllChildren();
+        for(Shapes s : Draw.getInstance().getObjShapes())
+        {
+            for(Shapes sub : s.getSubordinates())
+            {
+                s.getTreeNode().add(sub.getTreeNode());
+            }
+            root.add(s.getTreeNode());
+        }
         model.reload(root);
     }
 
@@ -75,6 +79,12 @@ public class Tree extends JTree implements UndoableEditListener
     {
         return selectedShape;
     }
+
+    public DefaultMutableTreeNode getSelectedNode()
+    {
+        return selectedNode;
+    }
+
 
     public static Tree getInstance(){
         if(instance == null){

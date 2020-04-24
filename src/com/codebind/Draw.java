@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
+import UndoRedo.*;
 
 public class Draw extends JPanel implements UndoableEditListener
 {
@@ -89,7 +90,7 @@ public class Draw extends JPanel implements UndoableEditListener
                     else if(shapeInt == 3)
                         s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
 
-                    objShapes.add(s);
+                    //objShapes.add(s);
                     assert s != null;
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
                             this, new UndoableDraw(objShapes, s)
@@ -123,7 +124,7 @@ public class Draw extends JPanel implements UndoableEditListener
     }
 
     //will draw whats necessary to Graphics object
-    public void draw(Graphics g)
+    private void draw(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
         for (Shapes s : objShapes)
@@ -157,6 +158,9 @@ public class Draw extends JPanel implements UndoableEditListener
         repaint();
     }
 
+    public void setObjShapes(Shapes s){
+        objShapes.add(s);
+    }
     public static Draw getInstance(){
         if(instance == null){
             instance = new Draw();
