@@ -148,7 +148,17 @@ public class MenuBar extends JMenuBar implements ActionListener
         dialogTreemodel =(DefaultTreeModel) dialogTree.getModel();
         dialogTreemodel.setRoot((TreeNode) tree.getModel().getRoot());
         dialogTreeroot = (DefaultMutableTreeNode) dialogTreemodel.getRoot();
-       // dialogTreeroot.remove(firstSelectedNode);
+
+        if(firstSelectedNode.getParent() != null)
+        {
+            DefaultMutableTreeNode firstSelectedNodeParent = (DefaultMutableTreeNode) firstSelectedNode.getParent();
+            firstSelectedNodeParent.remove(firstSelectedNode);
+        }
+        else
+        {
+             dialogTreeroot.remove(firstSelectedNode);
+        }
+
         dialogTreemodel.reload(dialogTreeroot);
 
         d.add(test);
@@ -177,9 +187,17 @@ public class MenuBar extends JMenuBar implements ActionListener
 
                 Object nodeInfo = selectedNode.getUserObject();
                 listOfShapes.add((Shapes) nodeInfo);
-                //dialogTreeroot.remove(selectedNode);
+                if(selectedNode.getParent() != null)
+                {
+                    DefaultMutableTreeNode selectedNodeParent = (DefaultMutableTreeNode) selectedNode.getParent();
+                    selectedNodeParent.remove(selectedNode);
+                }
+                else
+                {
+                    dialogTreeroot.remove(selectedNode);
+                }
 
-               // dialogTreemodel.reload(dialogTreeroot);
+                dialogTreemodel.reload(dialogTreeroot);
             }
         });
     }
