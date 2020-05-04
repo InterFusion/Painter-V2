@@ -1,6 +1,9 @@
 package com.codebind;
 import shapes.Shapes;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,49 +26,48 @@ public class FileIO
 
     public void createFile()
     {
-        objShapes = draw.getObjShapes();
-
         //create new file paint.txt
-        try (FileWriter file = new FileWriter("Paint.txt")) {
-            int groupcount = 0;
+        try (FileWriter file = new FileWriter("Paint.txt"))
+        {
             StringBuilder whiteSpace = new StringBuilder();
-            for (Shapes shape : objShapes)
-            {
-                if (shape.getSubordinates().size() != 0)
-                {
-                    groupcount = shape.getTreeNode().getChildCount();
-                }
+            TreeModel model = Tree.getInstance().getModel();
+            if (model != null) {
+                Object root = model.getRoot();
+                System.out.println(root.toString());
+                walk(model, root, file, whiteSpace);
             }
+            else
+                System.out.println("Tree is empty.");
 
-            file.write("Group " + groupcount);
-            file.write(System.lineSeparator());
-            whiteSpace.append("\t");
-
-            for (Shapes shape : objShapes)
-            {
-                if (shape.getSubordinates().size() == 0)
-                {
-                    writeToFile(file, shape, whiteSpace); //root
-                }
-                else
-                {
-                    writeToFile(file, shape, whiteSpace); //parent
-                    file.write(whiteSpace + "Group " + shape.getTreeNode().getChildCount());
-                    file.write(System.lineSeparator());
-                    whiteSpace.append("\t");
-
-                    System.out.println(shape.getSubordinates().size());
-
-                    for(Shapes child : shape.getSubordinates())
-                    {
-                        writeToFile(file, child, whiteSpace); //childs
-                    }
-                }
-            }
             file.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void walk(TreeModel model, Object o, FileWriter file, StringBuilder whiteSpace) throws IOException {
+        int cc = model.getChildCount(o);
+        file.write(whiteSpace + "Group " + cc);
+        file.write(System.lineSeparator());
+        whiteSpace.append("\t");
+        for( int i=0; i < cc; i++) {
+            Object child = model.getChild(o, i );
+            if (model.isLeaf(child)) {            //parent
+                for(Shapes shape : draw.getObjShapes())
+                {
+                    if(shape.toString().contains(child.toString()))
+                        writeToFile(file, shape, whiteSpace);
+                }
+            }
+            else {                              //child
+                for(Shapes shape : draw.getObjShapes())
+                {
+                    if(shape.toString().contains(child.toString()))
+                        writeToFile(file, shape, whiteSpace);
+                }
+                walk(model, child, file, whiteSpace);
+            }
         }
     }
 

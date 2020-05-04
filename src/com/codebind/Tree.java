@@ -48,11 +48,8 @@ public class Tree extends JTree implements UndoableEditListener
 
                 Object nodeInfo = selectedNode.getUserObject();
 
-                if(selectedNode.isLeaf())
-                {
-                    selectedShape = (Shapes) nodeInfo;
-                    selectedShape.setColor(Color.GRAY);
-                }
+                selectedShape = (Shapes) nodeInfo;
+                selectedShape.setColor(Color.GRAY);
 
                 for (Shapes s : Draw.getInstance().getObjShapes())
                 {
