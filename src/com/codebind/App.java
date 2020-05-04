@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JTree;
+import javax.swing.undo.UndoManager;
 
 public class App extends JFrame{
     private JButton cirkelButton;
@@ -16,7 +17,7 @@ public class App extends JFrame{
     private JPanel treePanel;
     protected final Draw draw;                  //draw class
     protected final Tree tree;                  //tree class
-    protected final MenuBar menu;
+    protected final MenuBar menu;               //MenuBar class
 
     protected static App instance = null;
 
@@ -30,9 +31,6 @@ public class App extends JFrame{
         this.draw = Draw.getInstance();
         canvas.add(draw);
         treePanel.add(tree);
-
-
-        //add jPanel to jFrame
 
         setJMenuBar(menu); //add jmenu to the jframe
         add(mainPanel);
@@ -63,6 +61,4 @@ public class App extends JFrame{
     {
         new App();
     }
-
-    //get tree from app.form
 }

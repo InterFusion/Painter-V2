@@ -1,2 +1,6 @@
 
 .idea/misc.xml
+
+*.class
+
+*.xml
