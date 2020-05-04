@@ -1,8 +1,11 @@
 package shapes;
 
+import UndoRedo.UndoableGroup;
 import com.codebind.Draw;
 import com.codebind.Tree;
 import UndoRedo.UndoHandler;
+
+import javax.swing.event.UndoableEditEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
@@ -27,7 +30,7 @@ public class Shapes
 
 
 
-    private final ArrayList<Shapes> subordinates;
+    protected ArrayList<Shapes> subordinates;
 
 
     //create a shape
@@ -51,6 +54,7 @@ public class Shapes
 
     public void addSubordinates(Shapes e) {
         subordinates.add(e);
+
     }
 
     public void removeSubordinates(Shapes e) {
@@ -104,6 +108,10 @@ public class Shapes
         return oldShape;
     }
 
+    public void setSubordinatesList(ArrayList<Shapes> subordinates){
+        this.subordinates = subordinates;
+    }
+
     public void setOldShape(Shape oldShape) {
         this.oldShape = oldShape;
     }
@@ -121,4 +129,5 @@ public class Shapes
     {
         return isSetInTree;
     }
+
 }

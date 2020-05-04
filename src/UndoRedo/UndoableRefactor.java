@@ -11,13 +11,12 @@ import java.util.ArrayList;
 
 public class UndoableRefactor extends AbstractUndoableEdit
 {
-    private ArrayList<Shapes> listOfShapes;
     private Shapes shapes;
 
 
-    public UndoableRefactor(ArrayList<Shapes> listOfShapes, Shapes shapes){
-        this.listOfShapes = listOfShapes;
-        this.shapes =  shapes;
+    public UndoableRefactor(Shapes shapes)
+    {
+        this.shapes = shapes;
     }
 
     public void undo(){

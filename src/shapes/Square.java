@@ -26,7 +26,7 @@ public class Square extends Shapes
 
         //add action to undoHandler
         undoHandler.undoableEditHappened(new UndoableEditEvent(
-                this, new UndoableRefactor(draw.getObjShapes(), this)
+                this, new UndoableRefactor(this)
         ));
     }
 }

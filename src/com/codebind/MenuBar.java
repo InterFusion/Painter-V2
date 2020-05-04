@@ -1,11 +1,16 @@
 package com.codebind;
 
+import UndoRedo.UndoHandler;
+import UndoRedo.UndoableGroup;
 import shapes.Shapes;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.tree.*;
+import javax.swing.undo.UndoManager;
 import javax.xml.crypto.NodeSetData;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,14 +18,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class MenuBar extends JMenuBar implements ActionListener
+public class MenuBar extends JMenuBar implements ActionListener, UndoableEditListener
 {
     private static MenuBar instance = null;         //instance of this class
     private JMenuItem m1, m2, b1, b2, g1, g2;
     private JMenu menu, bewerken, groepen;
     private JDialog d;
     private ArrayList<Shapes> listOfShapes = new ArrayList<>();
-
+    protected UndoManager undoHandler = UndoHandler.getInstance();
     protected final Tree tree;                  //tree class
     protected final FileIO fileIO;              //the FileIO class
     private DefaultTreeModel dialogTreemodel;
@@ -209,6 +214,9 @@ public class MenuBar extends JMenuBar implements ActionListener
             for (Shapes s: listOfShapes)
             {
                 firstSelectedShape.addSubordinates(s);
+                undoHandler.undoableEditHappened(new UndoableEditEvent(
+                        firstSelectedShape, new UndoableGroup(firstSelectedShape, s))
+                );
             }
             tree.updateTree();
             d.dispose();
@@ -226,6 +234,12 @@ public class MenuBar extends JMenuBar implements ActionListener
         if(instance == null)
             instance = new MenuBar();
         return instance;
+    }
+
+    @Override
+    public void undoableEditHappened(UndoableEditEvent e)
+    {
+        undoHandler.addEdit(e.getEdit());
     }
 }
 
