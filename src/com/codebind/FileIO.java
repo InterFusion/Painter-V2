@@ -84,11 +84,13 @@ public class FileIO
 
     public void readFile()
     {
+        draw.getObjShapes().clear();
         String name;
         int posX = 0;
         int posY = 0;
         int width = 0;
         int height = 0;
+        Shapes test = null;
 
         try { //read the lines from paint.txt
             List<String> allLines = Files.readAllLines(Paths.get("Paint.txt"));
@@ -102,14 +104,23 @@ public class FileIO
                     posY = Integer.parseInt(words[2]);
                     width = Integer.parseInt(words[3]);
                     height = Integer.parseInt(words[4]);
-                }
 
-                if(!name.contains("Group"))
-                {
                     //make new shapes from the words
                     draw.makeShape(name.trim(), posX, posY, width, height);
+
+                    if(test != null && draw.getObjShapes().size() != 0)
+                    {
+                        test.addSubordinates(draw.getObjShapes().get(draw.getObjShapes().size() - 1));
+                        Tree.getInstance().updateTree();
+                    }
+                }
+                else
+                {
+                    if(draw.getObjShapes().size() != 0)
+                        test = draw.getObjShapes().get(draw.getObjShapes().size() - 1);
                 }
             }
+            Tree.getInstance().updateTree();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -25,10 +25,7 @@ public class Shapes
 
     protected Color color = Color.RED;
 
-
-
-    private final ArrayList<Shapes> subordinates;
-
+    private final ArrayList<Shapes> subordinates = new ArrayList<>();
 
     //create a shape
     public Shapes(String name, int posX, int posY, int width, int height) {
@@ -39,7 +36,6 @@ public class Shapes
         this.height = height;
         draw = Draw.getInstance();
         tree = Tree.getInstance();
-        subordinates = new ArrayList<>();
         treeNode = new DefaultMutableTreeNode(this);
         draw.setObjShapes(this);
         tree.updateTree();
