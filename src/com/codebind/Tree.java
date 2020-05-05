@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.ExpandVetoException;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Tree extends JTree implements UndoableEditListener
 {
@@ -50,6 +51,7 @@ public class Tree extends JTree implements UndoableEditListener
 
                 selectedShape = (Shapes) nodeInfo;
                 selectedShape.setColor(Color.GRAY);
+                System.out.println(selectedShape.getSubordinates().size());
 
                 for (Shapes s : Draw.getInstance().getObjShapes())
                 {
@@ -64,9 +66,9 @@ public class Tree extends JTree implements UndoableEditListener
         root.removeAllChildren();
         for(Shapes s : Draw.getInstance().getObjShapes())
         {
-            for(Shapes sub : s.getSubordinates())
+            for (Shapes sub : s.getSubordinates())
             {
-                if(!sub.getboolTree())
+                if (!sub.getboolTree())
                 {
                     s.getTreeNode().add(sub.getTreeNode());
                     sub.setboolTree(true);
@@ -80,6 +82,11 @@ public class Tree extends JTree implements UndoableEditListener
             }
             s.setboolTree(false);
         }
+//FIXXXX
+      //  for(Shapes s : Draw.getInstance().getObjShapes())
+      //  {
+      //     s.setboolTree(false);
+     //   }
         model.reload(root);
     }
 
