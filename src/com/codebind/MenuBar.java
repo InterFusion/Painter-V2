@@ -2,6 +2,7 @@ package com.codebind;
 
 import UndoRedo.UndoHandler;
 import UndoRedo.UndoableGroup;
+import UndoRedo.UndoableGroupDelete;
 import shapes.Shapes;
 
 import javax.swing.*;
@@ -132,9 +133,12 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
             case"Groep verwijderen":
                 if(tree.getSelectedShape() != null)
                 {
+                    undoHandler.undoableEditHappened(new UndoableEditEvent(
+                            this, new UndoableGroupDelete(tree.getSelectedShape(), tree.getSelectedShape().getSubordinates()))
+                    );
                     tree.getSelectedShape().getSubordinates().clear();
+                    tree.updateTree();
                 }
-                tree.updateTree();
                 break;
         }
     }
@@ -217,6 +221,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                 undoHandler.undoableEditHappened(new UndoableEditEvent(
                         firstSelectedShape, new UndoableGroup(firstSelectedShape, s))
                 );
+                tree.updateTree();
             }
             tree.updateTree();
             d.dispose();
