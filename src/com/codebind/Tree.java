@@ -51,7 +51,6 @@ public class Tree extends JTree implements UndoableEditListener
 
                 selectedShape = (Shapes) nodeInfo;
                 selectedShape.setColor(Color.GRAY);
-                System.out.println(selectedShape.getSubordinates().size());
 
                 for (Shapes s : Draw.getInstance().getObjShapes())
                 {

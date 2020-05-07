@@ -1,8 +1,32 @@
-Group 2
-	Circle 230 181 198 198
-	Circle 475 382 135 135
-	Group 1
-		Circle 596 181 170 170
-		Circle 116 369 146 146
-		Group 1
-			Circle 116 369 146 146
+Group 1
+	Square -256 32 594 594
+	Group 18
+		Circle 503 396 99 99
+		Group 10
+			Circle 331 208 143 143
+			Circle 580 167 200 200
+			Circle 21 213 156 156
+			Circle 236 81 113 113
+			Circle 225 382 59 59
+			Square 617 28 107 107
+			Square 709 33 63 63
+			Square 541 65 82 82
+			Square 322 131 427 427
+			Square 505 91 303 303
+			Circle 381 368 103 103
+			Circle 195 468 60 60
+			Circle 83 472 45 45
+			Circle 178 353 38 38
+			Circle 264 220 5 5
+			Ellipse 221 29 171 124
+			Ellipse 504 113 139 76
+			Ellipse 474 118 163 203
+			Ellipse 17 145 241 233
+			Ellipse 10 74 412 343
+			Rectangle 451 96 413 96
+			Rectangle 709 63 179 118
+			Rectangle 522 369 293 203
+			Rectangle 353 249 132 206
+			Square 153 200 371 371
+			Square 154 137 312 312
+			Square 199 107 298 298
