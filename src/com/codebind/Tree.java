@@ -20,7 +20,7 @@ public class Tree extends JTree implements UndoableEditListener
     private DefaultMutableTreeNode selectedNode;
     private Shapes selectedShape;
 
-    public Tree(){
+    private Tree(){
         undoHandler = UndoHandler.getInstance();
         model =(DefaultTreeModel) this.getModel();
         model.setRoot(new DefaultMutableTreeNode("Shapes"));

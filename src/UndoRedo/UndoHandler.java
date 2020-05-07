@@ -8,10 +8,7 @@ public class UndoHandler extends UndoManager implements UndoableEditListener
 {
     private static UndoHandler instance = null;
 
-    public UndoHandler()
-    {
-
-    }
+    private UndoHandler() {}
 
     @Override
     public void undoableEditHappened(UndoableEditEvent e)

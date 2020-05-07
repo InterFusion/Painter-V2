@@ -33,7 +33,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
     private DefaultMutableTreeNode dialogTreeroot;
 
     //make al the buttons when the program starts
-    public MenuBar(){
+    private MenuBar(){
         menu = new JMenu("File");
         bewerken = new JMenu("Bewerken");
         groepen = new JMenu("Groepen");

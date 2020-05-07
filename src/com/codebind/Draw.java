@@ -30,7 +30,7 @@ public class Draw extends JPanel
 
     private static Draw instance = null;
 
-    public Draw()
+    private Draw()
     {
         undoButton.setEnabled(false);
         redoButton.setEnabled(false);
