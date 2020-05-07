@@ -6,13 +6,16 @@ import com.codebind.UndoHandler;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Shapes
 {
     protected String name;
     protected int posX, posY, width, height;
 
-    protected Shape shape, oldShape;
+    protected Shape shape;
+
+    private ArrayList<Shape> oldShapes = new ArrayList<>();
 
     protected final Draw draw;
     protected final Tree tree;
@@ -73,12 +76,12 @@ public class Shapes
         this.shape = shape;
     }
 
-    public Shape getOldShape() {
-        return oldShape;
+    public void setOldShapes(Shape shape){
+        oldShapes.add(shape);
     }
 
-    public void setOldShape(Shape oldShape) {
-        this.oldShape = oldShape;
+    public ArrayList<Shape> getOldShapes(){
+        return oldShapes;
     }
 
     public DefaultMutableTreeNode getTreeNode() {
