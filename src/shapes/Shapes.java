@@ -11,7 +11,7 @@ import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Shapes
+public class Shapes implements IShapes
 {
     protected String name;
     protected int posX, posY, width, height;
@@ -46,6 +46,11 @@ public class Shapes
 
     public void refactor(int posX, int posY, int width, int height) {
 
+    }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitShapes(this);
     }
 
     public void addSubordinates(Shapes e) {

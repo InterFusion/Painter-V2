@@ -29,4 +29,9 @@ public class Square extends Shapes
                 this, new UndoableRefactor(this)
         ));
     }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitSquare(this);
+    }
 }

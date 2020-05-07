@@ -29,4 +29,9 @@ public class Rectangle extends Shapes
                 this, new UndoableRefactor(this)
         ));
     }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitRectangle(this);
+    }
 }

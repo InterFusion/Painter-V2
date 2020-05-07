@@ -29,4 +29,9 @@ public class Ellipse extends Shapes
                 this, new UndoableRefactor(this)
         ));
     }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitEllipse(this);
+    }
 }

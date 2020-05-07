@@ -29,4 +29,9 @@ public class Circle extends Shapes
                 this, new UndoableRefactor(this)
         ));
     }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitCircle(this);
+    }
 }
