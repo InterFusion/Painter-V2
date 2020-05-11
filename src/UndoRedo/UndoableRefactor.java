@@ -12,30 +12,37 @@ import java.util.ArrayList;
 
 public class UndoableRefactor extends AbstractUndoableEdit
 {
-    private Shapes shapes;
-    private Shape oldShape;
-    private Shape firstOld;
-    private Shape shape;
+    private Shapes shape;
 
-
-    public UndoableRefactor(Shapes shapes)
-    {
-        this.shapes = shapes;
-        shape = shapes.getShape();
+    public UndoableRefactor(Shapes shapes){
+        this.shape =  shapes;
     }
 
     public void undo(){
         super.undo();
-        oldShape = shapes.getOldShape();
-        shapes.setOldShape(shape);
-        shapes.setShape(oldShape);
+        Shape oldShape = null;
+        for(int i=0;i<shape.getOldShapes().size();i++)
+        {
+            if(shape.getShape() == shape.getOldShapes().get(i))
+            {
+                oldShape = shape.getOldShapes().get(i-1);
+            }
+        }
+        shape.setShape(oldShape);
         Draw.getInstance().repaint();
     }
 
     public void redo(){
         super.redo();
-        shapes.setShape(shape);
-        shapes.setOldShape(oldShape);
+        Shape oldShape = null;
+        for(int i=0;i<shape.getOldShapes().size();i++)
+        {
+            if(shape.getShape() == shape.getOldShapes().get(i))
+            {
+                oldShape = shape.getOldShapes().get(i+1);
+            }
+        }
+        shape.setShape(oldShape);
         Draw.getInstance().repaint();
     }
 }
