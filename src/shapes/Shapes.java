@@ -1,9 +1,9 @@
 package shapes;
 
-import UndoRedo.UndoableGroup;
+import UndoRedo.UndoHandler;
+import UndoRedo.UndoableRefactor;
 import com.codebind.Draw;
 import com.codebind.Tree;
-import UndoRedo.UndoHandler;
 
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -11,121 +11,96 @@ import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Shapes implements IShapes
+public class Shapes
 {
-    protected String name;
-    protected int posX, posY, width, height;
-
-    protected Shape shape;
-    private ArrayList<Shape> oldShapes = new ArrayList<>();
-
-    protected final Draw draw;
-    private final Tree tree;
-
-    private DefaultMutableTreeNode treeNode;
-    private boolean isSetInTree;
-
-    protected UndoManager undoHandler = UndoHandler.getInstance();
-
-    protected Color color = Color.RED;
-
-    private ArrayList<Shapes> subordinates = new ArrayList<>();
+    private IShapes iShapes;
+    private final Draw draw;
+    private UndoManager undoHandler = UndoHandler.getInstance();
 
     //create a shape
-    public Shapes(String name, int posX, int posY, int width, int height) {
-        this.name = name;
-        this.posX = posX;
-        this.posY = posY;
-        this.width = width;
-        this.height = height;
+    public Shapes(IShapes iShapes) {
+        this.iShapes = iShapes;
         draw = Draw.getInstance();
-        tree = Tree.getInstance();
-        treeNode = new DefaultMutableTreeNode(this);
         draw.setObjShapes(this);
-        tree.updateTree();
+        iShapes.setTreeNode(this);
+        Tree.getInstance().updateTree();
     }
 
     public void refactor(int posX, int posY, int width, int height) {
-
-    }
-
-    @Override
-    public String accept(Visitor visitor) {
-        return visitor.visitShapes(this);
+        iShapes.refactor(posX, posY, width, height);
+        //add action to undoHandler
+        undoHandler.undoableEditHappened(new UndoableEditEvent(
+                this, new UndoableRefactor(this)
+        ));
     }
 
     public void addSubordinates(Shapes e) {
-        subordinates.add(e);
-    }
-
-    public void removeSubordinates(Shapes e) {
-        subordinates.remove(e);
+        iShapes.addSubordinates(e);
     }
 
     public ArrayList<Shapes> getSubordinates(){
-        return subordinates;
+        return iShapes.getSubordinates();
     }
 
     public void setColor(Color color) {
-        this.color = color;
-        draw.repaint();
+        iShapes.setColor(color);
     }
 
     public Color getColor()
     {
-        return color;
+        return iShapes.getColor();
     }
 
     public int getHeight(){
-        return height;
+        return iShapes.getHeight();
     }
 
     public int getWidth(){
-        return width;
+        return iShapes.getWidth();
     }
 
     public int getPosX(){
-        return posX;
+        return iShapes.getPosX();
     }
 
     public int getPosY(){
-        return posY;
+        return iShapes.getPosY();
     }
 
     public String getName(){
-        return name;
+        return iShapes.getName();
     }
 
     public Shape getShape() {
-        return shape;
+        return iShapes.getShape();
     }
 
     public void setShape(Shape shape) {
-        this.shape = shape;
+        iShapes.setShape(shape);
     }
 
     public void setOldShapes(Shape shape){
-        oldShapes.add(shape);
+        iShapes.setOldShapes(shape);
     }
 
     public ArrayList<Shape> getOldShapes(){
-        return oldShapes;
+        return iShapes.getOldShapes();
     }
 
     public void setSubordinatesList(ArrayList<Shapes> subordinates){
-        this.subordinates = subordinates;
+        iShapes.setSubordinatesList(subordinates);
     }
 
     public void setboolTree(boolean isSetInTree) {
-        this.isSetInTree = isSetInTree;
+        iShapes.setboolTree(isSetInTree);
     }
 
     public boolean getboolTree() {
-        return isSetInTree;
+        return iShapes.getboolTree();
     }
 
     public DefaultMutableTreeNode getTreeNode() {
-        return treeNode;
+        return iShapes.getTreeNode();
     }
 
 }

@@ -3,6 +3,7 @@ package com.codebind;
 import UndoRedo.UndoHandler;
 import UndoRedo.UndoableGroup;
 import UndoRedo.UndoableGroupDelete;
+import shapes.IShapes;
 import shapes.Shapes;
 
 import javax.swing.*;

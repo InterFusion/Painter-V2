@@ -83,13 +83,13 @@ public class Draw extends JPanel
                     Shapes s = null;
 
                     if(shapeInt == 0)
-                        s = new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.y - e.getY()), Math.abs(startDrag.y - e.getY())));
                     else if(shapeInt == 1)
-                        s = new Ellipse("Ellipse", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Ellipse("Ellipse", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY())));
                     else if(shapeInt == 2)
-                        s = new Square("Square", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Square("Square", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.y - e.getY()), Math.abs(startDrag.y - e.getY())));
                     else if(shapeInt == 3)
-                        s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY())));
 
                     //objShapes.add(s);
                     assert s != null;
@@ -145,10 +145,10 @@ public class Draw extends JPanel
     {
         Shapes s = switch (name)
                 {
-                    case "Circle" -> new Circle("Circle", posX, posY, width, height);
-                    case "Ellipse" -> new Ellipse("Ellipse", posX, posY, width, height);
-                    case "Square" -> new Square("Square", posX, posY, width, height);
-                    case "Rectangle" -> new Rectangle("Rectangle", posX, posY, width, height);
+                    case "Circle" -> new Shapes(new Circle("Circle", posX, posY, width, height));
+                    case "Ellipse" -> new Shapes(new Ellipse("Ellipse", posX, posY, width, height));
+                    case "Square" -> new Shapes(new Square("Square", posX, posY, width, height));
+                    case "Rectangle" -> new Shapes(new Rectangle("Rectangle", posX, posY, width, height));
                     default -> null;
                 };
 
