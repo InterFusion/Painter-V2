@@ -91,7 +91,6 @@ public class Draw extends JPanel
                     else if(shapeInt == 3)
                         s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
 
-                    //objShapes.add(s);
                     assert s != null;
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
                             this, new UndoableDraw(objShapes, s)
@@ -124,6 +123,10 @@ public class Draw extends JPanel
         return objShapes;
     }
 
+    public void setObjShapes(Shapes s){
+        objShapes.add(s);
+    }
+
     //will draw whats necessary to Graphics object
     private void draw(Graphics g)
     {
@@ -154,14 +157,9 @@ public class Draw extends JPanel
 
         if(s == null)
             return;
-
-        objShapes.add(s);
         repaint();
     }
 
-    public void setObjShapes(Shapes s){
-        objShapes.add(s);
-    }
     public static Draw getInstance(){
         if(instance == null){
             instance = new Draw();

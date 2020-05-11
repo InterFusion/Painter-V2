@@ -16,7 +16,9 @@ public class Shapes
     protected String name;
     protected int posX, posY, width, height;
 
-    protected Shape shape, oldShape;
+    protected Shape shape;
+
+    private ArrayList<Shape> oldShapes = new ArrayList<>();
 
     protected final Draw draw;
     private final Tree tree;
@@ -50,7 +52,6 @@ public class Shapes
 
     public void addSubordinates(Shapes e) {
         subordinates.add(e);
-
     }
 
     public void removeSubordinates(Shapes e) {
@@ -100,30 +101,27 @@ public class Shapes
         this.shape = shape;
     }
 
-    public Shape getOldShape() {
-        return oldShape;
+    public void setOldShapes(Shape shape){
+        oldShapes.add(shape);
     }
 
     public void setSubordinatesList(ArrayList<Shapes> subordinates){
         this.subordinates = subordinates;
     }
 
-    public void setOldShape(Shape oldShape) {
-        this.oldShape = oldShape;
-    }
-    
-    public DefaultMutableTreeNode getTreeNode() {
-        return treeNode;
+    public ArrayList<Shape> getOldShapes(){
+        return oldShapes;
     }
 
-    public void setboolTree(boolean isSetInTree)
-    {
+    public void setboolTree(boolean isSetInTree) {
         this.isSetInTree = isSetInTree;
     }
 
-    public boolean getboolTree()
-    {
+    public boolean getboolTree() {
         return isSetInTree;
     }
 
+    public DefaultMutableTreeNode getTreeNode() {
+        return treeNode;
+    }
 }

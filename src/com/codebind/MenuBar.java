@@ -143,6 +143,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
         }
     }
 
+    //Methode voor het aanmaken van groepen
     public void openDialog(DefaultMutableTreeNode firstSelectedNode, Shapes firstSelectedShape)
     {
         JFrame f = new JFrame();
