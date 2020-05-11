@@ -2,6 +2,7 @@ package UndoRedo;
 
 import com.codebind.Draw;
 import com.codebind.Tree;
+import shapes.IShapes;
 import shapes.Shapes;
 
 import javax.swing.tree.DefaultMutableTreeNode;

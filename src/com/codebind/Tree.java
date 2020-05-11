@@ -1,6 +1,7 @@
 package com.codebind;
 
 import UndoRedo.UndoHandler;
+import shapes.IShapes;
 import shapes.Shapes;
 import javax.swing.*;
 import javax.swing.event.*;
