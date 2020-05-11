@@ -1,19 +1,23 @@
 package shapes;
 
+import UndoRedo.UndoableGroup;
 import com.codebind.Draw;
 import com.codebind.Tree;
 import UndoRedo.UndoHandler;
+
+import javax.swing.event.UndoableEditEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Shapes
+public class Shapes implements IShapes
 {
     protected String name;
     protected int posX, posY, width, height;
 
-    protected Shape shape, oldShape;
+    protected Shape shape;
+    private ArrayList<Shape> oldShapes = new ArrayList<>();
 
     protected final Draw draw;
     private final Tree tree;
@@ -25,7 +29,7 @@ public class Shapes
 
     protected Color color = Color.RED;
 
-    private final ArrayList<Shapes> subordinates = new ArrayList<>();
+    private ArrayList<Shapes> subordinates = new ArrayList<>();
 
     //create a shape
     public Shapes(String name, int posX, int posY, int width, int height) {
@@ -43,6 +47,11 @@ public class Shapes
 
     public void refactor(int posX, int posY, int width, int height) {
 
+    }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitShapes(this);
     }
 
     public void addSubordinates(Shapes e) {
@@ -66,7 +75,6 @@ public class Shapes
     {
         return color;
     }
-
 
     public int getHeight(){
         return height;
@@ -96,25 +104,28 @@ public class Shapes
         this.shape = shape;
     }
 
-    public Shape getOldShape() {
-        return oldShape;
+    public void setOldShapes(Shape shape){
+        oldShapes.add(shape);
     }
 
-    public void setOldShape(Shape oldShape) {
-        this.oldShape = oldShape;
+    public ArrayList<Shape> getOldShapes(){
+        return oldShapes;
     }
-    
+
+    public void setSubordinatesList(ArrayList<Shapes> subordinates){
+        this.subordinates = subordinates;
+    }
+
+    public void setboolTree(boolean isSetInTree) {
+        this.isSetInTree = isSetInTree;
+    }
+
+    public boolean getboolTree() {
+        return isSetInTree;
+    }
+
     public DefaultMutableTreeNode getTreeNode() {
         return treeNode;
     }
 
-    public void setboolTree(boolean isSetInTree)
-    {
-        this.isSetInTree = isSetInTree;
-    }
-
-    public boolean getboolTree()
-    {
-        return isSetInTree;
-    }
 }

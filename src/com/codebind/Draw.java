@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -17,7 +18,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import UndoRedo.*;
 
-public class Draw extends JPanel implements UndoableEditListener
+public class Draw extends JPanel
 {
     private ArrayList<Shapes> objShapes = new ArrayList<Shapes>();          //list of objects
     private Point startDrag, endDrag;                               //start and endpoint
@@ -29,7 +30,7 @@ public class Draw extends JPanel implements UndoableEditListener
 
     private static Draw instance = null;
 
-    public Draw()
+    private Draw()
     {
         undoButton.setEnabled(false);
         redoButton.setEnabled(false);
@@ -47,7 +48,7 @@ public class Draw extends JPanel implements UndoableEditListener
         {
             try {
                 undoHandler.undo();
-            } catch (CannotRedoException cre) {
+            } catch (CannotUndoException cre) {
                 cre.printStackTrace();
             }
             repaint();
@@ -168,10 +169,5 @@ public class Draw extends JPanel implements UndoableEditListener
         return instance;
     }
 
-    @Override
-    public void undoableEditHappened(UndoableEditEvent e)
-    {
-        undoHandler.addEdit(e.getEdit());
-    }
 }
 

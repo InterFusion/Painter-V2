@@ -29,57 +29,14 @@ public class FileIO
         //create new file paint.txt
         try (FileWriter file = new FileWriter("Paint.txt"))
         {
-            StringBuilder whiteSpace = new StringBuilder();
-            TreeModel model = Tree.getInstance().getModel();
-            if (model != null) {
-                Object root = model.getRoot();
-                System.out.println(root.toString());
-                walk(model, root, file, whiteSpace);
-            }
-            else
-                System.out.println("Tree is empty.");
+            String exportString = ExportVisitor.getInstance().export();
+            file.write(exportString);
 
             file.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    protected void walk(TreeModel model, Object o, FileWriter file, StringBuilder whiteSpace) throws IOException {
-        int cc = model.getChildCount(o);
-        file.write(whiteSpace + "Group " + cc);
-        file.write(System.lineSeparator());
-        whiteSpace.append("\t");
-        for( int i=0; i < cc; i++) {
-            Object child = model.getChild(o, i );
-            if (model.isLeaf(child)) {            //parent
-                for(Shapes shape : draw.getObjShapes())
-                {
-                    if(shape.toString().contains(child.toString()))
-                        writeToFile(file, shape, whiteSpace);
-                }
-            }
-            else {                              //child
-                for(Shapes shape : draw.getObjShapes())
-                {
-                    if(shape.toString().contains(child.toString()))
-                        writeToFile(file, shape, whiteSpace);
-                }
-                walk(model, child, file, whiteSpace);
-            }
-        }
-    }
-
-    public void writeToFile(FileWriter file, Shapes shape, StringBuilder whitespace) throws IOException
-    {
-        //write the variables to the paint.txt
-        file.write(whitespace + shape.getName());
-        file.write(" " + shape.getPosX());
-        file.write(" " + shape.getPosY());
-        file.write(" " + shape.getWidth());
-        file.write(" " + shape.getHeight());
-        file.write(System.lineSeparator()); //at the end of every object create a new line
     }
 
     public void readFile()

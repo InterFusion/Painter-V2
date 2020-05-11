@@ -20,7 +20,7 @@ public class Tree extends JTree implements UndoableEditListener
     private DefaultMutableTreeNode selectedNode;
     private Shapes selectedShape;
 
-    public Tree(){
+    private Tree(){
         undoHandler = UndoHandler.getInstance();
         model =(DefaultTreeModel) this.getModel();
         model.setRoot(new DefaultMutableTreeNode("Shapes"));
@@ -51,7 +51,6 @@ public class Tree extends JTree implements UndoableEditListener
 
                 selectedShape = (Shapes) nodeInfo;
                 selectedShape.setColor(Color.GRAY);
-                System.out.println(selectedShape.getSubordinates().size());
 
                 for (Shapes s : Draw.getInstance().getObjShapes())
                 {
@@ -80,13 +79,13 @@ public class Tree extends JTree implements UndoableEditListener
                 root.add(s.getTreeNode());
                 s.setboolTree(true);
             }
-
-        }
-
-        for(Shapes s : Draw.getInstance().getObjShapes())
-        {
             s.setboolTree(false);
         }
+//FIXXXX
+      //  for(Shapes s : Draw.getInstance().getObjShapes())
+      //  {
+      //     s.setboolTree(false);
+     //   }
         model.reload(root);
     }
 
