@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Circle implements IShapes
 {
-    private String name;
+    private String name, position, text;
     private int posX, posY, width, height;
 
     private Shape shape;
@@ -57,6 +57,25 @@ public class Circle implements IShapes
     @Override
     public String accept(Visitor visitor) {
         return visitor.visitCircle(this);
+    }
+
+    @Override
+    public void setOrnament(String position, String text)
+    {
+        this.position = position;
+        this.text = text;
+    }
+
+    @Override
+    public String getPosition()
+    {
+        return position;
+    }
+
+    @Override
+    public String getText()
+    {
+        return text;
     }
 
     @Override

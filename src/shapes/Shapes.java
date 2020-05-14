@@ -4,6 +4,7 @@ import UndoRedo.UndoHandler;
 import UndoRedo.UndoableRefactor;
 import com.codebind.Draw;
 import com.codebind.Tree;
+import ornaments.IShapeDecorator;
 
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -103,4 +104,11 @@ public class Shapes
         return iShapes.getTreeNode();
     }
 
+    public void setOrnament(String position, String text) {
+        iShapes.setOrnament(position, text);
+    }
+
+    public String getPosition(){
+        return iShapes.getPosition();
+    }
 }

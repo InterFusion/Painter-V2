@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Ellipse implements IShapes
 {
-    private String name;
+    private String name, position, text;
     private int posX, posY, width, height;
 
     private Shape shape;
@@ -57,6 +57,26 @@ public class Ellipse implements IShapes
     public String accept(Visitor visitor) {
         return visitor.visitEllipse(this);
     }
+
+    @Override
+    public void setOrnament(String position, String text)
+    {
+        this.position = position;
+        this.text = text;
+    }
+
+    @Override
+    public String getPosition()
+    {
+        return position;
+    }
+
+    @Override
+    public String getText()
+    {
+        return text;
+    }
+
 
     @Override
     public void addSubordinates(Shapes e) {

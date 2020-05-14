@@ -26,4 +26,7 @@ public interface IShapes
     DefaultMutableTreeNode getTreeNode();
     void setTreeNode(Shapes shapes);
     String accept(Visitor visitor);
+    void setOrnament(String position, String text);
+    String getPosition();
+    String getText();
 }
