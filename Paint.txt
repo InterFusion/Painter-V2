@@ -1,7 +1,0 @@
-Group 2
-	Ornament Top "fdghg"
-	Circle 175 191 221 221
-	Group 2
-		Circle 597 359 124 124
-		Circle 656 62 246 246
-		Circle 237 479 71 71
