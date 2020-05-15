@@ -33,28 +33,30 @@ public class ExportVisitor implements Visitor
         for( int i=0; i < cc; i++) {
             Object child = model.getChild(o, i );
             if (model.isLeaf(child)) {            //parent
-                for(Shapes shape : Draw.getInstance().getObjShapes())
-                {
-                    if(shape.toString().contains(child.toString()))
-                    {
-                        sb.append(whiteSpace);
-                        sb.append(visitShapes(shape));
-                        sb.append("\n");
-                    }
-
-                }
+                getInfo(whiteSpace, sb, child);
             }
             else {                              //child
-                for(Shapes shape : Draw.getInstance().getObjShapes())
-                {
-                    if(shape.toString().contains(child.toString()))
-                    {
-                        sb.append(whiteSpace);
-                        sb.append(visitShapes(shape));
-                        sb.append("\n");
-                    }
-                }
+                getInfo(whiteSpace, sb, child);
                 walk(model, child, whiteSpace, sb);
+            }
+        }
+    }
+
+    private void getInfo(StringBuilder whiteSpace, StringBuilder sb, Object child)
+    {
+        for(Shapes shape : Draw.getInstance().getObjShapes())
+        {
+            if(shape.toString().contains(child.toString()))
+            {
+                if(shape.getPosition() != null)
+                {
+                    sb.append(whiteSpace);
+                    sb.append(getOrnament(shape));
+                }
+
+                sb.append(whiteSpace);
+                sb.append(visitShapes(shape));
+                sb.append("\n");
             }
         }
     }
@@ -63,6 +65,12 @@ public class ExportVisitor implements Visitor
     public String visitShapes(Shapes shapes)
     {
         return shapes.getName() + " " + shapes.getPosX() + " " + shapes.getPosY() + " " + shapes.getWidth() + " " + shapes.getHeight();
+    }
+
+    @Override
+    public String getOrnament(Shapes shapes)
+    {
+        return "Ornament" + " " + shapes.getPosition() + " \"" + shapes.getText() + "\"" + "\n";
     }
 
     @Override
