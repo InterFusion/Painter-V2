@@ -1,5 +1,12 @@
 package ornaments;
+import UndoRedo.UndoHandler;
+import UndoRedo.UndoableGroupDelete;
+import UndoRedo.UndoableOrnament;
+import com.codebind.MenuBar;
 import shapes.Shapes;
+
+import javax.swing.event.UndoableEditEvent;
+
 
 public abstract class ShapeDecorator implements IShapeDecorator
 {
@@ -14,4 +21,5 @@ public abstract class ShapeDecorator implements IShapeDecorator
     {
         decoratedShape.setOrnament(position, text);
     }
+
 }

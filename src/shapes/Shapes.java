@@ -111,4 +111,13 @@ public class Shapes
     public String getPosition(){
         return iShapes.getPosition();
     }
+
+    public String getText(){
+        return iShapes.getText();
+    }
+
+    public void deleteOrnament()
+    {
+        iShapes.deleteOrnament();
+    }
 }

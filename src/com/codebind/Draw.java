@@ -130,10 +130,45 @@ public class Draw extends JPanel
         Graphics2D g2 = (Graphics2D) g;
         for (Shapes s : objShapes)
         {
+            String text = s.getText();
             g2.setColor(s.getColor());
             g2.fill(s.getShape());
+            if(s.getPosition() != null)
+                g2.drawString(text, getCoordsX(s, g), getCoordsY(s));
         }
     }
+
+    private int getCoordsX(Shapes shape, Graphics g){
+        int x = shape.getPosX();
+        int width = shape.getWidth();
+        int textWidth = g.getFontMetrics().stringWidth(shape.getText());
+        switch(shape.getPosition()){
+            case "Top":
+            case "Bottom":
+                return x+(width - textWidth)/2;
+            case "Left":
+                return x - 30;
+            case "Right":
+                return (x+width) + 15;
+        }
+        return x;
+    }
+
+    private int getCoordsY(Shapes shape){
+        int y = shape.getPosY();
+        int height = shape.getHeight();
+        switch(shape.getPosition()){
+            case "Top":
+                return y - (y/80);
+            case "Bottom":
+                return (y+height)+15;
+            case "Left":
+            case "Right":
+                return y+(height/2);
+        }
+        return y;
+    }
+
 
     public void setShape(int x)
     {
