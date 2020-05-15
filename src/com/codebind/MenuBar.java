@@ -130,7 +130,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
 
                     if (result1 == JOptionPane.OK_OPTION)
                     {
-                        new TopDecorator(tree.getSelectedShape());
+                        tree.getSelectedShape().refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().getWidth(), tree.getSelectedShape().getHeight());
                     }
                 }
                 break;
