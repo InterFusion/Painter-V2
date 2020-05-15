@@ -66,6 +66,13 @@ public class Ellipse implements IShapes
     }
 
     @Override
+    public void deleteOrnament()
+    {
+        this.position = null;
+        this.text = null;
+    }
+
+    @Override
     public String getPosition()
     {
         return position;

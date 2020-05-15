@@ -188,6 +188,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                                 new RightDecorator(tree.getSelectedShape()).setOrnament(ornamentStrings[selection], text);
                                 break;
                         }
+                        Draw.getInstance().repaint();
                     }
                 }
                 break;

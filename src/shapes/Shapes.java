@@ -115,4 +115,9 @@ public class Shapes
     public String getText(){
         return iShapes.getText();
     }
+
+    public void deleteOrnament()
+    {
+        iShapes.deleteOrnament();
+    }
 }

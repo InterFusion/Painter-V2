@@ -1,9 +1,15 @@
 package ornaments;
 
+import UndoRedo.UndoHandler;
+import UndoRedo.UndoableOrnament;
 import shapes.Shapes;
+
+import javax.swing.event.UndoableEditEvent;
 
 public class RightDecorator extends ShapeDecorator
 {
+    UndoHandler undoHandler = UndoHandler.getInstance();
+
     public RightDecorator(Shapes decoratedShape)
     {
         super(decoratedShape);
@@ -13,9 +19,8 @@ public class RightDecorator extends ShapeDecorator
     public void setOrnament(String position, String text)
     {
         decoratedShape.setOrnament(position, text);
-        setTopDecorator();
-    }
-
-    public void setTopDecorator(){
+        undoHandler.undoableEditHappened(new UndoableEditEvent(
+                this, new UndoableOrnament(decoratedShape))
+        );
     }
 }
