@@ -6,13 +6,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Ellipse implements IShapes
 {
-    private String name, position, text;
+    private String name;
     private int posX, posY, width, height;
     private ArrayList<String> positionList = new ArrayList<>();
     private ArrayList<String> textList = new ArrayList<>();
+    HashMap<String, String> posText = new HashMap<>();
 
     private Shape shape;
     private ArrayList<Shape> oldShapes = new ArrayList<>();
@@ -67,34 +69,15 @@ public class Ellipse implements IShapes
         textList.add(text);
     }
 
-    public void deleteOrnament(String position, String text)
+    public void deleteOrnament(String position)
     {
-        positionList.remove(position);
-        textList.remove(text);
+        posText.remove(position);
     }
 
     @Override
-    public String getPosition()
+    public HashMap<String, String> getPosText()
     {
-        return position;
-    }
-
-    @Override
-    public String getText()
-    {
-        return text;
-    }
-
-    @Override
-    public ArrayList<String> getPList()
-    {
-        return positionList;
-    }
-
-    @Override
-    public ArrayList<String> getTList()
-    {
-        return textList;
+        return posText;
     }
 
 

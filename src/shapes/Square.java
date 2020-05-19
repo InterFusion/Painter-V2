@@ -7,13 +7,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Square implements IShapes
 {
-    private String name, position, text;
+    private String name;
     private int posX, posY, width, height;
-    private ArrayList<String> positionList = new ArrayList<>();
-    private ArrayList<String> textList = new ArrayList<>();
+    HashMap<String, String> posText = new HashMap<>();
 
     private Shape shape;
     private ArrayList<Shape> oldShapes = new ArrayList<>();
@@ -64,38 +64,19 @@ public class Square implements IShapes
     @Override
     public void setOrnament(String position, String text)
     {
-        positionList.add(position);
-        textList.add(text);
-    }
-
-    public void deleteOrnament(String position, String text)
-    {
-        positionList.remove(position);
-        textList.remove(text);
+        posText.put(position, text);
     }
 
     @Override
-    public String getPosition()
+    public void deleteOrnament(String position)
     {
-        return position;
+        posText.remove(position);
     }
 
     @Override
-    public String getText()
+    public HashMap<String, String> getPosText()
     {
-        return text;
-    }
-
-    @Override
-    public ArrayList<String> getPList()
-    {
-        return positionList;
-    }
-
-    @Override
-    public ArrayList<String> getTList()
-    {
-        return textList;
+        return null;
     }
 
     @Override

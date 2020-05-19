@@ -3,6 +3,7 @@ package shapes;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface IShapes
 {
@@ -27,9 +28,6 @@ public interface IShapes
     void setTreeNode(Shapes shapes);
     String accept(Visitor visitor);
     void setOrnament(String position, String text);
-    void deleteOrnament(String position, String text);
-    String getPosition();
-    String getText();
-    ArrayList<String> getPList();
-    ArrayList<String> getTList();
+    void deleteOrnament(String position);
+    HashMap<String, String> getPosText();
 }

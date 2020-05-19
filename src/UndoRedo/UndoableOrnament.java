@@ -1,14 +1,8 @@
 package UndoRedo;
 
 import com.codebind.Draw;
-import com.codebind.Tree;
-import ornaments.IShapeDecorator;
-import ornaments.ShapeDecorator;
-import shapes.IShapes;
 import shapes.Shapes;
-
 import javax.swing.undo.AbstractUndoableEdit;
-import javax.swing.undo.CannotUndoException;
 
 public class UndoableOrnament extends AbstractUndoableEdit
 {
@@ -23,7 +17,8 @@ public class UndoableOrnament extends AbstractUndoableEdit
 
     public void undo(){
         super.undo();
-        shapes.deleteOrnament(position, text);
+        shapes.deleteOrnament(position);
+        Draw.getInstance().repaint();
     }
 
     public void redo(){

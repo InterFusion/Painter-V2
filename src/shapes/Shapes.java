@@ -11,6 +11,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Shapes
 {
@@ -108,26 +109,12 @@ public class Shapes
         iShapes.setOrnament(position, text);
     }
 
-    public String getPosition(){
-        return iShapes.getPosition();
+    public HashMap<String, String> getPosText(){
+        return iShapes.getPosText();
     }
 
-    public String getText(){
-        return iShapes.getText();
-    }
-
-    public ArrayList<String> getPList()
+    public void deleteOrnament(String position)
     {
-        return iShapes.getPList();
-    }
-
-    public ArrayList<String> getTList()
-    {
-        return iShapes.getTList();
-    }
-
-    public void deleteOrnament(String position, String text)
-    {
-        iShapes.deleteOrnament(position, text);
+        iShapes.deleteOrnament(position);
     }
 }

@@ -16,6 +16,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import UndoRedo.*;
 
 public class Draw extends JPanel
@@ -132,10 +134,14 @@ public class Draw extends JPanel
         {
             g2.setColor(s.getColor());
             g2.fill(s.getShape());
-            if(s.getPList() != null)
+            HashMap<String, String> posText = s.getPosText(); 
+            if(posText != null)
             {
-                for (int i = 0; i < s.getPList().size(); i++)
-                    g2.drawString(s.getTList().get(i), getCoordsX(s, g, s.getTList().get(i), s.getPList().get(i)), getCoordsY(s, s.getPList().get(i)));
+                for (String position: posText.keySet())
+                {
+                    g2.drawString(posText.get(position), getCoordsX(s, g, posText.get(position), position), getCoordsY(s, position));
+
+                }
             }
         }
     }

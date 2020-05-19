@@ -1,15 +1,9 @@
 package UndoRedo;
 
 import com.codebind.Draw;
-import com.codebind.Tree;
-import shapes.IShapes;
 import shapes.Shapes;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.undo.AbstractUndoableEdit;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class UndoableRefactor extends AbstractUndoableEdit
 {

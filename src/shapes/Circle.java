@@ -7,13 +7,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Circle implements IShapes
 {
-    private String name, position, text;
+    private String name;
     private int posX, posY, width, height;
-    private ArrayList<String> positionList = new ArrayList<>();
-    private ArrayList<String> textList = new ArrayList<>();
+    HashMap<String, String> posText = new HashMap<>(); //Hashmap for the ornaments.
 
     private Shape shape;
     private ArrayList<Shape> oldShapes = new ArrayList<>();
@@ -56,6 +56,7 @@ public class Circle implements IShapes
         setOldShapes(shape);
     }
 
+
     @Override
     public String accept(Visitor visitor) {
         return visitor.visitCircle(this);
@@ -64,39 +65,19 @@ public class Circle implements IShapes
     @Override
     public void setOrnament(String position, String text)
     {
-        positionList.add(position);
-        textList.add(text);
+        posText.put(position, text);
     }
 
     @Override
-    public void deleteOrnament(String position, String text)
+    public void deleteOrnament(String position)
     {
-        positionList.remove(position);
-        textList.remove(text);
+        posText.remove(position);
     }
 
     @Override
-    public String getPosition()
+    public HashMap<String, String> getPosText()
     {
-        return position;
-    }
-
-    @Override
-    public String getText()
-    {
-        return text;
-    }
-
-    @Override
-    public ArrayList<String> getPList()
-    {
-        return positionList;
-    }
-
-    @Override
-    public ArrayList<String> getTList()
-    {
-        return textList;
+        return posText;
     }
 
     @Override

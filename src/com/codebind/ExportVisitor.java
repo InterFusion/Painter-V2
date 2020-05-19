@@ -48,7 +48,7 @@ public class ExportVisitor implements Visitor
         {
             if(shape.toString().contains(child.toString()))
             {
-                if(shape.getPosition() != null)
+                if(shape.getPosText() != null)
                 {
                     sb.append(whiteSpace);
                     sb.append(getOrnament(shape));
@@ -70,7 +70,7 @@ public class ExportVisitor implements Visitor
     @Override
     public String getOrnament(Shapes shapes)
     {
-        return "Ornament" + " " + shapes.getPosition() + " \"" + shapes.getText() + "\"" + "\n";
+        return "Ornament" + " " + shapes.getPosText() + " \"" + shapes.getPosText() + "\"" + "\n";
     }
 
     @Override
