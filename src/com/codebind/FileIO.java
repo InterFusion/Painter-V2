@@ -29,15 +29,8 @@ public class FileIO
         //create new file paint.txt
         try (FileWriter file = new FileWriter("Paint.txt"))
         {
-            StringBuilder whiteSpace = new StringBuilder();
-            TreeModel model = Tree.getInstance().getModel();
-            if (model != null) {
-                Object root = model.getRoot();
-                System.out.println(root.toString());
-                walk(model, root, file, whiteSpace);
-            }
-            else
-                System.out.println("Tree is empty.");
+            String exportString = ExportVisitor.getInstance().export();
+            file.write(exportString);
 
             file.flush();
 
@@ -46,49 +39,18 @@ public class FileIO
         }
     }
 
-    protected void walk(TreeModel model, Object o, FileWriter file, StringBuilder whiteSpace) throws IOException {
-        int cc = model.getChildCount(o);
-        file.write(whiteSpace + "Group " + cc);
-        file.write(System.lineSeparator());
-        whiteSpace.append("\t");
-        for( int i=0; i < cc; i++) {
-            Object child = model.getChild(o, i );
-            if (model.isLeaf(child)) {            //parent
-                for(Shapes shape : draw.getObjShapes())
-                {
-                    if(shape.toString().contains(child.toString()))
-                        writeToFile(file, shape, whiteSpace);
-                }
-            }
-            else {                              //child
-                for(Shapes shape : draw.getObjShapes())
-                {
-                    if(shape.toString().contains(child.toString()))
-                        writeToFile(file, shape, whiteSpace);
-                }
-                walk(model, child, file, whiteSpace);
-            }
-        }
-    }
-
-    public void writeToFile(FileWriter file, Shapes shape, StringBuilder whitespace) throws IOException
-    {
-        //write the variables to the paint.txt
-        file.write(whitespace + shape.getName());
-        file.write(" " + shape.getPosX());
-        file.write(" " + shape.getPosY());
-        file.write(" " + shape.getWidth());
-        file.write(" " + shape.getHeight());
-        file.write(System.lineSeparator()); //at the end of every object create a new line
-    }
-
     public void readFile()
     {
+        draw.getObjShapes().clear();
         String name;
         int posX = 0;
         int posY = 0;
         int width = 0;
         int height = 0;
+        boolean ornament = false;
+        boolean group = false;
+        ArrayList<String> posList = new ArrayList<>();
+        ArrayList<String> textList = new ArrayList<>();
 
         try { //read the lines from paint.txt
             List<String> allLines = Files.readAllLines(Paths.get("Paint.txt"));
@@ -96,20 +58,48 @@ public class FileIO
                 String[] words = line.split(" "); //split the lines in to words
 
                 name = words[0];
-                if(!name.contains("Group"))
+
+                if(!name.trim().contains("Group") && !name.trim().contains("Ornament"))
                 {
                     posX = Integer.parseInt(words[1]);
                     posY = Integer.parseInt(words[2]);
                     width = Integer.parseInt(words[3]);
                     height = Integer.parseInt(words[4]);
+
+                    //make new shapes from the words
+                    Shapes shape = draw.makeShape(name.trim(), posX, posY, width, height);
+                    if(ornament)
+                    {
+                        for(int i=0; i<posList.size();i++)
+                        {
+                            shape.setOrnament(posList.get(i),textList.get(i));
+                        }
+                        posList.clear();
+                        textList.clear();
+                        ornament = false;
+                    }
+
+                    if(group)
+                    {
+                        shape.addSubordinates(draw.getObjShapes().get(draw.getObjShapes().size() - 1));
+                        Tree.getInstance().updateTree();
+                        group = false;
+                    }
                 }
 
-                if(!name.contains("Group"))
+                if(name.trim().contains("Ornament"))
                 {
-                    //make new shapes from the words
-                    draw.makeShape(name.trim(), posX, posY, width, height);
+                    ornament = true;
+                    posList.add(words[1]);
+                    textList.add(words[2].replace("\"", ""));
+                }
+
+                if(name.trim().contains("Group"))
+                {
+                    group = true;
                 }
             }
+            Tree.getInstance().updateTree();
         } catch (IOException e) {
             e.printStackTrace();
         }

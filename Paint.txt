@@ -1,7 +1,0 @@
-Group 2
-	Circle 230 181 198 198
-	Circle 475 382 135 135
-	Group 1
-		Circle 596 181 170 170
-		Group 1
-			Circle 116 369 146 146

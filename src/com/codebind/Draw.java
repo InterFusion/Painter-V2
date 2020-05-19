@@ -16,6 +16,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import UndoRedo.*;
 
 public class Draw extends JPanel
@@ -30,7 +32,7 @@ public class Draw extends JPanel
 
     private static Draw instance = null;
 
-    public Draw()
+    private Draw()
     {
         undoButton.setEnabled(false);
         redoButton.setEnabled(false);
@@ -83,13 +85,13 @@ public class Draw extends JPanel
                     Shapes s = null;
 
                     if(shapeInt == 0)
-                        s = new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Circle("Circle",  Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.y - e.getY()), Math.abs(startDrag.y - e.getY())));
                     else if(shapeInt == 1)
-                        s = new Ellipse("Ellipse", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Ellipse("Ellipse", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY())));
                     else if(shapeInt == 2)
-                        s = new Square("Square", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Square("Square", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.y - e.getY()), Math.abs(startDrag.y - e.getY())));
                     else if(shapeInt == 3)
-                        s = new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY()));
+                        s = new Shapes(new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY())));
 
                     //objShapes.add(s);
                     assert s != null;
@@ -132,8 +134,49 @@ public class Draw extends JPanel
         {
             g2.setColor(s.getColor());
             g2.fill(s.getShape());
+            HashMap<String, String> posText = s.getPosText(); 
+            if(posText != null)
+            {
+                for (String position: posText.keySet())
+                {
+                    g2.drawString(posText.get(position), getCoordsX(s, g, posText.get(position), position), getCoordsY(s, position));
+
+                }
+            }
         }
     }
+
+    private int getCoordsX(Shapes shape, Graphics g, String text, String pos){
+        int x = shape.getPosX();
+        int width = shape.getWidth();
+        int textWidth = g.getFontMetrics().stringWidth(text);
+        switch(pos){
+            case "Top":
+            case "Bottom":
+                return x+(width - textWidth)/2;
+            case "Left":
+                return x - 30;
+            case "Right":
+                return (x+width) + 15;
+        }
+        return x;
+    }
+
+    private int getCoordsY(Shapes shape,String pos){
+        int y = shape.getPosY();
+        int height = shape.getHeight();
+        switch(pos){
+            case "Top":
+                return y - (y/80);
+            case "Bottom":
+                return (y+height)+15;
+            case "Left":
+            case "Right":
+                return y+(height/2);
+        }
+        return y;
+    }
+
 
     public void setShape(int x)
     {
@@ -141,22 +184,20 @@ public class Draw extends JPanel
     }
 
     //method for when you load a saved file.
-    public void makeShape(String name, int posX, int posY, int width, int height)
+    public Shapes makeShape(String name, int posX, int posY, int width, int height)
     {
-        Shapes s = switch (name)
+        Shapes s = null;
+        switch (name)
                 {
-                    case "Circle" -> new Circle("Circle", posX, posY, width, height);
-                    case "Ellipse" -> new Ellipse("Ellipse", posX, posY, width, height);
-                    case "Square" -> new Square("Square", posX, posY, width, height);
-                    case "Rectangle" -> new Rectangle("Rectangle", posX, posY, width, height);
-                    default -> null;
+                    case "Circle" -> s = new Shapes(new Circle("Circle", posX, posY, width, height));
+                    case "Ellipse" -> s = new Shapes(new Ellipse("Ellipse", posX, posY, width, height));
+                    case "Square" -> s = new Shapes(new Square("Square", posX, posY, width, height));
+                    case "Rectangle" -> s = new Shapes(new Rectangle("Rectangle", posX, posY, width, height));
                 };
 
-        if(s == null)
-            return;
-
-        objShapes.add(s);
         repaint();
+
+        return s;
     }
 
     public void setObjShapes(Shapes s){

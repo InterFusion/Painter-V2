@@ -1,6 +1,7 @@
 package com.codebind;
 
 import UndoRedo.UndoHandler;
+import shapes.IShapes;
 import shapes.Shapes;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -8,6 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.ExpandVetoException;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Tree extends JTree implements UndoableEditListener
 {
@@ -19,7 +21,7 @@ public class Tree extends JTree implements UndoableEditListener
     private DefaultMutableTreeNode selectedNode;
     private Shapes selectedShape;
 
-    public Tree(){
+    private Tree(){
         undoHandler = UndoHandler.getInstance();
         model =(DefaultTreeModel) this.getModel();
         model.setRoot(new DefaultMutableTreeNode("Shapes"));
@@ -64,9 +66,9 @@ public class Tree extends JTree implements UndoableEditListener
         root.removeAllChildren();
         for(Shapes s : Draw.getInstance().getObjShapes())
         {
-            for(Shapes sub : s.getSubordinates())
+            for (Shapes sub : s.getSubordinates())
             {
-                if(!sub.getboolTree())
+                if (!sub.getboolTree())
                 {
                     s.getTreeNode().add(sub.getTreeNode());
                     sub.setboolTree(true);
@@ -80,6 +82,11 @@ public class Tree extends JTree implements UndoableEditListener
             }
             s.setboolTree(false);
         }
+//FIXXXX
+      //  for(Shapes s : Draw.getInstance().getObjShapes())
+      //  {
+      //     s.setboolTree(false);
+     //   }
         model.reload(root);
     }
 

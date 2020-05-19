@@ -1,19 +1,49 @@
 package shapes;
 
-import UndoRedo.UndoableRefactor;
-import javax.swing.event.UndoableEditEvent;
+import com.codebind.Draw;
+import com.codebind.Tree;
+
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Circle extends Shapes
+public class Circle implements IShapes
 {
+    private String name;
+    private int posX, posY, width, height;
+    HashMap<String, String> posText = new HashMap<>(); //Hashmap for the ornaments.
+
+    private Shape shape;
+    private ArrayList<Shape> oldShapes = new ArrayList<>();
+
+    private final Draw draw;
+    private final Tree tree;
+
+    private DefaultMutableTreeNode treeNode;
+    private boolean isSetInTree;
+
+    private Color color = Color.RED;
+
+    private ArrayList<Shapes> subordinates = new ArrayList<>();
+
     public Circle(String name, int posX, int posY, int width, int height)
     {
-        super(name, posX, posY, height, height);
-        shape = new Ellipse2D.Float(posX, posY, height, height);
-        oldShape = shape;
+        this.name = name;
+        this.posX = posX;
+        this.posY = posY;
+        this.width = width;
+        this.height = height;
+        draw = Draw.getInstance();
+        tree = Tree.getInstance();
+
+        tree.updateTree();
+        shape = new Ellipse2D.Float(posX, posY, width, height);
+        setOldShapes(shape);
     }
 
+    @Override
     public void refactor(int posX, int posY, int width, int height)
     {
         this.posX = posX;
@@ -23,10 +53,122 @@ public class Circle extends Shapes
         Shape s = new Ellipse2D.Float(this.posX, this.posY, this.width, this.height);
         draw.repaint();
         shape = s;
+        setOldShapes(shape);
+    }
 
-        //add action to undoHandler
-        undoHandler.undoableEditHappened(new UndoableEditEvent(
-                this, new UndoableRefactor(this)
-        ));
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitCircle(this);
+    }
+
+    @Override
+    public void setOrnament(String position, String text)
+    {
+        posText.put(position, text);
+    }
+
+    @Override
+    public void deleteOrnament(String position)
+    {
+        posText.remove(position);
+    }
+
+    @Override
+    public HashMap<String, String> getPosText()
+    {
+        return posText;
+    }
+
+    @Override
+    public void addSubordinates(Shapes e) {
+        subordinates.add(e);
+    }
+
+    @Override
+    public ArrayList<Shapes> getSubordinates(){
+        return subordinates;
+    }
+
+    @Override
+    public void setColor(Color color) {
+        this.color = color;
+        draw.repaint();
+    }
+
+    @Override
+    public Color getColor()
+    {
+        return color;
+    }
+
+    @Override
+    public int getHeight(){
+        return height;
+    }
+
+    @Override
+    public int getWidth(){
+        return width;
+    }
+
+    @Override
+    public int getPosX(){
+        return posX;
+    }
+
+    @Override
+    public int getPosY(){
+        return posY;
+    }
+
+    @Override
+    public String getName(){
+        return name;
+    }
+
+    @Override
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public void setShape(Shape shape) {
+        this.shape = shape;
+    }
+
+    @Override
+    public void setOldShapes(Shape shape){
+        oldShapes.add(shape);
+    }
+
+    @Override
+    public ArrayList<Shape> getOldShapes(){
+        return oldShapes;
+    }
+
+    @Override
+    public void setSubordinatesList(ArrayList<Shapes> subordinates){
+        this.subordinates = subordinates;
+    }
+
+    @Override
+    public void setboolTree(boolean isSetInTree) {
+        this.isSetInTree = isSetInTree;
+    }
+
+    @Override
+    public boolean getboolTree() {
+        return isSetInTree;
+    }
+
+    @Override
+    public DefaultMutableTreeNode getTreeNode() {
+        return treeNode;
+    }
+
+    @Override
+    public void setTreeNode(Shapes e) {
+        treeNode = new DefaultMutableTreeNode(e);
     }
 }
