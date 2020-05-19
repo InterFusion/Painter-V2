@@ -92,15 +92,15 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
     public void actionPerformed(ActionEvent e)
     {
         String s = e.getActionCommand();
-
+        Shapes shapes = tree.getSelectedShape();
         //switch to see which button is pressed
         switch (s)
         {
             case "Grootte aanpassen":
-                if (tree.getSelectedShape() != null)
+                if (shapes != null)
                 {
-                    JTextField field1 = new JTextField(Integer.toString(tree.getSelectedShape().getWidth()));
-                    JTextField field2 = new JTextField(Integer.toString(tree.getSelectedShape().getHeight()));
+                    JTextField field1 = new JTextField(Integer.toString(shapes.getWidth()));
+                    JTextField field2 = new JTextField(Integer.toString(shapes.getHeight()));
                     JPanel panel = new JPanel(new GridLayout(0, 1));
                     panel.add(new JLabel("Breedte:"));
                     panel.add(field1);
@@ -111,15 +111,15 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
 
                     if (result == JOptionPane.OK_OPTION)
                     {
-                        tree.getSelectedShape().refactor(tree.getSelectedShape().getPosX(), tree.getSelectedShape().getPosY(), Integer.parseInt(field1.getText()), Integer.parseInt(field2.getText()));
+                        shapes.refactor(shapes.getPosX(), shapes.getPosY(), Integer.parseInt(field1.getText()), Integer.parseInt(field2.getText()));
                     }
                 }
                 break;
             case "Verplaatsen":
-                if (tree.getSelectedShape() != null)
+                if (shapes != null)
                 {
-                    JTextField posx = new JTextField(Integer.toString(tree.getSelectedShape().getPosX()));
-                    JTextField posy = new JTextField(Integer.toString(tree.getSelectedShape().getPosY()));
+                    JTextField posx = new JTextField(Integer.toString(shapes.getPosX()));
+                    JTextField posy = new JTextField(Integer.toString(shapes.getPosY()));
                     JPanel panel1 = new JPanel(new GridLayout(0, 1));
                     panel1.add(new JLabel("Pos x:"));
                     panel1.add(posx);
@@ -130,7 +130,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
 
                     if (result1 == JOptionPane.OK_OPTION)
                     {
-                        tree.getSelectedShape().refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().getWidth(), tree.getSelectedShape().getHeight());
+                        shapes.refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().getWidth(), tree.getSelectedShape().getHeight());
                     }
                 }
                 break;
@@ -141,23 +141,23 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                 fileIO.readFile();
                 break;
             case "Groep aanmaken":
-                if (tree.getSelectedShape() != null)
+                if (shapes != null)
                 {
-                    openDialog(tree.getSelectedNode(), tree.getSelectedShape());
+                    openDialog(tree.getSelectedNode(), shapes);
                 }
                 break;
             case "Groep verwijderen":
-                if (tree.getSelectedShape() != null)
+                if (shapes != null)
                 {
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
-                            this, new UndoableGroupDelete(tree.getSelectedShape(), tree.getSelectedShape().getSubordinates()))
+                            this, new UndoableGroupDelete(shapes, shapes.getSubordinates()))
                     );
-                    tree.getSelectedShape().getSubordinates().clear();
+                    shapes.getSubordinates().clear();
                     tree.updateTree();
                 }
                 break;
             case "Ornament toevoegen":
-                if (tree.getSelectedShape() != null)
+                if (shapes != null)
                 {
                     String[] ornamentStrings = {"Top", "Bottom", "Left", "Right"};
                     JComboBox posO = new JComboBox(ornamentStrings);
@@ -176,16 +176,16 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                     {
                         switch(selection){
                             case 0:
-                                new TopDecorator(tree.getSelectedShape()).setOrnament(ornamentStrings[selection], text);
+                                new TopDecorator(shapes).setOrnament(ornamentStrings[selection], text);
                                 break;
                             case 1:
-                                new BottomDecorator(tree.getSelectedShape()).setOrnament(ornamentStrings[selection], text);
+                                new BottomDecorator(shapes).setOrnament(ornamentStrings[selection], text);
                                 break;
                             case 2:
-                                new LeftDecorator(tree.getSelectedShape()).setOrnament(ornamentStrings[selection], text);
+                                new LeftDecorator(shapes).setOrnament(ornamentStrings[selection], text);
                                 break;
                             case 3:
-                                new RightDecorator(tree.getSelectedShape()).setOrnament(ornamentStrings[selection], text);
+                                new RightDecorator(shapes).setOrnament(ornamentStrings[selection], text);
                                 break;
                         }
                         Draw.getInstance().repaint();
@@ -234,31 +234,27 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
         okButton.addActionListener(e -> makeGroup(firstSelectedShape, listOfShapes));
         cancelButton.addActionListener(e -> cancel());
 
-        dialogTree.addTreeSelectionListener(new TreeSelectionListener()
+        dialogTree.addTreeSelectionListener(e ->
         {
-            @Override
-            public void valueChanged(TreeSelectionEvent e)
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) dialogTree.getLastSelectedPathComponent();
+
+            //Nothing is selected.
+            if (selectedNode == null)
+                return;
+
+            Object nodeInfo = selectedNode.getUserObject();
+            listOfShapes.add((Shapes) nodeInfo);
+            if(selectedNode.getParent() != null)
             {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) dialogTree.getLastSelectedPathComponent();
-
-                //Nothing is selected.
-                if (selectedNode == null)
-                    return;
-
-                Object nodeInfo = selectedNode.getUserObject();
-                listOfShapes.add((Shapes) nodeInfo);
-                if(selectedNode.getParent() != null)
-                {
-                    DefaultMutableTreeNode selectedNodeParent = (DefaultMutableTreeNode) selectedNode.getParent();
-                    selectedNodeParent.remove(selectedNode);
-                }
-                else
-                {
-                    dialogTreeroot.remove(selectedNode);
-                }
-
-                dialogTreemodel.reload(dialogTreeroot);
+                DefaultMutableTreeNode selectedNodeParent = (DefaultMutableTreeNode) selectedNode.getParent();
+                selectedNodeParent.remove(selectedNode);
             }
+            else
+            {
+                dialogTreeroot.remove(selectedNode);
+            }
+
+            dialogTreemodel.reload(dialogTreeroot);
         });
     }
 

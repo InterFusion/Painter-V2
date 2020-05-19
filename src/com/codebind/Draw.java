@@ -140,7 +140,6 @@ public class Draw extends JPanel
                 for (String position: posText.keySet())
                 {
                     g2.drawString(posText.get(position), getCoordsX(s, g, posText.get(position), position), getCoordsY(s, position));
-
                 }
             }
         }
