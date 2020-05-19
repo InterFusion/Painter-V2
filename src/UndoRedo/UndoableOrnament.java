@@ -15,15 +15,15 @@ public class UndoableOrnament extends AbstractUndoableEdit
     Shapes shapes;
     String position, text;
 
-    public UndoableOrnament(Shapes shapes){
+    public UndoableOrnament(Shapes shapes, String position, String text){
         this.shapes = shapes;
-        position = shapes.getPosition();
-        text = shapes.getText();
+        this.position = position;
+        this.text = text;
     }
 
     public void undo(){
         super.undo();
-        shapes.deleteOrnament();
+        shapes.deleteOrnament(position, text);
     }
 
     public void redo(){

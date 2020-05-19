@@ -27,7 +27,9 @@ public interface IShapes
     void setTreeNode(Shapes shapes);
     String accept(Visitor visitor);
     void setOrnament(String position, String text);
-    void deleteOrnament();
+    void deleteOrnament(String position, String text);
     String getPosition();
     String getText();
+    ArrayList<String> getPList();
+    ArrayList<String> getTList();
 }

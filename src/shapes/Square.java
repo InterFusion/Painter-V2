@@ -12,6 +12,8 @@ public class Square implements IShapes
 {
     private String name, position, text;
     private int posX, posY, width, height;
+    private ArrayList<String> positionList = new ArrayList<>();
+    private ArrayList<String> textList = new ArrayList<>();
 
     private Shape shape;
     private ArrayList<Shape> oldShapes = new ArrayList<>();
@@ -62,15 +64,14 @@ public class Square implements IShapes
     @Override
     public void setOrnament(String position, String text)
     {
-        this.position = position;
-        this.text = text;
+        positionList.add(position);
+        textList.add(text);
     }
 
-    @Override
-    public void deleteOrnament()
+    public void deleteOrnament(String position, String text)
     {
-        this.position = null;
-        this.text = null;
+        positionList.remove(position);
+        textList.remove(text);
     }
 
     @Override
@@ -83,6 +84,18 @@ public class Square implements IShapes
     public String getText()
     {
         return text;
+    }
+
+    @Override
+    public ArrayList<String> getPList()
+    {
+        return positionList;
+    }
+
+    @Override
+    public ArrayList<String> getTList()
+    {
+        return textList;
     }
 
     @Override

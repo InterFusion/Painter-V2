@@ -20,7 +20,7 @@ public class TopDecorator extends ShapeDecorator
     {
         decoratedShape.setOrnament(position, text);
         undoHandler.undoableEditHappened(new UndoableEditEvent(
-                this, new UndoableOrnament(decoratedShape))
+                this, new UndoableOrnament(decoratedShape, position, text))
         );
     }
 }

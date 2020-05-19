@@ -116,8 +116,18 @@ public class Shapes
         return iShapes.getText();
     }
 
-    public void deleteOrnament()
+    public ArrayList<String> getPList()
     {
-        iShapes.deleteOrnament();
+        return iShapes.getPList();
+    }
+
+    public ArrayList<String> getTList()
+    {
+        return iShapes.getTList();
+    }
+
+    public void deleteOrnament(String position, String text)
+    {
+        iShapes.deleteOrnament(position, text);
     }
 }

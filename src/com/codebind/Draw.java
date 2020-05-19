@@ -130,19 +130,21 @@ public class Draw extends JPanel
         Graphics2D g2 = (Graphics2D) g;
         for (Shapes s : objShapes)
         {
-            String text = s.getText();
             g2.setColor(s.getColor());
             g2.fill(s.getShape());
-            if(s.getPosition() != null)
-                g2.drawString(text, getCoordsX(s, g), getCoordsY(s));
+            if(s.getPList() != null)
+            {
+                for (int i = 0; i < s.getPList().size(); i++)
+                    g2.drawString(s.getTList().get(i), getCoordsX(s, g, s.getTList().get(i), s.getPList().get(i)), getCoordsY(s, s.getPList().get(i)));
+            }
         }
     }
 
-    private int getCoordsX(Shapes shape, Graphics g){
+    private int getCoordsX(Shapes shape, Graphics g, String text, String pos){
         int x = shape.getPosX();
         int width = shape.getWidth();
-        int textWidth = g.getFontMetrics().stringWidth(shape.getText());
-        switch(shape.getPosition()){
+        int textWidth = g.getFontMetrics().stringWidth(text);
+        switch(pos){
             case "Top":
             case "Bottom":
                 return x+(width - textWidth)/2;
@@ -154,10 +156,10 @@ public class Draw extends JPanel
         return x;
     }
 
-    private int getCoordsY(Shapes shape){
+    private int getCoordsY(Shapes shape,String pos){
         int y = shape.getPosY();
         int height = shape.getHeight();
-        switch(shape.getPosition()){
+        switch(pos){
             case "Top":
                 return y - (y/80);
             case "Bottom":
