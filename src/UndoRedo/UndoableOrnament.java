@@ -3,11 +3,12 @@ package UndoRedo;
 import com.codebind.Draw;
 import shapes.Shapes;
 import javax.swing.undo.AbstractUndoableEdit;
+import java.util.HashMap;
 
 public class UndoableOrnament extends AbstractUndoableEdit
 {
-    Shapes shapes;
-    String position, text;
+    private Shapes shapes;
+    private String position, text;
 
     public UndoableOrnament(Shapes shapes, String position, String text){
         this.shapes = shapes;
@@ -18,7 +19,6 @@ public class UndoableOrnament extends AbstractUndoableEdit
     public void undo(){
         super.undo();
         shapes.deleteOrnament(position);
-        Draw.getInstance().repaint();
     }
 
     public void redo(){
