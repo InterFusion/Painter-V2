@@ -3,14 +3,15 @@ package com.codebind;
 import shapes.*;
 
 import javax.swing.tree.TreeModel;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.HashMap;
 
 public class ExportVisitor implements Visitor
 {
     private static ExportVisitor instance = null;               //the instance of this class
+    private boolean firstTime;
 
     public String export() {
+        firstTime = true;
         StringBuilder sb = new StringBuilder();
         StringBuilder whiteSpace = new StringBuilder();
         TreeModel model = Tree.getInstance().getModel();
@@ -26,10 +27,13 @@ public class ExportVisitor implements Visitor
     private void walk(TreeModel model, Object o, StringBuilder whiteSpace, StringBuilder sb)
     {
         int cc = model.getChildCount(o);
-        sb.append(whiteSpace + "Group " + cc);
-        sb.append("\n");
-        whiteSpace.append("\t");
+        if(!firstTime) {
+            sb.append(whiteSpace + "Group " + cc);
+            sb.append("\n");
+            whiteSpace.append("\t");
+        }
 
+        firstTime = false;
         for( int i=0; i < cc; i++) {
             Object child = model.getChild(o, i );
             if (model.isLeaf(child)) {            //parent
@@ -50,8 +54,7 @@ public class ExportVisitor implements Visitor
             {
                 if(shape.getPosText() != null)
                 {
-                    sb.append(whiteSpace);
-                    sb.append(getOrnament(shape));
+                    sb.append(getOrnament(shape, whiteSpace));
                 }
 
                 sb.append(whiteSpace);
@@ -68,9 +71,16 @@ public class ExportVisitor implements Visitor
     }
 
     @Override
-    public String getOrnament(Shapes shapes)
+    public StringBuilder getOrnament(Shapes shapes, StringBuilder whiteSpace)
     {
-        return "Ornament" + " " + shapes.getPosText() + " \"" + shapes.getPosText() + "\"" + "\n";
+        HashMap<String, String> posText = shapes.getPosText();
+        StringBuilder ornamentString = new StringBuilder();
+        for (String position: posText.keySet())
+        {
+            ornamentString.append(whiteSpace + "Ornament" + " " + position + " \"" + posText.get(position) + "\"" + "\n");
+        }
+
+        return ornamentString;
     }
 
     @Override
