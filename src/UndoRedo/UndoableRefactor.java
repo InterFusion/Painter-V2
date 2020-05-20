@@ -24,8 +24,10 @@ public class UndoableRefactor extends AbstractUndoableEdit
         Shape oldShape = null;
         for(int i=0;i<shape.getOldShapes().size();i++)
         {
+            //check if the current shape is equal to the shape in the list
             if(shape.getShape() == shape.getOldShapes().get(i))
             {
+                //get the shape under the currentshape so you can go back to that shape
                 oldShape = shape.getOldShapes().get(i-1);
             }
         }
@@ -38,8 +40,10 @@ public class UndoableRefactor extends AbstractUndoableEdit
         Shape oldShape = null;
         for(int i=0;i<shape.getOldShapes().size();i++)
         {
+            //check if the current shape is equal to the shape in the list
             if(shape.getShape() == shape.getOldShapes().get(i))
             {
+                //get the shape above the currentshape so you can go back to that shape
                 oldShape = shape.getOldShapes().get(i+1);
             }
         }

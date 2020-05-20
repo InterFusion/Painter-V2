@@ -75,9 +75,10 @@ public class Draw extends JPanel
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
             }
-            //checks to see which shape to draw
+
             public void mouseReleased(MouseEvent e)
             {
+                //checks to see which shape to draw
                 if(endDrag != startDrag)
                 {
                     Shapes s = null;
@@ -156,6 +157,8 @@ public class Draw extends JPanel
     public void setObjShapes(Shapes s){
         objShapes.add(s);
     }
+
+    //get the instance of draw
     public static Draw getInstance(){
         if(instance == null){
             instance = new Draw();

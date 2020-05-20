@@ -48,7 +48,7 @@ public class Square implements IShapes
         this.posY = posY;
         this.width = width;
         this.height = height;
-        Shape s = new Rectangle2D.Float(this.posX, this.posY, this.width, this.height);
+        Shape s = new Rectangle2D.Float(this.posX, this.posY, this.width, this.height);         //create a new shape with the paramaters
         draw.repaint();
         shape = s;
         setOldShapes(shape);
