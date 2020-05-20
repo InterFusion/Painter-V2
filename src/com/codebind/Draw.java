@@ -175,8 +175,7 @@ public class Draw extends JPanel
         }
         return y;
     }
-
-
+    
     public void setShape(int x)
     {
         shapeInt = x;
@@ -195,7 +194,6 @@ public class Draw extends JPanel
                 };
 
         repaint();
-
         return s;
     }
 

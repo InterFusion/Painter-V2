@@ -19,6 +19,7 @@ public class UndoableOrnament extends AbstractUndoableEdit
     public void undo(){
         super.undo();
         shapes.deleteOrnament(position);
+        Draw.getInstance().repaint();
     }
 
     public void redo(){
