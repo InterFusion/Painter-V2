@@ -76,7 +76,7 @@ public class Square implements IShapes
     @Override
     public HashMap<String, String> getPosText()
     {
-        return null;
+        return posText;
     }
 
     @Override

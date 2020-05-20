@@ -81,7 +81,7 @@ public class FileIO
 
                     if(group)
                     {
-                        shape.addSubordinates(draw.getObjShapes().get(draw.getObjShapes().size() - 1));
+                        draw.getObjShapes().get(draw.getObjShapes().size()-2).addSubordinates(shape);
                         Tree.getInstance().updateTree();
                         group = false;
                     }

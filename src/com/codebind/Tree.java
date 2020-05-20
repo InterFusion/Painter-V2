@@ -82,11 +82,6 @@ public class Tree extends JTree implements UndoableEditListener
             }
             s.setboolTree(false);
         }
-//FIXXXX
-      //  for(Shapes s : Draw.getInstance().getObjShapes())
-      //  {
-      //     s.setboolTree(false);
-     //   }
         model.reload(root);
     }
 
