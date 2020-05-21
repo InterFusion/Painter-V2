@@ -11,7 +11,6 @@ public class App extends JFrame{
     private JButton rechthoekButton;
     private JButton ovaalButton;
     private JButton vierkantButton;
-    private JPanel buttonPanel;
     private JPanel canvas;
     private JPanel treePanel;
     protected final Draw draw;                  //draw class
@@ -26,26 +25,22 @@ public class App extends JFrame{
         instance = this;
         this.menu = MenuBar.getInstance();
         tree = Tree.getInstance();
-        //get instance of draw and set the size and location
         this.draw = Draw.getInstance();
-        canvas.add(draw);
-        treePanel.add(tree);
+        
+        canvas.add(draw);           //add draw to the canvas panel
+        treePanel.add(tree);        //add tree to the treePanel
 
-
-        //add jPanel to jFrame
-
-        setJMenuBar(menu); //add jmenu to the jframe
+        setJMenuBar(menu); //add menu to the jframe
         add(mainPanel);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setSize(1280,720);
 
-        //add actionListeners to the buttons
         addActionListeners();
-
     }
 
+    //add actionListeners to the buttons
     public void addActionListeners()
     {
         cirkelButton.addActionListener(e -> draw.setShape(0));
@@ -64,5 +59,4 @@ public class App extends JFrame{
         new App();
     }
 
-    //get tree from app.form
 }

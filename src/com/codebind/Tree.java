@@ -42,6 +42,7 @@ public class Tree extends JTree
                 Object nodeInfo = selectedNode.getUserObject();
 
                 if (selectedNode.isLeaf()) {
+                    //set the selectedShape
                     selectedShape = (Shapes) nodeInfo;
                 }
             }

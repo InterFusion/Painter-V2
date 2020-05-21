@@ -12,7 +12,6 @@ public class MenuBar extends JMenuBar implements ActionListener
     private JMenuItem m1, m2, m3, s1, s2, b1, b2;
     private JMenu menu, submenu, bewerken;
 
-    private JLabel label;
 
     protected final Tree tree;                  //tree class
 
@@ -20,7 +19,7 @@ public class MenuBar extends JMenuBar implements ActionListener
         menu = new JMenu("Menu");
         submenu = new JMenu("Settings");
         bewerken = new JMenu(("Bewerken"));
-        label = new JLabel("Hmmmmm");
+
         m1 = new JMenuItem("MenuItem1");
         m2 = new JMenuItem("MenuItem2");
         m3 = new JMenuItem("MenuItem3");
@@ -42,7 +41,6 @@ public class MenuBar extends JMenuBar implements ActionListener
         add(menu);
         menu.add(submenu);
         add(bewerken);
-        add(label);
 
         tree = Tree.getInstance();
         addActionListeners();
@@ -63,8 +61,6 @@ public class MenuBar extends JMenuBar implements ActionListener
     public void actionPerformed(ActionEvent e){
         String s = e.getActionCommand();
 
-        label.setText(s + " selected");
-
         switch (s)
         {
             case "Grootte aanpassen":
@@ -75,9 +71,12 @@ public class MenuBar extends JMenuBar implements ActionListener
                 panel.add(field1);
                 panel.add(new JLabel("Hoogte:"));
                 panel.add(field2);
+
+                //create a new JoptionPanel for the size
                 int result = JOptionPane.showConfirmDialog(null, panel, "Grootte aanpassen",
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+                //if selected ok get text of field1 and field2 and refactor the selected shape
                 if (result == JOptionPane.OK_OPTION) {
                     tree.getSelectedShape().refactor(tree.getSelectedShape().posX, tree.getSelectedShape().posY, Integer.parseInt(field1.getText()),Integer.parseInt(field2.getText()));
                 }
@@ -90,9 +89,12 @@ public class MenuBar extends JMenuBar implements ActionListener
                 panel1.add(posx);
                 panel1.add(new JLabel("Pos y:"));
                 panel1.add(posy);
+
+                //create a new JoptionPanel for the position
                 int result1 = JOptionPane.showConfirmDialog(null, panel1, "Verplaatsen",
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+                //if selected ok get text of posx and posy and refactor the selected shape
                 if (result1 == JOptionPane.OK_OPTION) {
                     tree.getSelectedShape().refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().width, tree.getSelectedShape().height);
                 }

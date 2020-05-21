@@ -5,13 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
-
-
 
 public class Draw extends JPanel
 {
@@ -25,8 +19,7 @@ public class Draw extends JPanel
 
     public Draw()
     {
-        /*setSize(1000,700);
-        setLocation(106, 0);*/
+
         this.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent e)
@@ -35,7 +28,7 @@ public class Draw extends JPanel
                 endDrag = startDrag;
             }
 
-            //veranderen in een switch of iets anders??
+            //create the shape with the selected shape
             public void mouseReleased(MouseEvent e)
             {
                 Shapes s;

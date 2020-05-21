@@ -20,7 +20,7 @@ public class Shapes
         this.height = height;
         this.draw = Draw.getInstance();
         tree = Tree.getInstance();
-        tree.addTreeNode(this);
+        tree.addTreeNode(this);             //add the object to the tree
     }
 
     public void refactor(int posX, int posY, int width, int height)
