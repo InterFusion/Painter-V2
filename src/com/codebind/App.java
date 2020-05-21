@@ -11,6 +11,7 @@ public class App extends JFrame{
     private JButton rechthoekButton;
     private JButton ovaalButton;
     private JButton vierkantButton;
+    private JPanel buttonPanel;
     private JPanel canvas;
     private JPanel treePanel;
     protected final Draw draw;                  //draw class
