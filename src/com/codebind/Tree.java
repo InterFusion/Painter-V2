@@ -60,6 +60,7 @@ public class Tree extends JTree implements UndoableEditListener
         root.removeAllChildren();
         for(Shapes s : Draw.getInstance().getObjShapes())
         {
+            //add every treenode from the shapes to the root
             root.add(s.getTreeNode());
         }
         model.reload(root);

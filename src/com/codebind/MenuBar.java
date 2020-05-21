@@ -65,9 +65,12 @@ public class MenuBar extends JMenuBar implements ActionListener
                     panel.add(field1);
                     panel.add(new JLabel("Hoogte:"));
                     panel.add(field2);
+
+                    //create a new JoptionPanel for the size
                     int result = JOptionPane.showConfirmDialog(null, panel, "Grootte aanpassen",
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+                    //if selected ok get text of field1 and field2 and refactor the selected shape
                     if (result == JOptionPane.OK_OPTION) {
                         tree.getSelectedShape().refactor(tree.getSelectedShape().getPosX(), tree.getSelectedShape().getPosY(), Integer.parseInt(field1.getText()),Integer.parseInt(field2.getText()));
                     }
@@ -83,9 +86,12 @@ public class MenuBar extends JMenuBar implements ActionListener
                     panel1.add(posx);
                     panel1.add(new JLabel("Pos y:"));
                     panel1.add(posy);
+
+                    //create a new JoptionPanel for the position
                     int result1 = JOptionPane.showConfirmDialog(null, panel1, "Verplaatsen",
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+                    //if selected ok get text of posx and posy and refactor the selected shape
                     if (result1 == JOptionPane.OK_OPTION) {
                         tree.getSelectedShape().refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().getWidth(), tree.getSelectedShape().getHeight());
                     }

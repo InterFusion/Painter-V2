@@ -27,23 +27,22 @@ public class App extends JFrame{
         instance = this;
         this.menu = MenuBar.getInstance();
         tree = Tree.getInstance();
-        //get instance of draw and set the size and location
         this.draw = Draw.getInstance();
-        canvas.add(draw);
-        treePanel.add(tree);
 
-        setJMenuBar(menu); //add jmenu to the jframe
+        canvas.add(draw);       //add draw to the canvas panel
+        treePanel.add(tree);    //add tree to the treePanel
+
+        setJMenuBar(menu);      //add jmenu to the jframe
         add(mainPanel);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setSize(1280,720);
 
-        //add actionListeners to the buttons
         addActionListeners();
-
     }
 
+    //add actionListeners to the buttons
     public void addActionListeners()
     {
         cirkelButton.addActionListener(e -> draw.setShape(0));

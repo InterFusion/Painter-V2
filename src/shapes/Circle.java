@@ -24,6 +24,7 @@ public class Circle extends Shapes
         draw.repaint();
         shape = s;
         setOldShapes(shape);
+        
         //add action to undoHandler
         undoHandler.undoableEditHappened(new UndoableEditEvent(
                 this, new UndoableRefactor( this)
