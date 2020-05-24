@@ -13,10 +13,10 @@ public class ExportVisitor implements Visitor
     public String export() {
         StringBuilder sb = new StringBuilder();
         StringBuilder whiteSpace = new StringBuilder();
-        TreeModel model = Tree.getInstance().getModel();
+        TreeModel model = Tree.getInstance().getModel();        //get the root of the tree with everthing in it
         if (model != null) {
             Object root = model.getRoot();
-            walk(model, root, whiteSpace, sb);
+            walk(model, root, whiteSpace, sb);                  //walk trough the tree
         }
         else
             System.out.println("Tree is empty.");
@@ -26,7 +26,7 @@ public class ExportVisitor implements Visitor
     private void walk(TreeModel model, Object o, StringBuilder whiteSpace, StringBuilder sb)
     {
         int cc = model.getChildCount(o);
-        sb.append(whiteSpace + "Group " + cc);
+        sb.append(whiteSpace + "Group " + cc);                  //add group with the childcount
         sb.append("\n");
         whiteSpace.append("\t");
 

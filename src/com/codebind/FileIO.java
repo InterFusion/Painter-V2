@@ -47,7 +47,7 @@ public class FileIO
         int posY = 0;
         int width = 0;
         int height = 0;
-        Shapes test = null;
+        Shapes shape = null;
 
         try { //read the lines from paint.txt
             List<String> allLines = Files.readAllLines(Paths.get("Paint.txt"));
@@ -65,16 +65,17 @@ public class FileIO
                     //make new shapes from the words
                     draw.makeShape(name.trim(), posX, posY, width, height);
 
-                    if(test != null && draw.getObjShapes().size() != 0)
+                    if(shape != null && draw.getObjShapes().size() != 0)
                     {
-                        test.addSubordinates(draw.getObjShapes().get(draw.getObjShapes().size() - 1));
+                        //add child to the parent
+                        shape.addSubordinates(draw.getObjShapes().get(draw.getObjShapes().size() - 1));
                         Tree.getInstance().updateTree();
                     }
                 }
                 else
                 {
                     if(draw.getObjShapes().size() != 0)
-                        test = draw.getObjShapes().get(draw.getObjShapes().size() - 1);
+                        shape = draw.getObjShapes().get(draw.getObjShapes().size() - 1);
                 }
             }
             Tree.getInstance().updateTree();

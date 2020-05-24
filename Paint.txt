@@ -1,5 +1,7 @@
-Group 1
-	Circle 561 177 201 201
-	Group 2
-		Circle 177 115 234 234
-		Circle 389 415 112 112
+Group 4
+	Circle 138 208 118 118
+	Circle 420 163 118 118
+	Circle 263 394 19 19
+	Rectangle 453 456 215 73
+	Group 1
+		Square 310 113 96 96
