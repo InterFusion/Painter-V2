@@ -14,10 +14,10 @@ public class ExportVisitor implements Visitor
         firstTime = true;
         StringBuilder sb = new StringBuilder();
         StringBuilder whiteSpace = new StringBuilder();
-        TreeModel model = Tree.getInstance().getModel();
+        TreeModel model = Tree.getInstance().getModel();        //get the root of the tree with everthing in it
         if (model != null) {
             Object root = model.getRoot();
-            walk(model, root, whiteSpace, sb);
+            walk(model, root, whiteSpace, sb);                  //walk trough the tree
         }
         else
             System.out.println("Tree is empty.");
@@ -28,7 +28,7 @@ public class ExportVisitor implements Visitor
     {
         int cc = model.getChildCount(o);
         if(!firstTime) {
-            sb.append(whiteSpace + "Group " + cc);
+            sb.append(whiteSpace + "Group " + cc);              //add group with the childcount
             sb.append("\n");
             whiteSpace.append("\t");
         }
@@ -50,8 +50,10 @@ public class ExportVisitor implements Visitor
     {
         for(Shapes shape : Draw.getInstance().getObjShapes())
         {
+            //convert Object to shape
             if(shape.toString().contains(child.toString()))
             {
+                //checks to see of it has ornament
                 if(shape.getPosText() != null)
                 {
                     sb.append(getOrnament(shape, whiteSpace));

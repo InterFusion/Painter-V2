@@ -70,6 +70,7 @@ public class FileIO
                     Shapes shape = draw.makeShape(name.trim(), posX, posY, width, height);
                     if(ornament)
                     {
+                        //add al the ornaments to shape
                         for(int i=0; i<posList.size();i++)
                         {
                             shape.setOrnament(posList.get(i),textList.get(i));
@@ -81,6 +82,7 @@ public class FileIO
 
                     if(group)
                     {
+                        //add child to parent
                         draw.getObjShapes().get(draw.getObjShapes().size()-2).addSubordinates(shape);
                         Tree.getInstance().updateTree();
                         group = false;

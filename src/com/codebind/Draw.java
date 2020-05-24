@@ -93,7 +93,6 @@ public class Draw extends JPanel
                     else if(shapeInt == 3)
                         s = new Shapes(new Rectangle("Rectangle", Math.min(startDrag.x, e.getX()), Math.min(startDrag.y, e.getY()), Math.abs(startDrag.x - e.getX()), Math.abs(startDrag.y - e.getY())));
 
-                    //objShapes.add(s);
                     assert s != null;
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
                             this, new UndoableDraw(objShapes, s)
@@ -134,6 +133,8 @@ public class Draw extends JPanel
         {
             g2.setColor(s.getColor());
             g2.fill(s.getShape());
+
+            //draw text to the graphics object
             HashMap<String, String> posText = s.getPosText(); 
             if(posText != null)
             {
