@@ -30,11 +30,11 @@ public class FileIO
         try (FileWriter file = new FileWriter("Paint.txt"))
         {
             StringBuilder whiteSpace = new StringBuilder();
-            TreeModel model = Tree.getInstance().getModel();
+            TreeModel model = Tree.getInstance().getModel();        //get the root of the tree with everything in it
             if (model != null) {
                 Object root = model.getRoot();
                 System.out.println(root.toString());
-                walk(model, root, file, whiteSpace);
+                walk(model, root, file, whiteSpace);                //walk trough the tree
             }
             else
                 System.out.println("Tree is empty.");
@@ -48,7 +48,7 @@ public class FileIO
 
     protected void walk(TreeModel model, Object o, FileWriter file, StringBuilder whiteSpace) throws IOException {
         int cc = model.getChildCount(o);
-        file.write(whiteSpace + "Group " + cc);
+        file.write(whiteSpace + "Group " + cc);             //add group with the childcount
         file.write(System.lineSeparator());
         whiteSpace.append("\t");
         for( int i=0; i < cc; i++) {
@@ -90,7 +90,7 @@ public class FileIO
         int posY = 0;
         int width = 0;
         int height = 0;
-        Shapes test = null;
+        Shapes shape = null;
 
         try { //read the lines from paint.txt
             List<String> allLines = Files.readAllLines(Paths.get("Paint.txt"));
@@ -108,16 +108,17 @@ public class FileIO
                     //make new shapes from the words
                     draw.makeShape(name.trim(), posX, posY, width, height);
 
-                    if(test != null && draw.getObjShapes().size() != 0)
+                    if(shape != null && draw.getObjShapes().size() != 0)
                     {
-                        test.addSubordinates(draw.getObjShapes().get(draw.getObjShapes().size() - 1));
+                        //add child to parent
+                        shape.addSubordinates(draw.getObjShapes().get(draw.getObjShapes().size() - 1));
                         Tree.getInstance().updateTree();
                     }
                 }
                 else
                 {
                     if(draw.getObjShapes().size() != 0)
-                        test = draw.getObjShapes().get(draw.getObjShapes().size() - 1);
+                        shape = draw.getObjShapes().get(draw.getObjShapes().size() - 1);
                 }
             }
             Tree.getInstance().updateTree();

@@ -41,7 +41,7 @@ public class Shapes
         this.height = height;
         draw = Draw.getInstance();
         tree = Tree.getInstance();
-        treeNode = new DefaultMutableTreeNode(this);
+        treeNode = new DefaultMutableTreeNode(this);            //creates a treenode for the tree
         draw.setObjShapes(this);
         tree.updateTree();
     }

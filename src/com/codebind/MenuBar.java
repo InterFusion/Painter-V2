@@ -32,7 +32,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
     private DefaultTreeModel dialogTreemodel;
     private DefaultMutableTreeNode dialogTreeroot;
 
-    //make al the buttons when the program starts
+    //make all the buttons when the program starts
     public MenuBar(){
         menu = new JMenu("File");
         bewerken = new JMenu("Bewerken");
@@ -92,9 +92,11 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                     panel.add(field1);
                     panel.add(new JLabel("Hoogte:"));
                     panel.add(field2);
+                    //create a new JoptionPanel for the size
                     int result = JOptionPane.showConfirmDialog(null, panel, "Grootte aanpassen",
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+                    //if selected ok get text of field1 and field2 and refactor the selected shape
                     if (result == JOptionPane.OK_OPTION) {
                         tree.getSelectedShape().refactor(tree.getSelectedShape().getPosX(), tree.getSelectedShape().getPosY(), Integer.parseInt(field1.getText()),Integer.parseInt(field2.getText()));
                     }
@@ -110,9 +112,11 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                     panel1.add(posx);
                     panel1.add(new JLabel("Pos y:"));
                     panel1.add(posy);
+                    //create a new JoptionPanel for the position
                     int result1 = JOptionPane.showConfirmDialog(null, panel1, "Verplaatsen",
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
+                    //if selected ok get text of posx and posy and refactor the selected shape
                     if (result1 == JOptionPane.OK_OPTION) {
                         tree.getSelectedShape().refactor(Integer.parseInt(posx.getText()), Integer.parseInt(posy.getText()), tree.getSelectedShape().getWidth(), tree.getSelectedShape().getHeight());
                     }
@@ -133,9 +137,11 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
             case"Groep verwijderen":
                 if(tree.getSelectedShape() != null)
                 {
+                    //create a action for the undo and redo
                     undoHandler.undoableEditHappened(new UndoableEditEvent(
                             this, new UndoableGroupDelete(tree.getSelectedShape(), tree.getSelectedShape().getSubordinates()))
                     );
+                    //remove all the child of the selectedshape
                     tree.getSelectedShape().getSubordinates().clear();
                     tree.updateTree();
                 }
@@ -146,27 +152,27 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
     //Methode voor het aanmaken van groepen
     public void openDialog(DefaultMutableTreeNode firstSelectedNode, Shapes firstSelectedShape)
     {
-        JFrame f = new JFrame();
+        JFrame f = new JFrame();                                //makes a new Jframe where everything is in
         d = new JDialog(f, "dialog Box");
         JButton okButton = new JButton("OK");
         JButton cancelButton = new JButton("Cancel");
 
         // create a label
         JPanel test = new JPanel();
-        JTree dialogTree = new JTree();
+        JTree dialogTree = new JTree();                         // create a tree
 
         dialogTreemodel =(DefaultTreeModel) dialogTree.getModel();
-        dialogTreemodel.setRoot((TreeNode) tree.getModel().getRoot());
+        dialogTreemodel.setRoot((TreeNode) tree.getModel().getRoot());      //clone the main tree in this tree
         dialogTreeroot = (DefaultMutableTreeNode) dialogTreemodel.getRoot();
 
         if(firstSelectedNode.getParent() != null)
         {
             DefaultMutableTreeNode firstSelectedNodeParent = (DefaultMutableTreeNode) firstSelectedNode.getParent();
-            firstSelectedNodeParent.remove(firstSelectedNode);
+            firstSelectedNodeParent.remove(firstSelectedNode);              //remove the selectednode from the parent
         }
         else
         {
-             dialogTreeroot.remove(firstSelectedNode);
+             dialogTreeroot.remove(firstSelectedNode); //remove the selectednode
         }
 
         dialogTreemodel.reload(dialogTreeroot);
@@ -181,6 +187,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
         // set visibility of dialog
         d.setVisible(true);
 
+        //add actionlisteners to the buttons
         okButton.addActionListener(e -> makeGroup(firstSelectedShape, listOfShapes));
         cancelButton.addActionListener(e -> cancel());
 
@@ -196,15 +203,15 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                     return;
 
                 Object nodeInfo = selectedNode.getUserObject();
-                listOfShapes.add((Shapes) nodeInfo);
+                listOfShapes.add((Shapes) nodeInfo);//add the selected node to the list
                 if(selectedNode.getParent() != null)
                 {
                     DefaultMutableTreeNode selectedNodeParent = (DefaultMutableTreeNode) selectedNode.getParent();
-                    selectedNodeParent.remove(selectedNode);
+                    selectedNodeParent.remove(selectedNode);//remove the selectednode from parent
                 }
                 else
                 {
-                    dialogTreeroot.remove(selectedNode);
+                    dialogTreeroot.remove(selectedNode); //remove the selectednode from tree
                 }
 
                 dialogTreemodel.reload(dialogTreeroot);
@@ -218,6 +225,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
         {
             for (Shapes s: listOfShapes)
             {
+                //add every shape from the list to the parent(firstselectedshape)
                 firstSelectedShape.addSubordinates(s);
                 undoHandler.undoableEditHappened(new UndoableEditEvent(
                         firstSelectedShape, new UndoableGroup(firstSelectedShape, s))

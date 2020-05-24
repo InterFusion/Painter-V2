@@ -146,17 +146,14 @@ public class Draw extends JPanel
     //method for when you load a saved file.
     public void makeShape(String name, int posX, int posY, int width, int height)
     {
-        Shapes s = switch (name)
+        switch (name)
                 {
                     case "Circle" -> new Circle("Circle", posX, posY, width, height);
                     case "Ellipse" -> new Ellipse("Ellipse", posX, posY, width, height);
                     case "Square" -> new Square("Square", posX, posY, width, height);
                     case "Rectangle" -> new Rectangle("Rectangle", posX, posY, width, height);
-                    default -> null;
                 };
 
-        if(s == null)
-            return;
         repaint();
     }
 
