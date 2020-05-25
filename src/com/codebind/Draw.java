@@ -139,21 +139,22 @@ public class Draw extends JPanel
             if(posText != null)
             {
                 for (String position: posText.keySet())
-                {
+                {   //the drawString method needs 'Text', an 'X' coordinate and a 'Y' coordinate
                     g2.drawString(posText.get(position), getCoordsX(s, g, posText.get(position), position), getCoordsY(s, position));
                 }
             }
         }
     }
 
+    //returns the X coordinate depending on the position given
     private int getCoordsX(Shapes shape, Graphics g, String text, String pos){
         int x = shape.getPosX();
         int width = shape.getWidth();
-        int textWidth = g.getFontMetrics().stringWidth(text);
+        int textWidth = g.getFontMetrics().stringWidth(text); //gets length of string in the given string
         switch(pos){
             case "Top":
             case "Bottom":
-                return x+(width - textWidth)/2;
+                return x+(width - textWidth)/2; //puts text in the middle if top/bottom
             case "Left":
                 return x - 30;
             case "Right":
@@ -161,7 +162,7 @@ public class Draw extends JPanel
         }
         return x;
     }
-
+    //returns the Y coordinate depending on the position given
     private int getCoordsY(Shapes shape,String pos){
         int y = shape.getPosY();
         int height = shape.getHeight();

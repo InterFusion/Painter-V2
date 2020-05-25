@@ -1,15 +1,16 @@
 package com.codebind;
 
 import UndoRedo.UndoHandler;
-import shapes.IShapes;
 import shapes.Shapes;
+
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.ExpandVetoException;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Tree extends JTree implements UndoableEditListener
 {
@@ -21,15 +22,16 @@ public class Tree extends JTree implements UndoableEditListener
     private DefaultMutableTreeNode selectedNode;
     private Shapes selectedShape;
 
-    private Tree(){
+    private Tree()
+    {
         undoHandler = UndoHandler.getInstance();
-        model =(DefaultTreeModel) this.getModel();
+        model = (DefaultTreeModel) this.getModel();
         model.setRoot(new DefaultMutableTreeNode("Shapes"));
 
         root = (DefaultMutableTreeNode) model.getRoot();
 
-        this.setBackground(new Color(56,162,197));
-        this.setPreferredSize(new Dimension(200,-1));
+        this.setBackground(new Color(56, 162, 197));
+        this.setPreferredSize(new Dimension(200, -1));
 
         //add listener to the tree for the selected node
         addTreeListener();
@@ -43,7 +45,7 @@ public class Tree extends JTree implements UndoableEditListener
             @Override
             public void valueChanged(TreeSelectionEvent e)
             {
-                selectedNode = (DefaultMutableTreeNode)instance.getLastSelectedPathComponent();
+                selectedNode = (DefaultMutableTreeNode) instance.getLastSelectedPathComponent();
 
                 //Nothing is selected.
                 if (selectedNode == null)
@@ -58,7 +60,7 @@ public class Tree extends JTree implements UndoableEditListener
                 //set the color of every shape to red except the selectedshape
                 for (Shapes s : Draw.getInstance().getObjShapes())
                 {
-                    if(s != selectedShape)
+                    if (s != selectedShape)
                         s.setColor(Color.red);
                 }
             }
@@ -66,9 +68,10 @@ public class Tree extends JTree implements UndoableEditListener
     }
 
     //update the tree everytime when a new shape is drawn
-    public void updateTree(){
+    public void updateTree()
+    {
         root.removeAllChildren();
-        for(Shapes s : Draw.getInstance().getObjShapes())
+        for (Shapes s : Draw.getInstance().getObjShapes())
         {
             for (Shapes sub : s.getSubordinates())
             {
@@ -81,7 +84,7 @@ public class Tree extends JTree implements UndoableEditListener
             }
 
             //add all the parents to the root
-            if(!s.getboolTree())
+            if (!s.getboolTree())
             {
                 root.add(s.getTreeNode());
                 s.setboolTree(true);
@@ -103,8 +106,10 @@ public class Tree extends JTree implements UndoableEditListener
     }
 
 
-    public static Tree getInstance(){
-        if(instance == null){
+    public static Tree getInstance()
+    {
+        if (instance == null)
+        {
             instance = new Tree();
         }
         return instance;

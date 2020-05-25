@@ -1,9 +1,7 @@
 package com.codebind;
+
 import shapes.Shapes;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;

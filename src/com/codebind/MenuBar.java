@@ -7,22 +7,19 @@ import ornaments.BottomDecorator;
 import ornaments.LeftDecorator;
 import ornaments.RightDecorator;
 import ornaments.TopDecorator;
-import shapes.IShapes;
 import shapes.Shapes;
 
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.tree.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.undo.UndoManager;
-import javax.xml.crypto.NodeSetData;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class MenuBar extends JMenuBar implements ActionListener, UndoableEditListener
 {
@@ -216,13 +213,13 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
         dialogTreemodel.setRoot((TreeNode) tree.getModel().getRoot());      //clone the main tree in this tree
         dialogTreeroot = (DefaultMutableTreeNode) dialogTreemodel.getRoot();
 
-        if(firstSelectedNode.getParent() != null)
+        if(firstSelectedNode.getParent() != null) //If the node has a parent it will be removed from the parent
         {
             //get the parent of firstselectedNode
             DefaultMutableTreeNode firstSelectedNodeParent = (DefaultMutableTreeNode) firstSelectedNode.getParent();
             firstSelectedNodeParent.remove(firstSelectedNode);      //remove the selectednode from the parent
         }
-        else
+        else //remove from root
         {
              dialogTreeroot.remove(firstSelectedNode);          //remove the selectednode
         }
@@ -266,6 +263,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
             dialogTreemodel.reload(dialogTreeroot);
         });
     }
+
 
     public void makeGroup(Shapes firstSelectedShape, ArrayList<Shapes> listOfShapes)
     {
