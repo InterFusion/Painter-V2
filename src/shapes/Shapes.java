@@ -17,7 +17,7 @@ public class Shapes
 {
     private IShapes iShapes;
     private final Draw draw;
-    private UndoManager undoHandler = UndoHandler.getInstance();
+    private UndoHandler undoHandler = UndoHandler.getInstance();
 
     //create a shape
     public Shapes(IShapes iShapes) {

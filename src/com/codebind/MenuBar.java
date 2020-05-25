@@ -164,7 +164,7 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                 if (shapes != null)
                 {
                     String[] ornamentStrings = {"Top", "Bottom", "Left", "Right"};
-                    JComboBox posO = new JComboBox(ornamentStrings);
+                    JComboBox posO = new JComboBox(ornamentStrings); //Dropdown menu
                     JTextField nameO = new JTextField();
                     JPanel panel1 = new JPanel(new GridLayout(0, 1));
                     panel1.add(new JLabel("Position Ornament:"));
@@ -174,8 +174,9 @@ public class MenuBar extends JMenuBar implements ActionListener, UndoableEditLis
                     int result1 = JOptionPane.showConfirmDialog(null, panel1, "Verplaatsen",
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-                    int selection = posO.getSelectedIndex();
-                    String text = nameO.getText();
+                    int selection = posO.getSelectedIndex(); //Selected position
+                    String text = nameO.getText(); //Text of the ornament
+
                     if (result1 == JOptionPane.OK_OPTION)
                     {
                         switch(selection){
